@@ -1,4 +1,4 @@
-import React from 'react'
+
 import HomeIcon from '../../components/icon/homeIcon'
 import ArrowRIghtIcon from '../../components/icon/arrowRightIcon'
 import SidebarLayout from '../../components/layout/SidebarLayout'

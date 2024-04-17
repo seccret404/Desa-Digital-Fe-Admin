@@ -1,4 +1,4 @@
-import React from 'react'
+
 import SidebarLayout from '../../components/layout/SidebarLayout'
 import { Input } from '../../components/ui/input'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
