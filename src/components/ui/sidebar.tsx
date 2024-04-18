@@ -78,7 +78,7 @@ export default function Sidebar() {
                                    <MenuItem icon={<PengumumanIcon size={18} color='black' />}>Riwayat Pengumuman</MenuItem>
                                    <MenuItem icon={<AddPengumumanIcon size={18} color='black' />}>Tambah Pengumuman Pengumuman  </MenuItem>
                               </SubMenu>
-                              <MenuItem disabled></MenuItem>
+                              <MenuItem disabled className='mt-6'></MenuItem>
                               <MenuItem className='text-center rounded-[5px] bg-[#fdcece] text-[#f84444]'>Keluar</MenuItem>
                          </Menu>
                     </Side>
