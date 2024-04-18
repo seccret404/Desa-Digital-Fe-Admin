@@ -20,7 +20,11 @@ export default function AgendaPage() {
                     const data = await getAgenda();
                     setAgenda(data);
                } catch (error) {
-                    console.error('error:', error.message);
+                    if (error instanceof Error) {
+                         console.error('error:', error.message);
+                       } else {
+                         console.error('An unexpected error occurred:', error);
+                       }
                }
           }
           fetchAgenda();
@@ -83,7 +87,7 @@ export default function AgendaPage() {
                                                   <TableRow key={p.id}>
                                                        <TableCell>{index + 1}</TableCell>
                                                        <TableCell>{p.nama_kegiatan}</TableCell>
-                                                       <TableCell>{p.tanggal_kegiatan}</TableCell>
+                                                       <TableCell></TableCell>
                                                        <TableCell>{p.lokasi}</TableCell>
                                                        <TableCell>{p.status_laporan}</TableCell>
                                                        <TableCell>

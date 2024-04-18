@@ -20,7 +20,11 @@ export default function OrganisasiPage() {
         const data = await getOrganisasi();
         setOrganisasi(data); 
       } catch (error) {
-        console.error('Error:', error.message);
+          if (error instanceof Error) {
+               console.error('error:', error.message);
+             } else {
+               console.error('An unexpected error occurred:', error);
+             }
       }
     }
     fetchOrganisasi();

@@ -19,7 +19,11 @@ export default function Penduduk() {
                     const data = await getPenduduk();
                     setPenduduk(data);
                }catch(error){
-                    console.error('error:',  error.message);
+                    if (error instanceof Error) {
+                         console.error('error:', error.message);
+                       } else {
+                         console.error('An unexpected error occurred:', error);
+                       }
                }
           }
           fetchPenduduk();
