@@ -4,9 +4,27 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { Input } from '../../components/ui/input'
 import Button from '../../components/ui/button'
 import { Link } from 'react-router-dom'
-import { Table, TableBody, TableCell, TableHead, TableHeader } from '../../components/ui/table'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table'
+import { useState, useEffect } from 'react'
+import { getOrganisasi } from '../../services/desaServices'
+import { Organisasi } from '../../interfaces/organisasi'
+
+
 
 export default function OrganisasiPage() {
+     const [organisasi, setOrganisasi] = useState<Organisasi[]>([]);
+
+  useEffect(() => {
+    async function fetchOrganisasi() {
+      try {
+        const data = await getOrganisasi();
+        setOrganisasi(data); 
+      } catch (error) {
+        console.error('Error:', error.message);
+      }
+    }
+    fetchOrganisasi();
+  }, []);
      return (
           <SidebarLayout>
                <div className="bg-[#D9D9D98B] rounded-[15px]">
@@ -38,19 +56,26 @@ export default function OrganisasiPage() {
                                              <TableHead>Aksi</TableHead>
                                         </TableHeader>
                                         <TableBody>
-                                             <TableCell>1</TableCell>
-                                             <TableCell>Karang Taruna</TableCell>
-                                             <TableCell>21 Maret2023</TableCell>
-                                             <TableCell>Jln 54 Pagaran</TableCell>
-                                             <TableCell>Edward Tua Panjaitan</TableCell>
-                                             <TableCell>
+                                        {organisasi.map((p, index) => (
+                                    <TableRow key={p.id}>
+                                        <TableCell>{index + 1}</TableCell>
+                                        <TableCell>{p.nama_lembaga}</TableCell>
+                                        <TableCell>{p.tahun_berdiri}</TableCell>
+                                        <TableCell>{p.alamat_organisasi}</TableCell>
+                                        <TableCell>{p.ketua}</TableCell>
+                                        <TableCell>
+                                             <div className="flex justify-center ml-4 mr-4">
+
                                                   <div className="flex justify-center text-[#0890EA] text-[12px] bg-[#0890EA60] w-[70px] h-[23px] text-center rounded-[5px]">
                                                        <Button>
                                                             Edit
                                                        </Button>
                                                   </div>
-                                             </TableCell>
-                                        </TableBody>
+                                             </div>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                                   </TableBody>
                                    </Table>
                               </div>
                          </div>

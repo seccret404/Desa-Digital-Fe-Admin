@@ -6,9 +6,26 @@ import { Input } from '../../components/ui/input'
 import { Link } from 'react-router-dom'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../components/ui/select'
 import PrintIcon from '../../components/icon/printIcon'
-import { Table, TableBody, TableCell, TableHead, TableHeader } from '../../components/ui/table'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table'
+import { getAgenda } from '../../services/desaServices'
+import { Agenda } from '../../interfaces/agenda'
+import { useState, useEffect } from 'react';
 
 export default function AgendaPage() {
+     const [agenda, setAgenda] = useState<Agenda[]>([]);
+
+     useEffect(() => {
+          async function fetchAgenda() {
+               try {
+                    const data = await getAgenda();
+                    setAgenda(data);
+               } catch (error) {
+                    console.error('error:', error.message);
+               }
+          }
+          fetchAgenda();
+     }, []);
+
      return (
           <SidebarLayout>
                <div className="bg-[#D9D9D98B] rounded-[15px]">
@@ -62,27 +79,25 @@ export default function AgendaPage() {
                                              <TableHead className='text-center'>Aksi</TableHead>
                                         </TableHeader>
                                         <TableBody>
-                                             <TableCell>1</TableCell>
-                                             <TableCell>Natal Oikumene</TableCell>
-                                             <TableCell>13 Maret 2022</TableCell>
-                                             <TableCell>Pagaran</TableCell>
-                                             <TableCell>
-                                                  <Link to='/laporan-detail' className='text-[#40A2E3] '>
-                                                       Lihat Laporan
-                                                  </Link>
-                                             </TableCell>
-                                             <TableCell>
-                                                  <div className="flex justify-between ml-4 mr-4">
-                                                       <div className="flex justify-center text-[#F61616] text-[12px] bg-[#fdcece] w-[70px] h-[23px] text-center rounded-[5px]"><Button>
-                                                            Hapus
-                                                       </Button></div>
-                                                       <div className="flex justify-center text-[#0890EA] text-[12px] bg-[#0890EA60] w-[70px] h-[23px] text-center rounded-[5px]">
-                                                            <Button>
-                                                                 Edit
-                                                            </Button>
-                                                       </div>
-                                                  </div>
-                                             </TableCell>
+                                             {agenda.map((p, index) => (
+                                                  <TableRow key={p.id}>
+                                                       <TableCell>{index + 1}</TableCell>
+                                                       <TableCell>{p.nama_kegiatan}</TableCell>
+                                                       <TableCell>{p.tanggal_kegiatan}</TableCell>
+                                                       <TableCell>{p.lokasi}</TableCell>
+                                                       <TableCell>{p.status_laporan}</TableCell>
+                                                       <TableCell>
+                                                            <div className="flex justify-center ml-4 mr-4">
+
+                                                                 <div className="flex justify-center text-[#0890EA] text-[12px] bg-[#0890EA60] w-[70px] h-[23px] text-center rounded-[5px]">
+                                                                      <Button>
+                                                                           Edit
+                                                                      </Button>
+                                                                 </div>
+                                                            </div>
+                                                       </TableCell>
+                                                  </TableRow>
+                                             ))}
                                         </TableBody>
                                    </Table>
                               </div>

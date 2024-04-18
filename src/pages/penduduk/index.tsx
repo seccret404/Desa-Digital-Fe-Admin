@@ -4,10 +4,26 @@ import { Input } from '../../components/ui/input'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import Button from '../../components/ui/button'
-import { Table, TableBody, TableCell, TableHead, TableHeader } from '../../components/ui/table'
-import { Link } from 'react-router-dom'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table'
+import { Link } from 'react-router-dom';
+import { useState,useEffect } from 'react';
+import { PendudukDesa } from '../../interfaces/penduduk';
+import { getPenduduk } from '../../services/desaServices'
 
 export default function Penduduk() {
+     const[penduduk, setPenduduk] = useState<PendudukDesa[]>([]);
+
+     useEffect(() =>{
+          async function fetchPenduduk(){
+               try{
+                    const data = await getPenduduk();
+                    setPenduduk(data);
+               }catch(error){
+                    console.error('error:',  error.message);
+               }
+          }
+          fetchPenduduk();
+     }, []);
      return (
           <SidebarLayout>
                <div className="bg-[#D9D9D98B] rounded-[15px]">
@@ -39,11 +55,13 @@ export default function Penduduk() {
                                         <TableHead className='text-center'>Aksi</TableHead>
                                    </TableHeader>
                                    <TableBody>
-                                        <TableCell>1</TableCell>
-                                        <TableCell>Edward Tua Panjaitan</TableCell>
-                                        <TableCell>121245265361</TableCell>
-                                        <TableCell>Pagaran</TableCell>
-                                        <TableCell>Pelajar</TableCell>
+                                   {penduduk.map((p, index) => (
+                                    <TableRow key={p.id}>
+                                        <TableCell>{index + 1}</TableCell>
+                                        <TableCell>{p.nama}</TableCell>
+                                        <TableCell>{p.nik}</TableCell>
+                                        <TableCell>{p.alamat}</TableCell>
+                                        <TableCell>{p.status_perkawinan}</TableCell>
                                         <TableCell>
                                              <div className="flex justify-center ml-4 mr-4">
 
@@ -54,6 +72,9 @@ export default function Penduduk() {
                                                   </div>
                                              </div>
                                         </TableCell>
+                                    </TableRow>
+                                ))}
+                                       
                                    </TableBody>
                               </Table>
                          </div>
