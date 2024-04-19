@@ -1,10 +1,9 @@
 export interface Agenda{
      id:number,
      nama_kegiatan:string,
-     tanggal_kegiatan: Date,
+     tanggal_kegiatan: string,
      lokasi:string,
      tujuan:string,
      status_laporan:string,
      createdAt:string,
-     gambar_kegiatan:string
 }

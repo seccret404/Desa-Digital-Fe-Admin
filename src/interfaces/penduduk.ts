@@ -4,7 +4,7 @@ export interface PendudukDesa{
      nama : string,
      agama : string,
      alamat : string,
-     tangal_lahir : Date,
+     tanggal_lahir : string,
      tempat_lahir : string,
      jenis_kelamin : string,
      pekerjaan : string,
@@ -14,6 +14,6 @@ export interface PendudukDesa{
      status_perkawinan : string,
      dusun : string,
      no_kk : string,
-     createdAt : Date,
+     createdAt : string,
      id_dusun : number
 }

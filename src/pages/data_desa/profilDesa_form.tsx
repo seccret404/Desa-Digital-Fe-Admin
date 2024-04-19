@@ -1,11 +1,58 @@
+import { useState } from 'react'
 import SidebarLayout from '../../components/layout/SidebarLayout'
 import Button from '../../components/ui/button'
 import { Input } from '../../components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../components/ui/select'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs'
 import { Textarea } from '../../components/ui/textarea'
+import { addPemerintah } from '../../services/desaServices'
+import { useNavigate } from 'react-router-dom'
+import { useToast } from '../../components/ui/use-toast'
 
 export default function ProfilForm() {
+     const [nik, setNik] = useState('');
+     const [nama, setNama] = useState('');
+     const [jabatan, setJabatan] = useState('');
+     const [tahunjabatan, setTahunJabatan] = useState('');
+     const [profil, setProfil] = useState('');
+     const navigate = useNavigate();
+     const {toast} = useToast();
+
+
+     const handleSubmit = async(event: { preventDefault: () => void }) =>{
+          event.preventDefault();
+
+          const pemerintahData = {
+               id: Date.now(),
+               nik: Number(nik),
+               nama: nama,
+               jabatan: jabatan,
+               tahun_jabatan: tahunjabatan,
+               profil:'test'
+          };
+
+          
+          try {
+               await addPemerintah(pemerintahData);
+               toast({
+                    title: "Profil Desa",
+                    description: "Data berhasil Ditambah!"
+               });
+               console.log("Sending data to server:", pemerintahData);
+               navigate('/data-desa');
+
+          } catch (error) {
+              
+                    console.error('Failed to add agenda:', error);
+                    
+               
+               toast({
+                    title: "Profil Desa",
+                    description: "Data Gagal Ditambah!",
+
+               });
+          }
+     }
      return (
           <SidebarLayout>
                <div className="bg-[#D9D9D98B] rounded-[15px]">
@@ -98,13 +145,13 @@ export default function ProfilForm() {
                                                                       <div className="">
                                                                            Nama
                                                                       </div>
-                                                                      <Input placeholder='Nama Kepala Desa' />
+                                                                      <Input placeholder='Nama Kepala Desa' value={nama} onChange={(e) => setNama(e.target.value)} />
                                                                  </div>
                                                                  <div className="">
-                                                                      <div className="">
+                                                                      <div className="" >
                                                                            NIK
                                                                       </div>
-                                                                      <Input placeholder='Nik' />
+                                                                      <Input placeholder='Nik' value={nik}  onChange={(e) => setNik(e.target.value)} />
                                                                  </div>
                                                                  <div className="">
                                                                       <div className="">
@@ -112,10 +159,10 @@ export default function ProfilForm() {
                                                                       </div>
                                                                       <Select>
                                                                            <SelectTrigger className="w-[270px]">
-                                                                                <SelectValue placeholder="Pilih Jabatan" />
+                                                                                <SelectValue placeholder="Pilih Jabatan" defaultValue={jabatan} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setJabatan(e.target.value)}/>
                                                                            </SelectTrigger>
                                                                            <SelectContent className='bg-white'>
-                                                                                <SelectItem value="Kepala Desa">Kepala Desa</SelectItem>
+                                                                                <SelectItem value="Kepala Desa" onClick={() => setJabatan('Kepala Desa')}>Kepala Desa</SelectItem>
                                                                                 <SelectItem value="BPD">BPD</SelectItem>
                                                                                 <SelectItem value="Sekretaris Desa">Sekretaris Desa</SelectItem>
                                                                                 <SelectItem value="kaur Pemerintahan">Kaur Pemerintahan</SelectItem>
@@ -472,9 +519,11 @@ export default function ProfilForm() {
                                                                  <TabsTrigger value="profil" hidden={true} className='bg-[#676A6C] w-[150px] h-[40px] text-white'>Kembali</TabsTrigger>
 
                                                             </TabsList>
-                                                            <Button bgColor='#0890EA' height={40} width={150} rounded={5} color='white'>
-                                                                 Simpan
-                                                            </Button>
+                                                           
+
+                                                            <button className='text-white bg-[#0890EA] rounded-[5px] w-[200px] h-[40px]' onClick={handleSubmit}>
+                                             Simpan
+                                        </button>
                                                        </div>
                                                   </div>
                                              </TabsContent>

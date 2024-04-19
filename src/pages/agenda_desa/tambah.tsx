@@ -5,8 +5,60 @@ import { Textarea } from '../../components/ui/textarea'
 import Button from '../../components/ui/button'
 import HomeIcon from '../../components/icon/homeIcon'
 import ArrowRIghtIcon from '../../components/icon/arrowRightIcon'
-
+import { useState } from 'react'
+import { addAgenda } from '../../services/desaServices'
+import { useNavigate } from 'react-router-dom'
+import { useToast } from '../../components/ui/use-toast'
 export default function TambahAgenda() {
+   
+          const [namaKegiatan, setNamaKegiatan] = useState('');
+          const [tanggalKegiatan, setTanggalKegiatan] = useState('');
+          const [lokasi, setLokasi] = useState('');
+          const [tujuan, setTujuan] = useState('');
+          const [deskripsi, setDeskripsi] = useState('');
+          const navigate = useNavigate();
+          const {toast }= useToast();
+
+          const handleSave = async (event: { preventDefault: () => void }) => {
+               event.preventDefault();
+           
+               // validasi 
+               if (!namaKegiatan || !tanggalKegiatan || !lokasi || !tujuan || !deskripsi) {
+                   alert('Please fill in all required fields.');
+                   return; 
+               }
+           
+               try {
+                   const agendaData = {
+                       id: Date.now(),  
+                       nama_kegiatan: namaKegiatan,
+                       tanggal_kegiatan: new Date(tanggalKegiatan).toISOString(),  
+                       lokasi: lokasi,
+                       tujuan: tujuan,
+                       deskripsi: deskripsi,
+                       status_laporan: 'pending',  
+                       createdAt: new Date().toISOString(),  
+                      
+                   };
+                   await addAgenda(agendaData);
+                   toast({
+                    title:"Agenda desa",
+                    description:"Data berhasil Ditambahkan"
+                   });
+                   console.log("Sending data to server:", agendaData);
+
+                   navigate('/agenda-desa');
+           
+               } catch (error) {
+                   console.error('Failed to add agenda:', error);
+                   alert(`Failed to add agenda: ${error.message}`);
+               }
+           }
+           
+
+
+      
+     
      return (
           <SidebarLayout>
                <div className="bg-[#D9D9D98B] rounded-[15px]">
@@ -18,7 +70,6 @@ export default function TambahAgenda() {
                               <div className="flex ">
                                    <div className="flex">
                                         <HomeIcon color='#0890EA' size={16} />
-
                                    </div>
                                    <div className="ml-4 flex">
                                         <ArrowRIghtIcon color='#000000' size={10} />
@@ -37,7 +88,7 @@ export default function TambahAgenda() {
                                                   Nama Kegitan
                                              </div>
                                              <div className="w-[350px]">
-                                                  <Input placeholder='nama kegiatan' />
+                                                  <Input placeholder='nama kegiatan' value={namaKegiatan} onChange={(e) => setNamaKegiatan(e.target.value)}/>
                                              </div>
                                         </div>
                                         <div className="flex items-center mt-4">
@@ -45,7 +96,7 @@ export default function TambahAgenda() {
                                                   Hari/Tanggal
                                              </div>
                                              <div className="w-[350px]">
-                                                  <Input type='date' placeholder='nama kegiatan' />
+                                                  <Input type='date' placeholder='nama kegiatan' value={tanggalKegiatan} onChange={(e) => setTanggalKegiatan(e.target.value)}/>
                                              </div>
                                         </div>
                                         <div className="flex items-center mt-4">
@@ -53,7 +104,7 @@ export default function TambahAgenda() {
                                                   Lokasi
                                              </div>
                                              <div className="w-[350px]">
-                                                  <Input placeholder='lokasi' />
+                                                  <Input placeholder='lokasi' value={lokasi} onChange={(e) => setLokasi(e.target.value)} />
                                              </div>
                                         </div>
                                         <div className="flex items-center mt-4">
@@ -61,7 +112,7 @@ export default function TambahAgenda() {
                                                   Tujuan Kegitan
                                              </div>
                                              <div className="w-[350px]">
-                                                  <Input placeholder='tujuan kegiatan' />
+                                                  <Input placeholder='tujuan kegiatan' value={tujuan} onChange={(e) => setTujuan(e.target.value)} />
                                              </div>
                                         </div>
                                         <div className="flex items-center mt-4">
@@ -69,11 +120,15 @@ export default function TambahAgenda() {
                                                   Deskripsi
                                              </div>
                                              <div className="w-[350px]">
-                                                  <Textarea placeholder='deskripsi'>
+                                                  <Textarea placeholder='deskripsi' 
+                                                  value={deskripsi}
+                                                  onChange={(e) => setDeskripsi(e.target.value)}
+                                                  >
 
                                                   </Textarea>
                                              </div>
                                         </div>
+                                        
                                         <div className="flex justify-end mt-6">
                                              <div className="mr-6">
                                                   <Button color='white' bgColor='#F61616' rounded={5} width={142} height={30}>
@@ -81,10 +136,10 @@ export default function TambahAgenda() {
                                                   </Button>
                                              </div>
                                              <div className="">
-
-                                                  <Button color='white' bgColor='#0890EA' rounded={5} width={142} height={30}>
-                                                       Simpan
-                                                  </Button>
+                                                  <button onClick={handleSave} className='text-white rounded-[5px] w-[142px] h-[30px]'>
+                                                       simpan
+                                                  </button>
+                                                 
 
                                              </div>
                                         </div>

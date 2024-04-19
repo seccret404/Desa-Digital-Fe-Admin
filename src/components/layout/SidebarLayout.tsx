@@ -1,7 +1,7 @@
 import React from 'react'
 import Sidebar from '../ui/sidebar'
 import { ScrollArea } from '../ui/scroll';
-
+import { Toaster } from '../ui/toaster';
 export default function SidebarLayout({
      children,
 }: {
@@ -15,6 +15,7 @@ export default function SidebarLayout({
                          <ScrollArea className='h-screen pt-4'>
                               {children}
                          </ScrollArea>
+                         <Toaster/>
                     </div>
                </div>
           </>
