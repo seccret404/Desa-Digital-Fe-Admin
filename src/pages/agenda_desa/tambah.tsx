@@ -51,7 +51,6 @@ export default function TambahAgenda() {
            
                } catch (error) {
                    console.error('Failed to add agenda:', error);
-                   alert(`Failed to add agenda: ${error.message}`);
                }
            }
            

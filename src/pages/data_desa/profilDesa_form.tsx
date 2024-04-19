@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import SidebarLayout from '../../components/layout/SidebarLayout'
-import Button from '../../components/ui/button'
 import { Input } from '../../components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../components/ui/select'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs'
@@ -13,8 +12,8 @@ export default function ProfilForm() {
      const [nik, setNik] = useState('');
      const [nama, setNama] = useState('');
      const [jabatan, setJabatan] = useState('');
-     const [tahunjabatan, setTahunJabatan] = useState('');
-     const [profil, setProfil] = useState('');
+     // const [tahunjabatan, setTahunJabatan] = useState('');
+     // const [profil, setProfil] = useState('');
      const navigate = useNavigate();
      const {toast} = useToast();
 
@@ -27,7 +26,7 @@ export default function ProfilForm() {
                nik: Number(nik),
                nama: nama,
                jabatan: jabatan,
-               tahun_jabatan: tahunjabatan,
+               tahun_jabatan: "tahunjabatan",
                profil:'test'
           };
 
