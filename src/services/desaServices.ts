@@ -4,7 +4,8 @@ import { Organisasi } from '../interfaces/organisasi';
 import { Pemerintah } from '../interfaces/pemerintah';
 import { PendudukDesa } from '../interfaces/penduduk';
 
-const API_URL = 'https://desa-digital-bakend-jf9ckkwwo-seccret404s-projects.vercel.app/api';
+// const API_URL = 'https://desa-digital-bakend-jf9ckkwwo-seccret404s-projects.vercel.app/api';
+const API_URL = 'http://localhost:3000/api';
 
 export const getDusun = async (): Promise<Dusun[]> =>{
   try {
@@ -85,21 +86,21 @@ export const addAgenda = async (data: Agenda): Promise<void> => {
   }
 }
 
-export const addPenduduk = async(data: PendudukDesa): Promise<void>=>{
-  try{
-    await fetch(`${API_URL}/penduduk`,{
-      method:'POST',
-      headers:{
+export const addPenduduk = async (data: PendudukDesa): Promise<void> => {
+  try {
+    await fetch(`${API_URL}/penduduk`, {
+      method: 'POST',
+      headers: {
         'Content-Type': 'application/json',
-        
       },
       body: JSON.stringify(data),
     });
-  }catch(error){
-    console.error('Error :',error);
-    throw new Error('Gagal menambah agenda');
+  } catch (error) {
+    console.error('Error:', error);
+    throw new Error('Gagal menambah penduduk');
   }
-}
+};
+
 
 export const addPemerintah = async(data:Pemerintah): Promise<void>=>{
   try{

@@ -1,5 +1,5 @@
 export interface PendudukDesa{
-     id:number,
+   
     nik : number,
      nama : string,
      agama : string,
@@ -9,11 +9,10 @@ export interface PendudukDesa{
      jenis_kelamin : string,
      pekerjaan : string,
      kewarganegaraan : string,
-     pendidikan : string,
+     pendidikan_terakhir : string,
      status_hidup : string,
      status_perkawinan : string,
      dusun : string,
      no_kk : string,
-     createdAt : string,
      id_dusun : number
 }
