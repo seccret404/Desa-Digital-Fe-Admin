@@ -10,6 +10,6 @@ export const formatDate = (date: Date): string => {
        day = '0' + day;
      }
    
-     return `${year}-${month}-${day}`;
+     return `${day}-${month}-${year}`;
    };
    

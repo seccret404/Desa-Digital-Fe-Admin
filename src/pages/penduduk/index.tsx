@@ -6,24 +6,24 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import Button from '../../components/ui/button'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table'
 import { Link } from 'react-router-dom';
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { PendudukDesa } from '../../interfaces/penduduk';
 import { getPenduduk } from '../../services/desaServices'
 
 export default function Penduduk() {
-     const[penduduk, setPenduduk] = useState<PendudukDesa[]>([]);
+     const [penduduk, setPenduduk] = useState<PendudukDesa[]>([]);
 
-     useEffect(() =>{
-          async function fetchPenduduk(){
-               try{
+     useEffect(() => {
+          async function fetchPenduduk() {
+               try {
                     const data = await getPenduduk();
                     setPenduduk(data);
-               }catch(error){
+               } catch (error) {
                     if (error instanceof Error) {
                          console.error('error:', error.message);
-                       } else {
+                    } else {
                          console.error('An unexpected error occurred:', error);
-                       }
+                    }
                }
           }
           fetchPenduduk();
@@ -59,26 +59,28 @@ export default function Penduduk() {
                                         <TableHead className='text-center'>Aksi</TableHead>
                                    </TableHeader>
                                    <TableBody>
-                                   {penduduk.map((p, index) => (
-                                    <TableRow key={p.id}>
-                                        <TableCell>{index + 1}</TableCell>
-                                        <TableCell>{p.nama}</TableCell>
-                                        <TableCell>{p.nik}</TableCell>
-                                        <TableCell>{p.alamat}</TableCell>
-                                        <TableCell>{p.status_perkawinan}</TableCell>
-                                        <TableCell>
-                                             <div className="flex justify-center ml-4 mr-4">
+                                        {penduduk.map((p, index) => (
+                                             <TableRow key={p.id}>
+                                                  <TableCell>{index + 1}</TableCell>
+                                                  <TableCell>{p.nama}</TableCell>
+                                                  <TableCell>{p.nik}</TableCell>
+                                                  <TableCell>{p.alamat}</TableCell>
+                                                  <TableCell>{p.status_perkawinan}</TableCell>
+                                                  <TableCell>
+                                                       <div className="flex justify-center ml-4 mr-4">
 
-                                                  <div className="flex justify-center text-[#0890EA] text-[12px] bg-[#0890EA60] w-[70px] h-[23px] text-center rounded-[5px]">
-                                                       <Button>
-                                                            Edit
-                                                       </Button>
-                                                  </div>
-                                             </div>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                                       
+                                                            <div className="flex justify-center text-[#0890EA] text-[12px] bg-[#0890EA60] w-[70px] h-[23px] text-center rounded-[5px]">
+                                                                 <Button>
+                                                                      <Link to={`/edit-penduduk/${p.id}`} >
+                                                                           Edit
+                                                                      </Link>
+                                                                 </Button>
+                                                            </div>
+                                                       </div>
+                                                  </TableCell>
+                                             </TableRow>
+                                        ))}
+
                                    </TableBody>
                               </Table>
                          </div>

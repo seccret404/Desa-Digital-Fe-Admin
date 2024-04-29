@@ -6,7 +6,6 @@ import { addPenduduk } from '../../services/desaServices'
 import { SetStateAction, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useToast } from '../../components/ui/use-toast'
-import { formatDate } from '../../utils/format'
 
 export default function TambahPenduduk() {
      const [nik, setNik] = useState('');
@@ -27,17 +26,22 @@ export default function TambahPenduduk() {
      const { toast } = useToast();
 
      const navigate = useNavigate();
-
+     const formatDateForBackend = (date: Date): string => {
+          const isoString = date.toISOString();
+          const parts = isoString.split('T')[0].split('-');
+          const [year, month, day] = parts;
+          return `${year}-${month}-${day}`;
+      };
+      
      const handleSubmit = async (event: { preventDefault: () => void }) => {
           event.preventDefault();
 
           const pendudukData = {
-
                nik: Number(nik),
                nama: nama,
                agama: agama,
                alamat: alamat,
-               tanggal_lahir: formatDate(tanggalLahir),
+               tanggal_lahir: formatDateForBackend(tanggalLahir),
                tempat_lahir: tempatLahir,
                jenis_kelamin: jenisKelamin,
                pekerjaan: pekerjaan,
@@ -45,9 +49,8 @@ export default function TambahPenduduk() {
                pendidikan_terakhir: pendidikan_terakhir,
                status_hidup: statusHidup,
                status_perkawinan: statusPerkawinan,
-               dusun: dusun,
-               no_kk: noKK,
-
+               dusun: 'dg',
+               no_kk: Number(noKK),
                id_dusun: 2
           };
 
@@ -63,8 +66,6 @@ export default function TambahPenduduk() {
           } catch (error) {
 
                console.error('Failed to add agenda:', error);
-
-
                toast({
                     title: "Data Penduduk",
                     description: "Data Gagal Ditambah!",
@@ -134,7 +135,8 @@ export default function TambahPenduduk() {
 
                                                        <select value={agama} onChange={handleChangeAgama} className='w-[416px] h-[40px] font-bold border border-gray-300 rounded-md px-2'>
                                                      
-                                                            <option value="Kristen Protestan" className=''>Kristen Protestan</option>
+                                                       <option>Pilih Agama</option>
+                                                       <option value="Kristen Protestan">Kristen Protestan</option>
                                                             <option value="Kristen Khatolik">Kristen Khatolik</option>
                                                             <option value="Islam">Islam</option>
                                                             <option value="Budha">Budha</option>
@@ -174,6 +176,7 @@ export default function TambahPenduduk() {
                                                   </div>
                                                   <div className="">
                                                   <select value={statusHidup} onChange={handleChangeSh} className='w-[416px] h-[40px] font-bold border border-gray-300 rounded-md px-2'>
+                                                     <option >Pilih Status</option>
                                                      <option value="Hidup">Hidup</option>
                                                      <option value="Wafat">Wafat</option>
                                                 </select>
@@ -203,6 +206,7 @@ export default function TambahPenduduk() {
                                                   </div>
                                                   <div className="">
                                                   <select value={statusHidup} onChange={handleJk} className='w-[416px] h-[40px] font-bold border border-gray-300 rounded-md px-2'>
+                                                     <option>Pilih Jenis</option>
                                                      <option value="Laki-laki">Laki-laki</option>
                                                      <option value="Perempuan">Perempuan</option>
                                                 </select>
@@ -214,6 +218,7 @@ export default function TambahPenduduk() {
                                                   </div>
                                                   <div className="">
                                                   <select value={statusPerkawinan} onChange={handleKawin} className='w-[416px] h-[40px] font-bold border border-gray-300 rounded-md px-2'>
+                                                     <option>Pilih Status</option>
                                                      <option value="Kawin">Kawin</option>
                                                      <option value="Belum Kawin">Belum Kawin</option>
                                                      <option value="Cerai Hidup">Cerai Hidup</option>
@@ -240,6 +245,7 @@ export default function TambahPenduduk() {
                                                   </div>
                                                   <div className="">
                                                   <select value={kewarganegaraan} onChange={handleWarga} className='w-[416px] h-[40px] font-bold border border-gray-300 rounded-md px-2'>
+                                                    <option >Pilih Kewarganegaraan</option>
                                                     <option value="WNI">Warga Negara Indonesia</option>
                                                     <option value="WNA">Warga Negara Asing</option>
                                                 </select>
@@ -251,6 +257,7 @@ export default function TambahPenduduk() {
                                                   </div>
                                                   <div className="">
                                                   <select value={pendidikan_terakhir} onChange={handlePendidikan} className='w-[416px] h-[40px] font-bold border border-gray-300 rounded-md px-2'>
+                                                    <option >Pilih Pendidikan</option>
                                                     <option value="SD">Sekolah Dasar</option>
                                                     <option value="SMP">Sekolah Mengengah Pertama</option>
                                                     <option value="SMA">Sekolah Mengengah Atas</option>
@@ -265,6 +272,7 @@ export default function TambahPenduduk() {
                                                   </div>
                                                   <div className="">
                                                   <select value={dusun} onChange={handleDusun} className='w-[416px] h-[40px] font-bold border border-gray-300 rounded-md px-2'>
+                                                    <option >Pilih Dusun</option>
                                                     <option value="Dusun Pagaran">Dusun Pagaran</option>
                                                 </select>
                                                   </div>

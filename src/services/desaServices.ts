@@ -118,3 +118,34 @@ export const addPemerintah = async(data:Pemerintah): Promise<void>=>{
   }
 }
 
+export const getPendudukById = async (id: string): Promise<PendudukDesa> => {
+  try {
+    const response = await fetch(`${API_URL}/penduduk/${id}`, {
+      headers: {
+        'Origin': 'http://localhost:3000'
+      }
+    });
+    if (!response.ok) throw new Error(response.statusText);
+    const data = await response.json();
+    return data as PendudukDesa;
+  } catch (error) {
+    console.error('Error:', error);
+    throw new Error('Gagal mendapatkan data penduduk');
+  }
+};
+
+export const updatePenduduk = async (id: string, data: PendudukDesa): Promise<void> => {
+  try {
+    await fetch(`${API_URL}/penduduk/${id}`, {
+      method: 'PUT', 
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+  } catch (error) {
+    console.error('Error:', error);
+    throw new Error('Gagal memperbarui penduduk');
+  }
+};
+

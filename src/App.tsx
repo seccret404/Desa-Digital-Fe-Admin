@@ -18,6 +18,7 @@ import ApbdesPage from './pages/apbdes'
 import AddApbdes from './pages/apbdes/tambah_apbdes'
 import OrganisasiPage from './pages/organisasi'
 import AddOrganisasi from './pages/organisasi/tambahorganisasi'
+import EditPenduduk from './pages/penduduk/edit'
 export default function App() {
   return (
     <Router>
@@ -25,6 +26,7 @@ export default function App() {
         <Route path='/' element={<Dashboard />} />
         <Route path='/data-penduduk' element={<Penduduk />} />
         <Route path='/tambah-penduduk' element={<TambahPenduduk />} />
+        <Route path='/edit-penduduk/:id' element={<EditPenduduk />} />
         <Route path='/umkm' element={<UmkmPage />} />
         <Route path='/tambah-umkm' element={<AddUmkm />} />
         <Route path='/detail-umkm' element={<DetailUmkm />} />
