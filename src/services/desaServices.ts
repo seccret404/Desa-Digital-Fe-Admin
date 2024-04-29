@@ -117,7 +117,6 @@ export const addPemerintah = async(data:Pemerintah): Promise<void>=>{
     throw new Error('Gagal Menambah Pemerintah');
   }
 }
-
 export const getPendudukById = async (id: string): Promise<PendudukDesa> => {
   try {
     const response = await fetch(`${API_URL}/penduduk/${id}`, {
@@ -148,4 +147,3 @@ export const updatePenduduk = async (id: string, data: PendudukDesa): Promise<vo
     throw new Error('Gagal memperbarui penduduk');
   }
 };
-
