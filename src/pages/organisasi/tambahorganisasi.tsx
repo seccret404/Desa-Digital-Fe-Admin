@@ -15,9 +15,7 @@ export default function AddOrganisasi() {
                setSelectedFile(e.target.files[0]);
            }
      }
-     const handleEditorChange = (event) => {
-          //
-        };
+    
      return (
           <SidebarLayout>
                <div className="bg-[#D9D9D98B] rounded-[15px]">

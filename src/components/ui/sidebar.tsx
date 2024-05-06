@@ -60,12 +60,17 @@ export default function Sidebar() {
                               <SubMenu label='Data Desa'>
                                    <MenuItem component={<Link to='/data-desa' />} icon={<DataDesaIcon size={18} color='black' />}>Profil Desa</MenuItem>
                                    <MenuItem component={<Link to='/dusun' />} icon={<DataDesaIcon size={18} color='black' />}>Dusun</MenuItem>
+                                   <MenuItem component={<Link to='/pemerintahan' />} icon={<DataDesaIcon size={18} color='black' />}>Struktur Pemerintahan</MenuItem>
                               </SubMenu>
                               <SubMenu label='APBDes'>
                                    <MenuItem component={<Link to="/apbdes" />}>Data APBDes</MenuItem>
                                    {/* <MenuItem component={<Link to='/wisata' />}>Objek Wisata</MenuItem> */}
                               </SubMenu>
-                             
+                              <SubMenu label="Data Bantuan">
+                                   <MenuItem component={<Link to='/bantuan' />} >Data Penerima</MenuItem>
+                                   <MenuItem component={<Link to='/tambah-bantuan' />} >Daftar Bantuan</MenuItem>
+
+                              </SubMenu>
                               <SubMenu label="Informasi Publik">
                                    <MenuItem component={<Link to='/pengumuman' />} >Pengumuman</MenuItem>
                                    <MenuItem component={<Link to='/berita' />} >Berita</MenuItem>
