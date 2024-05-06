@@ -5,7 +5,8 @@ import SidebarLayout from '../../components/layout/SidebarLayout'
 import Button from '../../components/ui/button'
 import { Input } from '../../components/ui/input'
 import { ChangeEvent, useState } from 'react'
-
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 export default function AddOrganisasi() {
      const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
@@ -14,6 +15,9 @@ export default function AddOrganisasi() {
                setSelectedFile(e.target.files[0]);
            }
      }
+     const handleEditorChange = (event) => {
+          //
+        };
      return (
           <SidebarLayout>
                <div className="bg-[#D9D9D98B] rounded-[15px]">
@@ -137,6 +141,15 @@ export default function AddOrganisasi() {
                                         </div>
 
                                    </div>
+                                   <div className="flex items-center mt-2 pl-6 pr-6 mb-8">
+                <div className="w-full">
+                  <div className="">Deskripsi</div>
+                  <CKEditor
+                    editor={ClassicEditor}
+                   
+                  />
+                </div>
+              </div>
                                    <div className="flex justify-end">
                                         <div className="mr-8">
                                              <Button bgColor='#F61616' rounded={5} width={128} height={34} color='white'>

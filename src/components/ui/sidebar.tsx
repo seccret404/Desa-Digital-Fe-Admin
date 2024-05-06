@@ -8,8 +8,6 @@ import AddUserIcon from '../icon/adduserIcon';
 import AgendaIcon from '../icon/agendaIcon';
 import AddAgendaIcon from '../icon/addagendaIcon';
 import DataDesaIcon from '../icon/datadesaIcon';
-import PengumumanIcon from '../icon/pengumumanIcon';
-import AddPengumumanIcon from '../icon/addpengumumanIcon';
 export default function Sidebar() {
 
      const [isHovered, setIsHovered] = useState(false);
@@ -61,23 +59,23 @@ export default function Sidebar() {
                               </SubMenu>
                               <SubMenu label='Data Desa'>
                                    <MenuItem component={<Link to='/data-desa' />} icon={<DataDesaIcon size={18} color='black' />}>Profil Desa</MenuItem>
+                                   <MenuItem component={<Link to='/dusun' />} icon={<DataDesaIcon size={18} color='black' />}>Dusun</MenuItem>
                               </SubMenu>
                               <SubMenu label='APBDes'>
                                    <MenuItem component={<Link to="/apbdes" />}>Data APBDes</MenuItem>
                                    {/* <MenuItem component={<Link to='/wisata' />}>Objek Wisata</MenuItem> */}
                               </SubMenu>
-                              {/* <SubMenu label='Layanan Surat'>
-                                   <MenuItem>Surat Keterangan Usaha</MenuItem>
-                                   <MenuItem>Pengaturan</MenuItem>
-                              </SubMenu> */}
-                              <SubMenu label="Organisasi Desa">
-                                   <MenuItem component={<Link to='/organisasi' />} >Data Organisasi</MenuItem>
+                             
+                              <SubMenu label="Informasi Publik">
+                                   <MenuItem component={<Link to='/pengumuman' />} >Pengumuman</MenuItem>
+                                   <MenuItem component={<Link to='/berita' />} >Berita</MenuItem>
 
                               </SubMenu>
-                              <SubMenu label='Pengumuman'>
-                                   <MenuItem icon={<PengumumanIcon size={18} color='black' />}>Riwayat Pengumuman</MenuItem>
-                                   <MenuItem icon={<AddPengumumanIcon size={18} color='black' />}>Tambah Pengumuman Pengumuman  </MenuItem>
+                              <SubMenu label='Organisasi Desa '>
+                                   <MenuItem component={<Link to='/organisasi' />} icon={<AgendaIcon size={18} color='black' />}>Data Organisasi</MenuItem>
+                                   <MenuItem component={<Link to="/tambah-organisasi" />} icon={<AddAgendaIcon size={18} color='black' />}>Tambah Organisasi Desa</MenuItem>
                               </SubMenu>
+                             
                               <MenuItem disabled className='mt-6'></MenuItem>
                               <MenuItem className='text-center rounded-[5px] bg-[#fdcece] text-[#f84444]'>Keluar</MenuItem>
                          </Menu>

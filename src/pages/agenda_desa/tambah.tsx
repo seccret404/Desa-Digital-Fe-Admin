@@ -2,7 +2,6 @@
 import SidebarLayout from '../../components/layout/SidebarLayout'
 import { Input } from '../../components/ui/input'
 import { Textarea } from '../../components/ui/textarea'
-import Button from '../../components/ui/button'
 import HomeIcon from '../../components/icon/homeIcon'
 import ArrowRIghtIcon from '../../components/icon/arrowRightIcon'
 import { useState } from 'react'
@@ -12,34 +11,33 @@ import { useToast } from '../../components/ui/use-toast'
 export default function TambahAgenda() {
    
           const [namaKegiatan, setNamaKegiatan] = useState('');
-          const [tanggalKegiatan, setTanggalKegiatan] = useState('');
+          const [tanggalKegiatan, setTanggalKegiatan] = useState<Date>(new Date());
           const [lokasi, setLokasi] = useState('');
           const [tujuan, setTujuan] = useState('');
           const [deskripsi, setDeskripsi] = useState('');
           const navigate = useNavigate();
           const {toast }= useToast();
 
+          const formatDateForBackend = (date: Date): string => {
+               const isoString = date.toISOString();
+               const parts = isoString.split('T')[0].split('-');
+               const [year, month, day] = parts;
+               return `${year}-${month}-${day}`;
+           };
           const handleSave = async (event: { preventDefault: () => void }) => {
                event.preventDefault();
-           
-               // validasi 
-               if (!namaKegiatan || !tanggalKegiatan || !lokasi || !tujuan || !deskripsi) {
-                   alert('Please fill in all required fields.');
-                   return; 
+               const agendaData = {
+
+                    nama_kegiatan:namaKegiatan,
+                    tanggal_kegiatan:formatDateForBackend(tanggalKegiatan),  
+                    lokasi: lokasi,
+                    tujuan_kegiatan: tujuan,
+                    deskripsi_kegiatan: deskripsi,
+                    status_laporan: 'Pending',  
+                    
                }
-           
                try {
-                   const agendaData = {
-                       id: Date.now(),  
-                       nama_kegiatan: namaKegiatan,
-                       tanggal_kegiatan: new Date(tanggalKegiatan).toISOString(),  
-                       lokasi: lokasi,
-                       tujuan: tujuan,
-                       deskripsi: deskripsi,
-                       status_laporan: 'pending',  
-                       createdAt: new Date().toISOString(),  
-                      
-                   };
+                  
                    await addAgenda(agendaData);
                    toast({
                     title:"Agenda desa",
@@ -55,7 +53,9 @@ export default function TambahAgenda() {
            }
            
 
-
+           const back = () =>{
+               navigate('/agenda-desa')
+           }
       
      
      return (
@@ -95,7 +95,7 @@ export default function TambahAgenda() {
                                                   Hari/Tanggal
                                              </div>
                                              <div className="w-[350px]">
-                                                  <Input type='date' placeholder='nama kegiatan' value={tanggalKegiatan} onChange={(e) => setTanggalKegiatan(e.target.value)}/>
+                                                  <Input type='date' placeholder='nama kegiatan' value={tanggalKegiatan.toISOString().split('T')[0]} onChange={(e) => setTanggalKegiatan(new Date(e.target.value))}/>
                                              </div>
                                         </div>
                                         <div className="flex items-center mt-4">
@@ -130,12 +130,12 @@ export default function TambahAgenda() {
                                         
                                         <div className="flex justify-end mt-6">
                                              <div className="mr-6">
-                                                  <Button color='white' bgColor='#F61616' rounded={5} width={142} height={30}>
+                                             <button onClick={back} className='text-white bg-[#F61616] rounded-[5px] w-[142px] h-[30px]'>
                                                        Batal
-                                                  </Button>
+                                                  </button>
                                              </div>
                                              <div className="">
-                                                  <button onClick={handleSave} className='text-white rounded-[5px] w-[142px] h-[30px]'>
+                                                  <button onClick={handleSave}  className='text-white bg-[#0890EA] rounded-[5px] w-[142px] h-[30px]'>
                                                        simpan
                                                   </button>
                                                  

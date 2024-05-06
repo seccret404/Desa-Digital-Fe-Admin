@@ -1,108 +1,106 @@
-
-import HomeIcon from '../../components/icon/homeIcon'
-import ArrowRIghtIcon from '../../components/icon/arrowRightIcon'
-import SidebarLayout from '../../components/layout/SidebarLayout'
-import Button from '../../components/ui/button'
-import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { getLaporanById, getAgenda } from '../../services/desaServices';
+import SidebarLayout from '../../components/layout/SidebarLayout';
+import HomeIcon from '../../components/icon/homeIcon';
+import ArrowRightIcon from '../../components/icon/arrowRightIcon';
+import { Laporan } from '../../interfaces/laporan';
+import { Agenda } from '../../interfaces/agenda';
 
 export default function DetailLaporan() {
-     return (
-          <SidebarLayout>
-               <div className="bg-[#D9D9D98B] rounded-[15px]">
-                    <div className="p-8">
-                         <div className="bg-white flex justify-between p-4 rounded-[7px]">
-                              <div className="text-[16px]">
-                                   Form Tambah Laporan
-                              </div>
-                              <div className="flex ">
-                                   <div className="flex">
-                                        <HomeIcon color='#0890EA' size={16} />
+  const { id } = useParams<{ id: string }>(); // Ambil id dari parameter URL
+  const [laporan, setLaporan] = useState<Laporan | null>(null); // State untuk menyimpan data laporan
+  const [namaKegiatan, setNamaKegiatan] = useState<string>(''); // State untuk menyimpan nama kegiatan
 
-                                   </div>
-                                   <div className="ml-4 flex">
-                                        <ArrowRIghtIcon color='#000000' size={10} />
-                                   </div>
-                                   <div className="text-[#D9D9D9] text-[16px] ml-4">
-                                        Tambah Lapooran
-                                   </div>
-                              </div>
-                         </div>
-                         <div className="flex justify-end mt-4">
-                              <Button width={249} height={47} color='white' bgColor='#0890EA' rounded={5} >
-                                   <Link to='/laporan-agenda'>
-                                        Tambah Lporan
-                                   </Link>
-                              </Button>
-                         </div>
-                         <div className="bg-white rounded-[15px] mt-6 ">
-                              <div className="p-6 mb-6" >
-                                   <div className="text-[20px] font-medium">
-                                        Kegiatan Natal
-                                   </div>
-                                   <div className="">
-                                        <div className="text-[18px] font-medium mt-8">
-                                             Dokumentasi
-                                        </div>
-                                        <div className="grid grid-cols-4 gap-4">
-                                             {[...Array(4)].map((_, index) => (
-                                                  <div className="" key={index}>
-                                                       <img src="assets/laporan.png" alt="" />
-                                                  </div>
-                                             ))}
-                                        </div>
-                                   </div>
-                                   <div className="">
-                                        <div className="text-[18px] font-medium mt-8">
-                                             Hari/Tanggal
-                                        </div>
-                                        <div className="">
-                                             Sabtu 13 Maret 2023
-                                        </div>
-                                   </div>
-                                   <div className="">
-                                        <div className="text-[18px] font-medium mt-8">
-                                             Jumlah Peserta
-                                        </div>
-                                        <div className="">
-                                             134 orang
-                                        </div>
-                                   </div>
-                                   <div className="">
-                                        <div className="text-[18px] font-medium mt-8">
-                                             Lokasi
-                                        </div>
-                                        <div className="">
-                                             Aula Desa
-                                        </div>
-                                   </div>
-                                   <div className="">
-                                        <div className="text-[18px] font-medium mt-8">
-                                             Anggaran Desa
-                                        </div>
-                                        <div className="">
-                                             Rp. 5.000.000
-                                        </div>
-                                   </div>
-                                   <div className="">
-                                        <div className="text-[18px] font-medium">
-                                             Donasi
-                                        </div>
-                                        <div className="">
-                                             Rp. 5.000.000
-                                        </div>
-                                   </div>
-                                   <div className="">
-                                        <div className="text-[18px] font-medium mt-8">
-                                             Status Kegiatan
-                                        </div>
-                                        <div className="">
-                                             Selesai
-                                        </div>
-                                   </div>
-                              </div>
-                         </div>
+  useEffect(() => {
+    async function fetchLaporan() {
+      try {
+        const data = await getLaporanById(id); // Ambil data laporan berdasarkan id
+        setLaporan(data);
+      } catch (error) {
+        console.error('Error fetching laporan:', error);
+      }
+    }
+    fetchLaporan();
+  }, [id]); // Panggil fetchLaporan saat id berubah
+
+  useEffect(() => {
+    async function fetchAgendaData() {
+      try {
+        const agendaData = await getAgenda(); // Ambil semua data agenda
+        const agendaTerkait = agendaData.find(agenda => agenda.id === laporan?.id_agenda); // Cari agenda berdasarkan id_agenda dalam laporan
+        if (agendaTerkait) {
+          setNamaKegiatan(agendaTerkait.nama_kegiatan); // Set nama kegiatan jika agenda terkait ditemukan
+        }
+      } catch (error) {
+        console.error('Error fetching agenda data:', error);
+      }
+    }
+    if (laporan) {
+      fetchAgendaData();
+    }
+  }, [laporan]); // Panggil fetchAgendaData saat laporan berubah
+
+  if (!laporan || !namaKegiatan) {
+    return <div>Loading...</div>; // Tampilkan pesan loading jika data laporan atau nama kegiatan belum tersedia
+  }
+
+  return (
+    <SidebarLayout>
+      <div className="bg-[#D9D9D98B] rounded-[15px]">
+        <div className="p-8">
+          <div className="bg-white flex justify-between p-4 rounded-[7px]">
+            <div className="text-[16px]">Detail Laporan</div>
+            <div className="flex">
+              <HomeIcon color="#0890EA" size={16} />
+              <div className="ml-4 flex">
+                <ArrowRightIcon color="#000000" size={10} />
+              </div>
+              <div className="text-[#D9D9D9] text-[16px] ml-4">Detail Laporan</div>
+            </div>
+          </div>
+          <div className="flex justify-end mt-4"></div>
+          <div className="bg-white rounded-[15px] mt-6 ">
+            <div className="p-6 mb-6">
+              <div className="text-[20px] font-medium">{namaKegiatan}</div>
+              <div>
+                <div className="text-[18px] font-medium mt-8">Dokumentasi</div>
+                <div className="grid grid-cols-4 gap-4">
+                  {/* {laporan.dokumentasi.map((foto, index) => (
+                    <div key={index}>
+                      <img src={foto} alt={`Dokumentasi ${index}`} />
                     </div>
-               </div>
-          </SidebarLayout>
-     )
+                  ))} */}
+                </div>
+              </div>
+              <div>
+                <div className="text-[18px] font-medium mt-8">Hari/Tanggal</div>
+                <div>{new Date(laporan.tgl_realisasi).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: '2-digit' })}</div>
+              </div>
+              <div>
+                <div className="text-[18px] font-medium mt-8">Jumlah Peserta</div>
+                <div>{laporan.jumlah_peserta} orang</div>
+              </div>
+              <div>
+                <div className="text-[18px] font-medium mt-8">Lokasi</div>
+                <div>{laporan.lokasi_kegiatan}</div>
+              </div>
+              <div>
+                <div className="text-[18px] font-medium mt-8">Anggaran Desa</div>
+                <div>Rp. {laporan.anggaran_desa}</div>
+              </div>
+              <div>
+                <div className="text-[18px] font-medium mt-8">Donasi</div>
+                <div>Rp. {laporan.donasi}</div>
+              </div>
+              <div>
+                <div className="text-[18px] font-medium mt-8">Status Kegiatan</div>
+                <div>{laporan.status_kegiatan}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </SidebarLayout>
+  );
 }

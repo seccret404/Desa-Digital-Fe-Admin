@@ -5,7 +5,6 @@ interface AddPengumumanProps {
      color?: string
 }
 
-const AddPengumumanIcon: FC<AddPengumumanProps> = ({ size, color }) => (
      <svg style={{
           width: size ? `${size}px` : '100px',
           height: 'auto'
