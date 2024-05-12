@@ -17,7 +17,7 @@ export default function TambahDaftarBantuan() {
                     <div className="p-8">
                          <div className="bg-white flex justify-between p-4 rounded-[7px]">
                               <div className="text-[16px]">
-                                   Form Tambah Dusun
+                                   Form Tambah bantuan
                               </div>
                               <div className="flex ">
                                    <div className="flex">
@@ -27,11 +27,12 @@ export default function TambahDaftarBantuan() {
                                         <ArrowRIghtIcon color='#000000' size={10} />
                                    </div>
                                    <div className="text-[#D9D9D9] text-[16px] ml-4">
-                                        Tambah Dusun
+                                        Tambah Bantuan
                                    </div>
                               </div>
                          </div>
-                         <div className="bg-white rounded-[15px] mt-6 flex justify-center">
+                       <div className="flex justify-center items-center">
+                       <div className="bg-white w-[600px] rounded-[15px] mt-6 flex justify-center">
                               <div className="p-2 mb-6" >
                                    <form action="">
 
@@ -82,6 +83,7 @@ export default function TambahDaftarBantuan() {
                                    </form>
                               </div>
                          </div>
+                       </div>
                     </div>
                </div>
           </SidebarLayout >

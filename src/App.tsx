@@ -30,6 +30,7 @@ import EditAgenda from './pages/agenda_desa/editAgenda'
 import BantuanPage from './pages/banntuan'
 import DaftarBantuanPage from './pages/banntuan/daftar_bantuan'
 import TambahDaftarBantuan from './pages/banntuan/tambah_bantuan'
+import TambahPenerimaBantuan from './pages/banntuan/tambah_penerima'
 
 export default function App() {
   return (
@@ -65,6 +66,7 @@ export default function App() {
         <Route path='/bantuan' element={<BantuanPage/>} />
         <Route path='/tambah-bantuan' element={<DaftarBantuanPage/>} />
         <Route path='/tambah-daftar' element={<TambahDaftarBantuan/>} />
+        <Route path='/tambah-penerima' element={<TambahPenerimaBantuan/>} />
 
       </Routes> 
     </Router>
