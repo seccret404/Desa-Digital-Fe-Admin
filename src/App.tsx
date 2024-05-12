@@ -31,6 +31,10 @@ import BantuanPage from './pages/banntuan'
 import DaftarBantuanPage from './pages/banntuan/daftar_bantuan'
 import TambahDaftarBantuan from './pages/banntuan/tambah_bantuan'
 import TambahPenerimaBantuan from './pages/banntuan/tambah_penerima'
+import Pemerintahan from './pages/data_desa/pemerintahan'
+import TambahPemerintah from './pages/data_desa/pemerintahan/tambah'
+import TugasWewenang from './pages/data_desa/TugasWewenang'
+import TambahTugasWewenang from './pages/data_desa/TugasWewenang/tambah'
 
 export default function App() {
   return (
@@ -51,6 +55,10 @@ export default function App() {
         <Route path='detail-wisata' element={<DetailWisata/>}/>
         <Route path='/data-desa' element={<DataDesa/>}/>
         <Route path='/profil-desa' element={<ProfilForm/>}/>
+        <Route path='/pemerintahan' element={<Pemerintahan/>}/>
+        <Route path='/tambah-pemerintah' element={<TambahPemerintah/>}/>
+        <Route path='/tugas-wewenang' element={<TugasWewenang/>}/>
+        <Route path='/tambah-tugas-wewenang' element={<TambahTugasWewenang/>}/>
         <Route path='/agenda-desa' element={<AgendaPage/>}/>
         <Route path='/tambah-agenda' element={<TambahAgenda/>}/>
         <Route path='/edit-agenda/:id' element={<EditAgenda/>}/>

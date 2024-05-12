@@ -1,539 +1,233 @@
-import { useState } from 'react'
-import SidebarLayout from '../../components/layout/SidebarLayout'
-import { Input } from '../../components/ui/input'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../components/ui/select'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs'
-import { Textarea } from '../../components/ui/textarea'
-import { addPemerintah } from '../../services/desaServices'
-import { useNavigate } from 'react-router-dom'
-import { useToast } from '../../components/ui/use-toast'
+import React, { useState, useEffect } from 'react';
+import SidebarLayout from '../../components/layout/SidebarLayout';
+import { Input } from '../../components/ui/input';
+import HomeIcon from '../../components/icon/homeIcon';
+import ArrowRightIcon from '../../components/icon/arrowRightIcon';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
+interface Location {
+  id: string;
+  nama: string;
+}
 
 export default function ProfilForm() {
-     const [nik, setNik] = useState('');
-     const [nama, setNama] = useState('');
-     const [jabatan, setJabatan] = useState('');
-     // const [tahunjabatan, setTahunJabatan] = useState('');
-     // const [profil, setProfil] = useState('');
-     const navigate = useNavigate();
-     const {toast} = useToast();
+  const [provinsiList, setProvinsiList] = useState<Location[]>([]);
+  const [kabupatenList, setKabupatenList] = useState<Location[]>([]);
+  const [kecamatanList, setKecamatanList] = useState<Location[]>([]);
 
+  useEffect(() => {
+    // Fetch provinsi data
+    fetch('https://ibnux.github.io/data-indonesia/provinsi.json')
+      .then(response => response.json())
+      .then(data => setProvinsiList(data));
+  }, []);
 
-     const handleSubmit = async(event: { preventDefault: () => void }) =>{
-          event.preventDefault();
+  const handleProvinsiChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const provinsiId = e.target.value;
+    // Fetch kabupaten data based on selected provinsi
+    fetch(`https://ibnux.github.io/data-indonesia/kabupaten/${provinsiId}.json`)
+      .then(response => response.json())
+      .then(data => setKabupatenList(data));
+  };
 
-          const pemerintahData = {
-               id: Date.now(),
-               nik: Number(nik),
-               nama: nama,
-               jabatan: jabatan,
-               tahun_jabatan: "tahunjabatan",
-               profil:'test'
-          };
+  const handleKabupatenChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const kabupatenId = e.target.value;
+    // Fetch kecamatan data based on selected kabupaten
+    fetch(`https://ibnux.github.io/data-indonesia/kecamatan/${kabupatenId}.json`)
+      .then(response => response.json())
+      .then(data => setKecamatanList(data));
+  };
 
-          
-          try {
-               await addPemerintah(pemerintahData);
-               toast({
-                    title: "Profil Desa",
-                    description: "Data berhasil Ditambah!"
-               });
-               console.log("Sending data to server:", pemerintahData);
-               navigate('/data-desa');
-
-          } catch (error) {
-              
-                    console.error('Failed to add agenda:', error);
-                    
-               
-               toast({
-                    title: "Profil Desa",
-                    description: "Data Gagal Ditambah!",
-
-               });
-          }
-     }
-     return (
-          <SidebarLayout>
-               <div className="bg-[#D9D9D98B] rounded-[15px]">
-                    <div className="p-8">
-                         <div className="bg-white rounded-[15px] mt-6">
-                              <div className="p-4 text-[20px]">
-                                   Data Desa
-                              </div>
-                         </div>
-                         <div className="bg-white rounded-[15px] mt-6">
-                              <div className=" flex justify-center items-center">
-                                   <form action="">
-                                        <Tabs defaultValue="profil" className="">
-
-                                             <TabsContent value="profil">
-                                                  <div className="p-2 w-[600px]">
-                                                       <div className="flex mt-4 items-center">
-                                                            <div className="w-[150px]">
-                                                                 Nama Desa
-                                                            </div>
-                                                            <div className="w-[500px]">
-                                                                 <Input placeholder='Nama desa' />
-                                                            </div>
-                                                       </div>
-                                                       <div className="flex mt-4 items-center">
-                                                            <div className="w-[150px]">
-                                                                 Alamat Desa
-                                                            </div>
-                                                            <div className="w-[500px]">
-                                                                 <Input placeholder='Alamat Desa' />
-                                                            </div>
-                                                       </div>
-                                                       <div className="flex mt-4 items-center">
-                                                            <div className="w-[150px]">
-                                                                 Kecamatan
-                                                            </div>
-                                                            <div className="w-[500px]">
-                                                                 <Input placeholder='Kecamatan' />
-                                                            </div>
-                                                       </div>
-                                                       <div className="flex mt-4 items-center">
-                                                            <div className="w-[150px]">
-                                                                 Kabupaten
-                                                            </div>
-                                                            <div className="w-[500px]">
-                                                                 <Input placeholder='Kabupaten' />
-                                                            </div>
-                                                       </div>
-                                                       <div className="flex mt-4 items-center">
-                                                            <div className="w-[150px]">
-                                                                 Profil Desa
-                                                            </div>
-                                                            <div className="w-[500px]">
-                                                                 <Textarea placeholder='Profil desa'>
-                                                                 </Textarea>
-                                                            </div>
-                                                       </div>
-                                                       <div className="flex mt-4 mt-4 items-center">
-                                                            <div className="mb-2 text-[16px] w-[150px]">
-                                                                 Gambar Desa
-                                                            </div>
-                                                            <div className="relative w-[500px]">
-
-                                                                 <label htmlFor="fileInput" className="cursor-pointer flex">
-                                                                      <Input className='w-[362px] h-[49px]' id="fileInput" placeholder='gambar desa' />
-                                                                      <span className="ml-1 bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600 transition duration-300 ease-in-out cursor-pointer">
-                                                                           Pilih File
-                                                                      </span>
-
-                                                                 </label>
-                                                                 <input className="absolute inset-0 w-[416px] h-[49px] opacity-0" type="file" placeholder="   " />
-                                                            </div>
-                                                       </div>
-                                                  </div>
-                                                  <div className="mt-4  mb-8 flex justify-end">
-                                                       <TabsList>
-                                                            <TabsTrigger value="jabatan" hidden={true} className='bg-[#0890EA] w-[150px] h-[40px] text-white'>Selanjutnya</TabsTrigger>
-                                                       </TabsList>
-                                                  </div>
-                                             </TabsContent>
-                                             <TabsContent value="jabatan">
-                                                  <div className="">
-                                                       <div className="">
-                                                            <div className=" bg-[#40A2E3] w-[250px] h-[40px] flex items-center justify-center rounded-[5px] text-[white] font-medium">
-                                                                 Kepala Desa
-                                                            </div>
-                                                            <div className="grid grid-cols-3 gap-4 p-2">
-                                                                 {/* kepala desa */}
-                                                                 <div className="">
-                                                                      <div className="">
-                                                                           Nama
-                                                                      </div>
-                                                                      <Input placeholder='Nama Kepala Desa' value={nama} onChange={(e) => setNama(e.target.value)} />
-                                                                 </div>
-                                                                 <div className="">
-                                                                      <div className="" >
-                                                                           NIK
-                                                                      </div>
-                                                                      <Input placeholder='Nik' value={nik}  onChange={(e) => setNik(e.target.value)} />
-                                                                 </div>
-                                                                 <div className="">
-                                                                      <div className="">
-                                                                           Jabatan
-                                                                      </div>
-                                                                      <Select>
-                                                                           <SelectTrigger className="w-[270px]">
-                                                                                <SelectValue placeholder="Pilih Jabatan" defaultValue={jabatan} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setJabatan(e.target.value)}/>
-                                                                           </SelectTrigger>
-                                                                           <SelectContent className='bg-white'>
-                                                                                <SelectItem value="Kepala Desa" onClick={() => setJabatan('Kepala Desa')}>Kepala Desa</SelectItem>
-                                                                                <SelectItem value="BPD">BPD</SelectItem>
-                                                                                <SelectItem value="Sekretaris Desa">Sekretaris Desa</SelectItem>
-                                                                                <SelectItem value="kaur Pemerintahan">Kaur Pemerintahan</SelectItem>
-                                                                                <SelectItem value="Kaur Pembangunan">Kaur Pembangunan</SelectItem>
-                                                                                <SelectItem value="Kaur Pemberdayaan Masyarakat">Kaur Pemberdayaan Masyarakat</SelectItem>
-                                                                                <SelectItem value="Kaur Kesejahteraan Rakyat">Kaur Kesejahteraan Rakyat</SelectItem>
-                                                                                <SelectItem value="Kaur Umum">Kaur Umum</SelectItem>
-                                                                                <SelectItem value="Kaur Keuangan">Kaur Keuangan</SelectItem>
-                                                                           </SelectContent>
-                                                                      </Select>
-                                                                 </div>
-
-                                                            </div>
-                                                       </div>
-
-                                                       {/* BPD */}
-                                                       <div className="mt-8">
-                                                            <div className="bg-[#40A2E3] w-[250px] h-[40px] flex items-center justify-center rounded-[5px] text-[white] font-medium">
-                                                                 Badan Permusyawaratan Rakyat
-                                                            </div>
-                                                            <div className="grid grid-cols-3 gap-4 p-2">
-                                                                 {/* kepala desa */}
-                                                                 <div className="">
-                                                                      <div className="">
-                                                                           Nama
-                                                                      </div>
-                                                                      <Input placeholder='Nama' />
-                                                                 </div>
-                                                                 <div className="">
-                                                                      <div className="">
-                                                                           NIK
-                                                                      </div>
-                                                                      <Input placeholder='Nik' />
-                                                                 </div>
-                                                                 <div className="">
-                                                                      <div className="">
-                                                                           Jabatan
-                                                                      </div>
-                                                                      <Select>
-                                                                           <SelectTrigger className="w-[270px]">
-                                                                                <SelectValue placeholder="Pilih Jabatan" />
-                                                                           </SelectTrigger>
-                                                                           <SelectContent className='bg-white'>
-                                                                                <SelectItem value="Kepala Desa">Kepala Desa</SelectItem>
-                                                                                <SelectItem value="BPD">BPD</SelectItem>
-                                                                                <SelectItem value="Sekretaris Desa">Sekretaris Desa</SelectItem>
-                                                                                <SelectItem value="kaur Pemerintahan">Kaur Pemerintahan</SelectItem>
-                                                                                <SelectItem value="Kaur Pembangunan">Kaur Pembangunan</SelectItem>
-                                                                                <SelectItem value="Kaur Pemberdayaan Masyarakat">Kaur Pemberdayaan Masyarakat</SelectItem>
-                                                                                <SelectItem value="Kaur Kesejahteraan Rakyat">Kaur Kesejahteraan Rakyat</SelectItem>
-                                                                                <SelectItem value="Kaur Umum">Kaur Umum</SelectItem>
-                                                                                <SelectItem value="Kaur Keuangan">Kaur Keuangan</SelectItem>
-                                                                           </SelectContent>
-                                                                      </Select>
-                                                                 </div>
-                                                            </div>
-                                                       </div>
-                                                       {/* sekretaris desa */}
-                                                       <div className="mt-8">
-                                                            <div className="bg-[#40A2E3] w-[250px] h-[40px] flex items-center justify-center rounded-[5px] text-[white] font-medium">
-                                                                 Sekretaris Desa
-                                                            </div>
-                                                            <div className="grid grid-cols-3 gap-4 p-2">
-                                                                 {/* kepala desa */}
-                                                                 <div className="">
-                                                                      <div className="">
-                                                                           Nama
-                                                                      </div>
-                                                                      <Input placeholder='Nama' />
-                                                                 </div>
-                                                                 <div className="">
-                                                                      <div className="">
-                                                                           NIK
-                                                                      </div>
-                                                                      <Input placeholder='Nik' />
-                                                                 </div>
-                                                                 <div className="">
-                                                                      <div className="">
-                                                                           Jabatan
-                                                                      </div>
-                                                                      <Select>
-                                                                           <SelectTrigger className="w-[270px]">
-                                                                                <SelectValue placeholder="Pilih Jabatan" />
-                                                                           </SelectTrigger>
-                                                                           <SelectContent className='bg-white'>
-                                                                                <SelectItem value="Kepala Desa">Kepala Desa</SelectItem>
-                                                                                <SelectItem value="BPD">BPD</SelectItem>
-                                                                                <SelectItem value="Sekretaris Desa">Sekretaris Desa</SelectItem>
-                                                                                <SelectItem value="kaur Pemerintahan">Kaur Pemerintahan</SelectItem>
-                                                                                <SelectItem value="Kaur Pembangunan">Kaur Pembangunan</SelectItem>
-                                                                                <SelectItem value="Kaur Pemberdayaan Masyarakat">Kaur Pemberdayaan Masyarakat</SelectItem>
-                                                                                <SelectItem value="Kaur Kesejahteraan Rakyat">Kaur Kesejahteraan Rakyat</SelectItem>
-                                                                                <SelectItem value="Kaur Umum">Kaur Umum</SelectItem>
-                                                                                <SelectItem value="Kaur Keuangan">Kaur Keuangan</SelectItem>
-                                                                           </SelectContent>
-                                                                      </Select>
-                                                                 </div>
-                                                            </div>
-                                                       </div>
-                                                       {/* Kaur pemerintahan */}
-                                                       <div className="mt-8">
-                                                            <div className="bg-[#40A2E3] w-[250px] h-[40px] flex items-center justify-center rounded-[5px] text-[white] font-medium">
-                                                                 Kaur Pemerintahan
-                                                            </div>
-                                                            <div className="grid grid-cols-3 gap-4 p-2">
-                                                                 {/* kepala desa */}
-                                                                 <div className="">
-                                                                      <div className="">
-                                                                           Nama
-                                                                      </div>
-                                                                      <Input placeholder='Nama' />
-                                                                 </div>
-                                                                 <div className="">
-                                                                      <div className="">
-                                                                           NIK
-                                                                      </div>
-                                                                      <Input placeholder='Nik' />
-                                                                 </div>
-                                                                 <div className="">
-                                                                      <div className="">
-                                                                           Jabatan
-                                                                      </div>
-                                                                      <Select>
-                                                                           <SelectTrigger className="w-[270px]">
-                                                                                <SelectValue placeholder="Pilih Jabatan" />
-                                                                           </SelectTrigger>
-                                                                           <SelectContent className='bg-white'>
-                                                                                <SelectItem value="Kepala Desa">Kepala Desa</SelectItem>
-                                                                                <SelectItem value="BPD">BPD</SelectItem>
-                                                                                <SelectItem value="Sekretaris Desa">Sekretaris Desa</SelectItem>
-                                                                                <SelectItem value="kaur Pemerintahan">Kaur Pemerintahan</SelectItem>
-                                                                                <SelectItem value="Kaur Pembangunan">Kaur Pembangunan</SelectItem>
-                                                                                <SelectItem value="Kaur Pemberdayaan Masyarakat">Kaur Pemberdayaan Masyarakat</SelectItem>
-                                                                                <SelectItem value="Kaur Kesejahteraan Rakyat">Kaur Kesejahteraan Rakyat</SelectItem>
-                                                                                <SelectItem value="Kaur Umum">Kaur Umum</SelectItem>
-                                                                                <SelectItem value="Kaur Keuangan">Kaur Keuangan</SelectItem>
-                                                                           </SelectContent>
-                                                                      </Select>
-                                                                 </div>
-                                                            </div>
-                                                       </div>
-                                                       {/* Kaur Pembangunan */}
-                                                       <div className="mt-8">
-                                                            <div className="bg-[#40A2E3] w-[250px] h-[40px] flex items-center justify-center rounded-[5px] text-[white] font-medium">
-                                                                 Kaur Pembangunan
-                                                            </div>
-                                                            <div className="grid grid-cols-3 gap-4 p-2">
-                                                                 {/* kepala desa */}
-                                                                 <div className="">
-                                                                      <div className="">
-                                                                           Nama
-                                                                      </div>
-                                                                      <Input placeholder='Nama' />
-                                                                 </div>
-                                                                 <div className="">
-                                                                      <div className="">
-                                                                           NIK
-                                                                      </div>
-                                                                      <Input placeholder='Nik' />
-                                                                 </div>
-                                                                 <div className="">
-                                                                      <div className="">
-                                                                           Jabatan
-                                                                      </div>
-                                                                      <Select>
-                                                                           <SelectTrigger className="w-[270px]">
-                                                                                <SelectValue placeholder="Pilih Jabatan" />
-                                                                           </SelectTrigger>
-                                                                           <SelectContent className='bg-white'>
-                                                                                <SelectItem value="Kepala Desa">Kepala Desa</SelectItem>
-                                                                                <SelectItem value="BPD">BPD</SelectItem>
-                                                                                <SelectItem value="Sekretaris Desa">Sekretaris Desa</SelectItem>
-                                                                                <SelectItem value="kaur Pemerintahan">Kaur Pemerintahan</SelectItem>
-                                                                                <SelectItem value="Kaur Pembangunan">Kaur Pembangunan</SelectItem>
-                                                                                <SelectItem value="Kaur Pemberdayaan Masyarakat">Kaur Pemberdayaan Masyarakat</SelectItem>
-                                                                                <SelectItem value="Kaur Kesejahteraan Rakyat">Kaur Kesejahteraan Rakyat</SelectItem>
-                                                                                <SelectItem value="Kaur Umum">Kaur Umum</SelectItem>
-                                                                                <SelectItem value="Kaur Keuangan">Kaur Keuangan</SelectItem>
-                                                                           </SelectContent>
-                                                                      </Select>
-                                                                 </div>
-                                                            </div>
-                                                       </div>
-                                                       {/* Kaur Pemberdayaan Masyarakat */}
-                                                       <div className="mt-8">
-                                                            <div className="bg-[#40A2E3] w-[250px] h-[40px] flex items-center justify-center rounded-[5px] text-[white] font-medium">
-                                                                 Kaur Pemberdayaan Masyarakat
-                                                            </div>
-                                                            <div className="grid grid-cols-3 gap-4 p-2">
-                                                                 {/* kepala desa */}
-                                                                 <div className="">
-                                                                      <div className="">
-                                                                           Nama
-                                                                      </div>
-                                                                      <Input placeholder='Nama' />
-                                                                 </div>
-                                                                 <div className="">
-                                                                      <div className="">
-                                                                           NIK
-                                                                      </div>
-                                                                      <Input placeholder='Nik' />
-                                                                 </div>
-                                                                 <div className="">
-                                                                      <div className="">
-                                                                           Jabatan
-                                                                      </div>
-                                                                      <Select>
-                                                                           <SelectTrigger className="w-[270px]">
-                                                                                <SelectValue placeholder="Pilih Jabatan" />
-                                                                           </SelectTrigger>
-                                                                           <SelectContent className='bg-white'>
-                                                                                <SelectItem value="Kepala Desa">Kepala Desa</SelectItem>
-                                                                                <SelectItem value="BPD">BPD</SelectItem>
-                                                                                <SelectItem value="Sekretaris Desa">Sekretaris Desa</SelectItem>
-                                                                                <SelectItem value="kaur Pemerintahan">Kaur Pemerintahan</SelectItem>
-                                                                                <SelectItem value="Kaur Pembangunan">Kaur Pembangunan</SelectItem>
-                                                                                <SelectItem value="Kaur Pemberdayaan Masyarakat">Kaur Pemberdayaan Masyarakat</SelectItem>
-                                                                                <SelectItem value="Kaur Kesejahteraan Rakyat">Kaur Kesejahteraan Rakyat</SelectItem>
-                                                                                <SelectItem value="Kaur Umum">Kaur Umum</SelectItem>
-                                                                                <SelectItem value="Kaur Keuangan">Kaur Keuangan</SelectItem>
-                                                                           </SelectContent>
-                                                                      </Select>
-                                                                 </div>
-                                                            </div>
-                                                       </div>
-                                                       {/* Kaur Kesejahteraan Rakyat */}
-                                                       <div className="mt-8">
-                                                            <div className="bg-[#40A2E3] w-[250px] h-[40px] flex items-center justify-center rounded-[5px] text-[white] font-medium">
-                                                                 Kaur Kesejahteraan Rakyat
-                                                            </div>
-                                                            <div className="grid grid-cols-3 gap-4 p-2">
-                                                                 {/* kepala desa */}
-                                                                 <div className="">
-                                                                      <div className="">
-                                                                           Nama
-                                                                      </div>
-                                                                      <Input placeholder='Nama' />
-                                                                 </div>
-                                                                 <div className="">
-                                                                      <div className="">
-                                                                           NIK
-                                                                      </div>
-                                                                      <Input placeholder='Nik' />
-                                                                 </div>
-                                                                 <div className="">
-                                                                      <div className="">
-                                                                           Jabatan
-                                                                      </div>
-                                                                      <Select>
-                                                                           <SelectTrigger className="w-[270px]">
-                                                                                <SelectValue placeholder="Pilih Jabatan" />
-                                                                           </SelectTrigger>
-                                                                           <SelectContent className='bg-white'>
-                                                                                <SelectItem value="Kepala Desa">Kepala Desa</SelectItem>
-                                                                                <SelectItem value="BPD">BPD</SelectItem>
-                                                                                <SelectItem value="Sekretaris Desa">Sekretaris Desa</SelectItem>
-                                                                                <SelectItem value="kaur Pemerintahan">Kaur Pemerintahan</SelectItem>
-                                                                                <SelectItem value="Kaur Pembangunan">Kaur Pembangunan</SelectItem>
-                                                                                <SelectItem value="Kaur Pemberdayaan Masyarakat">Kaur Pemberdayaan Masyarakat</SelectItem>
-                                                                                <SelectItem value="Kaur Kesejahteraan Rakyat">Kaur Kesejahteraan Rakyat</SelectItem>
-                                                                                <SelectItem value="Kaur Umum">Kaur Umum</SelectItem>
-                                                                                <SelectItem value="Kaur Keuangan">Kaur Keuangan</SelectItem>
-                                                                           </SelectContent>
-                                                                      </Select>
-                                                                 </div>
-                                                            </div>
-                                                       </div>
-                                                       {/* Kaur Umum */}
-                                                       <div className="mt-8">
-                                                            <div className="bg-[#40A2E3] w-[250px] h-[40px] flex items-center justify-center rounded-[5px] text-[white] font-medium">
-                                                                 Kaur Umum
-                                                            </div>
-                                                            <div className="grid grid-cols-3 gap-4 p-2">
-                                                                 {/* kepala desa */}
-                                                                 <div className="">
-                                                                      <div className="">
-                                                                           Nama
-                                                                      </div>
-                                                                      <Input placeholder='Nama' />
-                                                                 </div>
-                                                                 <div className="">
-                                                                      <div className="">
-                                                                           NIK
-                                                                      </div>
-                                                                      <Input placeholder='Nik' />
-                                                                 </div>
-                                                                 <div className="">
-                                                                      <div className="">
-                                                                           Jabatan
-                                                                      </div>
-                                                                      <Select>
-                                                                           <SelectTrigger className="w-[270px]">
-                                                                                <SelectValue placeholder="Pilih Jabatan" />
-                                                                           </SelectTrigger>
-                                                                           <SelectContent className='bg-white'>
-                                                                                <SelectItem value="Kepala Desa">Kepala Desa</SelectItem>
-                                                                                <SelectItem value="BPD">BPD</SelectItem>
-                                                                                <SelectItem value="Sekretaris Desa">Sekretaris Desa</SelectItem>
-                                                                                <SelectItem value="kaur Pemerintahan">Kaur Pemerintahan</SelectItem>
-                                                                                <SelectItem value="Kaur Pembangunan">Kaur Pembangunan</SelectItem>
-                                                                                <SelectItem value="Kaur Pemberdayaan Masyarakat">Kaur Pemberdayaan Masyarakat</SelectItem>
-                                                                                <SelectItem value="Kaur Kesejahteraan Rakyat">Kaur Kesejahteraan Rakyat</SelectItem>
-                                                                                <SelectItem value="Kaur Umum">Kaur Umum</SelectItem>
-                                                                                <SelectItem value="Kaur Keuangan">Kaur Keuangan</SelectItem>
-                                                                           </SelectContent>
-                                                                      </Select>
-                                                                 </div>
-                                                            </div>
-                                                       </div>
-                                                       {/* Kaur Keuangan */}
-                                                       <div className="mt-8">
-                                                            <div className="bg-[#40A2E3] w-[250px] h-[40px] flex items-center justify-center rounded-[5px] text-[white] font-medium">
-                                                                 Kaur Keuangan
-                                                            </div>
-                                                            <div className="grid grid-cols-3 gap-4 p-2">
-                                                                 {/* kepala desa */}
-                                                                 <div className="">
-                                                                      <div className="">
-                                                                           Nama
-                                                                      </div>
-                                                                      <Input placeholder='Nama' />
-                                                                 </div>
-                                                                 <div className="">
-                                                                      <div className="">
-                                                                           NIK
-                                                                      </div>
-                                                                      <Input placeholder='Nik' />
-                                                                 </div>
-                                                                 <div className="">
-                                                                      <div className="">
-                                                                           Jabatan
-                                                                      </div>
-                                                                      <Select>
-                                                                           <SelectTrigger className="w-[270px]">
-                                                                                <SelectValue placeholder="Pilih Jabatan" />
-                                                                           </SelectTrigger>
-                                                                           <SelectContent className='bg-white'>
-                                                                                <SelectItem value="Kepala Desa">Kepala Desa</SelectItem>
-                                                                                <SelectItem value="BPD">BPD</SelectItem>
-                                                                                <SelectItem value="Sekretaris Desa">Sekretaris Desa</SelectItem>
-                                                                                <SelectItem value="kaur Pemerintahan">Kaur Pemerintahan</SelectItem>
-                                                                                <SelectItem value="Kaur Pembangunan">Kaur Pembangunan</SelectItem>
-                                                                                <SelectItem value="Kaur Pemberdayaan Masyarakat">Kaur Pemberdayaan Masyarakat</SelectItem>
-                                                                                <SelectItem value="Kaur Kesejahteraan Rakyat">Kaur Kesejahteraan Rakyat</SelectItem>
-                                                                                <SelectItem value="Kaur Umum">Kaur Umum</SelectItem>
-                                                                                <SelectItem value="Kaur Keuangan">Kaur Keuangan</SelectItem>
-                                                                           </SelectContent>
-                                                                      </Select>
-                                                                 </div>
-                                                            </div>
-                                                       </div>
-                                                       <div className="flex justify-between mt-10 mb-6">
-                                                            <TabsList>
-                                                                 <TabsTrigger value="profil" hidden={true} className='bg-[#676A6C] w-[150px] h-[40px] text-white'>Kembali</TabsTrigger>
-
-                                                            </TabsList>
-                                                           
-
-                                                            <button className='text-white bg-[#0890EA] rounded-[5px] w-[200px] h-[40px]' onClick={handleSubmit}>
-                                             Simpan
-                                        </button>
-                                                       </div>
-                                                  </div>
-                                             </TabsContent>
-                                        </Tabs>
-                                   </form>
-
-
-                              </div>
-                         </div>
-                    </div>
-               </div>
-          </SidebarLayout>
-     )
+  return (
+    <SidebarLayout>
+      <div className="bg-[#D9D9D98B] rounded-[15px]">
+        <div className="p-10">
+          <div className="bg-white flex justify-between p-4 rounded-[7px]">
+            <div className="text-[16px]">
+              Form Edit Profil Desa
+            </div>
+            <div className="flex">
+              <div className="flex">
+                <HomeIcon color='#0890EA' size={16} />
+              </div>
+              <div className="ml-4 flex">
+                <ArrowRightIcon color='#000000' size={10} />
+              </div>
+              <div className="text-[#D9D9D9] text-[16px] ml-4">
+                Edit Profil Desa
+              </div>
+            </div>
+          </div>
+          <div className="bg-white rounded-[15px] mt-6">
+            <div className="pb-4">
+              <form>
+              <div className="pl-6 pr-6 pt-6">
+                <div className="text-[16px] mb-1 mt-2">Nama Desa</div>
+                <div className="">
+                  <Input
+                    className=' h-[40px] font-bold bg-[#EDECEC]'
+                    placeholder='nama desa'
+                    name="nama_desa"
+                   
+                  />
+                </div>
+              </div>
+              <div className="pl-6 pr-6 pt-6">
+                <div className="text-[16px] mb-1 mt-2">Alamat Kantor Desa</div>
+                <div className="">
+                  <Input
+                    className=' h-[40px] font-bold bg-[#EDECEC]'
+                    placeholder='alamat '
+                    name="nama_desa"
+                   
+                  />
+                </div>
+              </div>
+                <div className="pl-6 pr-6 pt-6">
+                  <div className="text-[16px] mb-1 mt-2">Provinsi</div>
+                  <div className="">
+                    <select onChange={handleProvinsiChange} className='w-full border h-[40px] p-3 rounded bg-[#EDECEC]'>
+                      <option value="">Pilih Provinsi</option>
+                      {provinsiList.map((provinsi: Location) => (
+                        <option key={provinsi.id} value={provinsi.id}>{provinsi.nama}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div className="pl-6 pr-6 pt-6">
+                  <div className="text-[16px] mb-1 mt-2">Kabupaten</div>
+                  <div className="">
+                    <select onChange={handleKabupatenChange} className='w-full border h-[40px] p-3 rounded bg-[#EDECEC]'>
+                      <option value="">Pilih Kabupaten</option>
+                      {kabupatenList.map((kabupaten: Location) => (
+                        <option key={kabupaten.id} value={kabupaten.id}>{kabupaten.nama}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div className="pl-6 pr-6 pt-6">
+                  <div className="text-[16px] mb-1 mt-2">Kecamatan</div>
+                  <div className="">
+                    <select className='w-full border h-[40px] p-3 rounded bg-[#EDECEC]'>
+                      <option value="">Pilih Kecamatan</option>
+                      {kecamatanList.map((kecamatan: Location) => (
+                        <option key={kecamatan.id} value={kecamatan.id}>{kecamatan.nama}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div className="pl-6 pr-6 pt-6">
+                  <div className="text-[16px] mb-1 mt-2">Alamat Kantor Desa</div>
+                  <div className="">
+                    <Input
+                      className=' h-[40px] font-bold bg-[#EDECEC]'
+                      placeholder='alamat '
+                      name="alamat_kantor"
+                    />
+                  </div>
+                </div>
+                <div className="flex items-center mt-2 pl-6 pr-6">
+                  <div className="w-full">
+                    <div className="text-[16px] mb-1 mt-2">Profil Singkat Desa</div>
+                    <CKEditor
+                      editor={ClassicEditor}
+                      
+                    />
+                  </div>
+                </div>
+                <div className="flex items-center mt-2 pl-6 pr-6">
+                  <div className="w-full">
+                    <div className="text-[16px] mb-1 mt-2">Visi Desa</div>
+                    <CKEditor
+                      editor={ClassicEditor}
+                    />
+                  </div>
+                </div>
+                <div className="flex items-center mt-2 pl-6 pr-6">
+                  <div className="w-full">
+                    <div className="text-[16px] mb-1 mt-2">Misi Desa</div>
+                    <CKEditor
+                      editor={ClassicEditor}
+                    />
+                  </div>
+                </div>
+                <div className="flex items-center mt-2 pl-6 pr-6">
+                  <div className="w-full">
+                    <div className="text-[16px] mb-1 mt-2">Sejarah Desa</div>
+                    <CKEditor
+                      editor={ClassicEditor}
+                    />
+                  </div>
+                </div>
+                <div className="p-4 text-center text-[16px] font-bold">Letak Geografis Desa</div>
+                <div className="flex items-center mt-2 pl-6 pr-6">
+                  <div className="w-full">
+                    <div className="text-[16px] mb-1 mt-2">Sebelah Utara</div>
+                    <Input
+                      type='text'
+                      className=' h-[40px] font-bold bg-[#EDECEC]'
+                     
+                    />
+                  </div>
+                </div>
+                <div className="flex items-center mt-2 pl-6 pr-6">
+                  <div className="w-full">
+                    <div className="text-[16px] mb-1 mt-2">Sebelah Timur</div>
+                    <Input
+                      type='text'
+                      className=' h-[40px] font-bold bg-[#EDECEC]'
+                     
+                    />
+                  </div>
+                </div>
+                <div className="flex items-center mt-2 pl-6 pr-6">
+                  <div className="w-full">
+                    <div className="text-[16px] mb-1 mt-2">Sebelah Selatan</div>
+                    <Input
+                      type='text'
+                      className=' h-[40px] font-bold bg-[#EDECEC]'
+                     
+                    />
+                  </div>
+                </div>
+                <div className="flex items-center mt-2 pl-6 pr-6">
+                  <div className="w-full">
+                    <div className="text-[16px] mb-1 mt-2">Sebelah Barat</div>
+                    <Input
+                      type='text'
+                      className=' h-[40px] font-bold bg-[#EDECEC]'
+                     
+                    />
+                  </div>
+                </div>
+                <div className="flex items-center mt-2 pl-6 pr-6">
+                  <div className="w-full">
+                    <div className="text-[16px] mb-1 mt-2">Gambar Desa</div>
+                    <Input
+                      type='file'
+                      className=' h-[40px] font-bold bg-[#EDECEC]'
+                      name="cover"
+                    />
+                  </div>
+                </div>
+                <div className="flex justify-end mt-6  pr-6 mb-10">
+                  <div className="mr-6">
+                    <button className='text-white bg-[#F61616] rounded-[5px] w-[142px] h-[30px]'>
+                      Batal
+                    </button>
+                  </div>
+                  <div className="">
+                    <button type="submit" className='text-white bg-[#0890EA] rounded-[5px] w-[142px] h-[30px]'>
+                      Simpan
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </SidebarLayout>
+  )
 }

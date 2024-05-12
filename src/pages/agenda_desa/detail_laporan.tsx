@@ -5,7 +5,6 @@ import SidebarLayout from '../../components/layout/SidebarLayout';
 import HomeIcon from '../../components/icon/homeIcon';
 import ArrowRightIcon from '../../components/icon/arrowRightIcon';
 import { Laporan } from '../../interfaces/laporan';
-import { Agenda } from '../../interfaces/agenda';
 
 export default function DetailLaporan() {
   const { id } = useParams<{ id: string }>(); // Ambil id dari parameter URL

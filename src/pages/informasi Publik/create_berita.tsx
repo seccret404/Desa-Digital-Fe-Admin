@@ -39,7 +39,8 @@ export default function TambahBerita() {
     }
   };
 
-  const handleEditorChange = (event: any, editor: { getData: () => any }) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleEditorChange = (_event: any, editor: { getData: () => any }) => {
     const isi_berita = editor.getData();
     setBerita({ ...berita, isi_berita });
   };

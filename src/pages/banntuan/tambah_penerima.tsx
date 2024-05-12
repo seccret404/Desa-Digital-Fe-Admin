@@ -6,8 +6,9 @@ import Button from '../../components/ui/button'
 import { Input } from '../../components/ui/input'
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { useState } from 'react'
 export default function TambahPenerimaBantuan() {
-
+     const [status, setStatus] = useState('');
 
      return (
           <SidebarLayout>
@@ -52,11 +53,44 @@ export default function TambahPenerimaBantuan() {
                                                   </div>
                                              </div>
                                              <div className="mt-4">
-                                                  <div className="mb-2">
+                                                  <div className="mb-2 text-[16px]">
                                                        Nama Bantuan
                                                   </div>
                                                   <div className="">
                                                        <Input className='h-[40px] font-bold' placeholder='nama bantuan' />
+                                                  </div>
+                                             </div>
+                                             <div className="mt-4">
+                                                  <div className="mb-2 text-[16px]">
+                                                       Tanggal Mulai Diterima
+                                                  </div>
+                                                  <div className="">
+                                                       <Input type='date' className='h-[40px] font-bold' placeholder='nama bantuan' />
+                                                  </div>
+                                             </div>
+                                             <div className="mt-4">
+                                                  <div className="mb-2 text-[16px]">
+                                                       Status Penerima Bantuan
+                                                  </div>
+                                                  <div className="flex">
+                                                       <label className="mr-4">
+                                                            <input
+                                                                 type="radio"
+                                                                 value="Lanjut"
+                                                                 checked={status === 'Lanjut'}
+                                                                 onChange={() => setStatus('Lanjut')}
+                                                            />
+                                                            Lanjut
+                                                       </label>
+                                                       <label>
+                                                            <input
+                                                                 type="radio"
+                                                                 value="Berhenti"
+                                                                 checked={status === 'Berhenti'}
+                                                                 onChange={() => setStatus('Berhenti')}
+                                                            />
+                                                            Berhenti
+                                                       </label>
                                                   </div>
                                              </div>
                                              <div className="mt-4">

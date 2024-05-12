@@ -1,41 +1,46 @@
 import { Link } from 'react-router-dom'
 import SidebarLayout from '../../components/layout/SidebarLayout'
 import Button from '../../components/ui/button'
-import { Input } from '../../components/ui/input'
-import {
-     Select, SelectContent,
-     SelectGroup,
-     SelectItem,
-     SelectLabel,
-     SelectTrigger,
-     SelectValue,
-} from '../../components/ui/select'
+import MapIcon from '../../components/icon/mapIcon'
+
+// import HomeIcon from '../../components/icon/homeIcon'
+// import ArrowRIghtIcon from '../../components/icon/arrowRightIcon'
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 export default function DataDesa() {
      return (
           <SidebarLayout>
                <div className="bg-[#D9D9D98B] rounded-[15px]">
                     <div className="p-8">
-                         <div className="bg-white rounded-[15px] mt-6">
-                              <div className="p-4 text-[20px]">
-                                   Data Desa
+                         <div className="flex items-center justify-between">
+                              {/* <div className="relative w-[376px]">
+                                   <FontAwesomeIcon icon={faSearch} className="absolute top-[10px] left-[10px]" />
+                                   <Input placeholder="Ketikkan kata kunci..." className="pl-[35px] rounded-[23px]" />
+                              </div> */}
+                              <div className="">
+                                   <Button width={249} height={47} color='white' bgColor='#0890EA' rounded={5} >
+                                        <Link to='/profil-desa'>
+                                             Edit Profil
+                                        </Link>
+                                   </Button>
                               </div>
                          </div>
                          <div className="bg-white rounded-[15px] mt-6">
-                              <div className="p-4">
-                                   <div className="flex">
+                              <div className="p-10 ">
+                                   <div className="mb-10">
                                         <div className="">
-                                             <img src="assets/desa.jpeg" alt="" className='rounded-[15px] w-[900px]' />
+                                             <img src="assets/desa.jpeg" alt="" className='rounded-[15px] w-full h-[300px]' />
                                         </div>
-                                        <div className="ml-12">
+                                        <div className="mt-4">
                                              <div className="font-bold text-[20px]" >
                                                   Desa Sosor  Dolok.
                                              </div>
-                                             <div className="mt-[-5px] text-[12px]">
-                                                  Telp : +62 8574 2342 2342
-                                             </div>
-                                             <div className="mt-[-5px] text-[12px]">
-                                                  Jln Efrata, Kec. Harian, Kabupaten Samosir, Provinsi Sumatera Utara
+                                             <div className="mt-[1px] flex items-center text-[16px]">
+                                                  <MapIcon size={20} color='black' />
+                                                  <div className="ml-2">
+                                                       Jln Efrata, Kec. Harian, Kabupaten Samosir, Provinsi Sumatera Utara
+                                                  </div>
                                              </div>
                                              <div className="mt-4 text-justify">
                                                   Desa Sosor Dolok merupakan kawasan pariwisata diSumatera Utara yang masuk dalam administratif  Kecamatan Harian,
@@ -43,93 +48,74 @@ export default function DataDesa() {
                                                   destinasi wisata alam yang masih jarang dikunjungi, Air Terjun Efrat.
                                              </div>
                                         </div>
-                                   </div>
-                                   <div className="bg-[#EDECEC] p-3 rounded-[15px] mt-4 text-[16px]">
-                                        Struktur Organisasi
-                                   </div>
-                                   <div className="flex items-center justify-end mt-4" >
-                                        <div className="text-[18px] text-[#40A2E3]">
-                                             Tahun Pemerintahan
+                                        <div className="mt-4 w-[100px] text-[18px] font-bold">
+                                             <div className="">Profil Desa</div>
+                                             <div className="bg-[#0890EA] h-1"></div>
                                         </div>
-                                        <div className="ml-4">
-                                             <Select>
-                                                  <SelectTrigger className="w-[180px] bg-[#40A2E3] text-white">
-                                                       <SelectValue placeholder="Pilih Tahun" />
-                                                  </SelectTrigger>
-                                                  <SelectContent>
-                                                       <SelectGroup className='bg-[#40A2E3] text-white'>
-                                                            <SelectLabel>Pilih Tahun</SelectLabel>
-                                                            <SelectItem value="2003">2003</SelectItem>
-                                                            <SelectItem value="2004">2004</SelectItem>
-                                                            <SelectItem value="2005">2005</SelectItem>
-
-                                                       </SelectGroup>
-                                                  </SelectContent>
-                                             </Select>
+                                        <div className="text-[14px] text-justify">
+                                             Desa Sosor Dolok terletak di daerah dataran tinggi, menawarkan pemandangan alam yang menakjubkan dengan latar belakang pegunungan yang megah dan udara yang sejuk. Desa ini terkenal dengan kebun teh yang membentang luas, menciptakan panorama hijau yang menyejukkan mata. Penduduk desa yang mayoritas adalah petani teh, menjalani hidup dengan ritme yang tenang dan penuh kesederhanaan, jauh dari hiruk-pikuk kota.
+                                             Keunikan Desa Sosor Dolok tidak hanya terletak pada keindahan alamnya, tetapi juga pada kekayaan budayanya. Warga desa masih memegang teguh adat istiadat dan tradisi yang turun-temurun, termasuk upacara-upacara yang berkaitan dengan pertanian dan kepercayaan lokal. Di sini, pengunjung dapat menyaksikan langsung berbagai festival budaya yang diadakan dengan penuh warna dan keceriaan. Selain itu, keramahan penduduk lokal menjadikan setiap pengalaman kunjungan menjadi lebih berkesan dan autentik.
                                         </div>
-                                   </div>
-                                   <div className="mt-5">
-                                        <div className="text-[16px] font-medium">
-                                             Nama Kepala Desa
+                                        <div className="mt-4 w-[100px] text-[18px] font-bold">
+                                             <div className="">Visi</div>
+                                             <div className="bg-[#0890EA] h-1"></div>
                                         </div>
-                                        <Input disabled />
-                                   </div>
-                                   <div className="mt-5">
-                                        <div className="text-[16px] font-medium">
-                                             Nama Badan Permusyawaratan Desa
+                                        <div className="text-[14px] text-justify">
+                                             Visi Desa Sosor Dolok adalah menjadi desa wisata yang berkelanjutan, yang memadukan kearifan lokal dengan inovasi modern untuk mewujudkan kesejahteraan dan kebahagiaan bagi seluruh warganya serta memberikan pengalaman yang unik dan berkesan bagi para pengunjung. Desa ini berkomitmen untuk mengembangkan ekonomi lokal melalui pemanfaatan sumber daya alam dan budaya yang berkelanjutan, sekaligus melestarikan lingkungan dan adat istiadat yang ada.
                                         </div>
-                                        <Input disabled />
-                                   </div>
-                                   <div className="mt-5">
-                                        <div className="text-[16px] font-medium">
-                                             Nama  Sekretaris Desa
+                                        <div className="mt-4 w-[100px] text-[18px] font-bold">
+                                             <div className="">Misi</div>
+                                             <div className="bg-[#0890EA] h-1"></div>
                                         </div>
-                                        <Input disabled />
-                                   </div>
-                                   <div className="mt-5">
-                                        <div className="text-[16px] font-medium">
-                                             Nama Kaur Pemerintahan
+                                        <div className="text-[14px] text-justify">
+                                             Visi Desa Sosor Dolok adalah menjadi desa wisata yang berkelanjutan, yang memadukan kearifan lokal dengan inovasi modern untuk mewujudkan kesejahteraan dan kebahagiaan bagi seluruh warganya serta memberikan pengalaman yang unik dan berkesan bagi para pengunjung. Desa ini berkomitmen untuk mengembangkan ekonomi lokal melalui pemanfaatan sumber daya alam dan budaya yang berkelanjutan, sekaligus melestarikan lingkungan dan adat istiadat yang ada.
                                         </div>
-                                        <Input disabled />
-                                   </div>
-                                   <div className="mt-5">
-                                        <div className="text-[16px] font-medium">
-                                             Nama Kaur Pembangunan
+                                        <div className="mt-4 w-[120px] text-[18px] font-bold">
+                                             <div className="">Sejarah Desa</div>
+                                             <div className="bg-[#0890EA] h-1"></div>
                                         </div>
-                                        <Input disabled />
-                                   </div>
-                                   <div className="mt-5">
-                                        <div className="text-[16px] font-medium">
-                                             Nama Kaur Pemberdayaan Masyarakat
+                                        <div className="text-[14px] text-justify">
+                                             Desa Sosor Dolok terletak di daerah dataran tinggi, menawarkan pemandangan alam yang menakjubkan dengan latar belakang pegunungan yang megah dan udara yang sejuk. Desa ini terkenal dengan kebun teh yang membentang luas, menciptakan panorama hijau yang menyejukkan mata. Penduduk desa yang mayoritas adalah petani teh, menjalani hidup dengan ritme yang tenang dan penuh kesederhanaan, jauh dari hiruk-pikuk kota.
+                                             Keunikan Desa Sosor Dolok tidak hanya terletak pada keindahan alamnya, tetapi juga pada kekayaan budayanya. Warga desa masih memegang teguh adat istiadat dan tradisi yang turun-temurun, termasuk upacara-upacara yang berkaitan dengan pertanian dan kepercayaan lokal. Di sini, pengunjung dapat menyaksikan langsung berbagai festival budaya yang diadakan dengan penuh warna dan keceriaan. Selain itu, keramahan penduduk lokal menjadikan setiap pengalaman kunjungan menjadi lebih berkesan dan autentik.
                                         </div>
-                                        <Input disabled />
-                                   </div>
-                                   <div className="mt-5">
-                                        <div className="text-[16px] font-medium">
-                                             Nama Kaur Kesejahteraan Rakyat
+                                        <div className="mt-4 w-[150px] text-[18px] font-bold">
+                                             <div className="">Letak Geografis</div>
+                                             <div className="bg-[#0890EA] h-1"></div>
                                         </div>
-                                        <Input disabled />
-                                   </div>
-                                   <div className="mt-5">
-                                        <div className="text-[16px] font-medium">
-                                             Nama Kaur Umum
+                                        <div className="flex text-[18px]">
+                                             <div className="w-[150px]">
+                                                  Sebelah Utara
+                                             </div>
+                                             <div className="">
+                                                  : Desa Partungko Naginjang Kecamatan Harian
+                                             </div>
                                         </div>
-                                        <Input disabled />
-                                   </div>
-                                   <div className="mt-5">
-                                        <div className="text-[16px] font-medium">
-                                             Nama Kaur  Keuangan
+                                        <div className="flex text-[18px]">
+                                             <div className="w-[150px]">
+                                                  Sebelah Timur
+                                             </div>
+                                             <div className="">
+                                                  : Desa Turpuk Malau/Turpuk Sagala Kecamatan Harian
+                                             </div>
                                         </div>
-                                        <Input disabled />
+                                        <div className="flex text-[18px]">
+                                             <div className="w-[150px]">
+                                                  Sebelah Selatan
+                                             </div>
+                                             <div className="">
+                                                  : Desa Partungko Naginjang Kecamatan Harian 
+                                             </div>
+                                        </div>
+                                        <div className="flex text-[18px]">
+                                             <div className="w-[150px]">
+                                                  Sebelah Barat
+                                             </div>
+                                             <div className="">
+                                                  : Desa Partungko Naginjang Kecamatan Harian
+                                             </div>
+                                        </div>
                                    </div>
 
-                                   <div className="flex justify-end mt-4" >
-                                        <Button rounded={5} height={40} bgColor='#0890EA' color='white' width={170}>
-                                             <Link to='/profil-desa'>
-                                                  Edit Data
-                                             </Link>
-                                        </Button>
-                                   </div>
 
 
 
