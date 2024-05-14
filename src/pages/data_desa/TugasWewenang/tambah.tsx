@@ -32,10 +32,7 @@ export default function TambahTugasWewenang() {
               <div className="pl-6 pr-6 pt-6">
                   <div className="text-[16px] mb-1 mt-2">Jabatan</div>
                   <div className="">
-                    <select className='w-full border h-[40px] p-3 rounded bg-[#EDECEC]'>
-                      <option value="">Pilih Jabatan</option>
-                      
-                    </select>
+                    
                   </div>
                 </div>
                 <div className="flex items-center mt-2 pl-6 pr-6">

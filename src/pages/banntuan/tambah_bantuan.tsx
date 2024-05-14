@@ -3,14 +3,49 @@ import HomeIcon from '../../components/icon/homeIcon'
 import ArrowRIghtIcon from '../../components/icon/arrowRightIcon'
 import { useNavigate } from 'react-router-dom'
 import { Input } from '../../components/ui/input';
+import {SetStateAction, useState } from 'react';
+import { useToast } from '../../components/ui/use-toast';
+import { addBantuan } from '../../services/desaServices';
 
 
 export default function TambahDaftarBantuan() {
      const navigate = useNavigate();
+     const {toast} = useToast();
      const Back = () => {
           navigate('/tambah-bantuan')
      }
+     const [jenisBantuan, setJenisbantuan] = useState('');
+     const [namaBantuan, setNamabantuan] = useState('');
 
+     const handleJenisBantuanChange = (e: { target: { value: SetStateAction<string>; }; }) => {
+          setJenisbantuan(e.target.value);
+     }
+
+     const handleSubmit = async (event: { preventDefault: () => void }) => {
+          event.preventDefault();
+          const dataBantuan = {
+               jenis_bantuan: jenisBantuan,
+               nama_bantuan: namaBantuan
+          };
+
+          try {
+               await addBantuan(dataBantuan);
+               toast({
+                    title: "Data Bantuan",
+                    description: "Data berhasil ditambah!"
+               });
+               navigate('/tambah-bantuan');
+          } catch (error) {
+               console.error("error :", error);
+               toast({
+                    title: "Data Bantuan",
+                    description: "Data gagal ditambah!",
+
+               });
+          }
+
+     }
+     
      return (
           <SidebarLayout>
                <div className="bg-[#D9D9D98B] rounded-[15px]">
@@ -41,10 +76,10 @@ export default function TambahDaftarBantuan() {
                                                   Jenis Bantuan
                                              </div>
                                              <div className="w-[350px]">
-                                                  <select name="" id="" className='w-[350px] h-[35px] border-[2px] rounded-[5px] text-[16px]'>
+                                                  <select value={jenisBantuan} onChange={handleJenisBantuanChange} name="" id="" className='w-[350px] h-[35px] border-[2px] rounded-[5px] text-[16px]'>
                                                        <option value="">Pilih Jenis</option>
-                                                       <option value="">Pemerintahan Desa</option>
-                                                       <option value="">Pemerintahan Pusat</option>
+                                                       <option value="Desa">Pemerintahan Desa</option>
+                                                       <option value="Pemerintah">Pemerintahan Pusat</option>
                                                   </select>
                                              </div>
                                         </div>
@@ -53,7 +88,10 @@ export default function TambahDaftarBantuan() {
                                                   Nama Bantuan
                                              </div>
                                              <div className="w-[350px]">
-                                                 <Input placeholder='Nama Bantuan'/>
+                                                 <Input placeholder='Nama Bantuan' 
+                                                 value={namaBantuan}
+                                                 onChange={(e) => setNamabantuan(e.target.value)}
+                                                 />
                                              </div>
                                         </div>
                                         <div className="flex items-center mt-4">
@@ -73,7 +111,7 @@ export default function TambahDaftarBantuan() {
                                                   </button>
                                              </div>
                                              <div className="">
-                                                  <button className='bg-[#0890EA] text-white rounded-[5px] w-[142px] h-[30px]'>
+                                                  <button onClick={handleSubmit} className='bg-[#0890EA] text-white rounded-[5px] w-[142px] h-[30px]'>
                                                        simpan
                                                   </button>
 

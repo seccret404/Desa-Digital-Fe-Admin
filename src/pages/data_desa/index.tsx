@@ -1,83 +1,119 @@
-import { Link } from 'react-router-dom'
-import SidebarLayout from '../../components/layout/SidebarLayout'
-import Button from '../../components/ui/button'
-import MapIcon from '../../components/icon/mapIcon'
-
-// import HomeIcon from '../../components/icon/homeIcon'
-// import ArrowRIghtIcon from '../../components/icon/arrowRightIcon'
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { Link } from 'react-router-dom';
+import SidebarLayout from '../../components/layout/SidebarLayout';
+import Button from '../../components/ui/button';
+import MapIcon from '../../components/icon/mapIcon';
+import { useEffect, useState } from 'react';
+import { Profil } from '../../interfaces/profil';
+import { getProfil } from '../../services/desaServices';
 
 export default function DataDesa() {
+     const [profile, setProfile] = useState<Profil[]>([]);
+     const [loading, setLoading] = useState(true);
+
+     useEffect(() => {
+          async function fetchProfile() {
+               try {
+                    const data = await getProfil();
+                    setProfile(data);
+                    setLoading(false);
+               } catch (error) {
+                    if (error instanceof Error) {
+                         console.error('error:', error.message);
+                    } else {
+                         console.error('An unexpected error occurred:', error);
+                    }
+                    setLoading(false);
+               }
+          }
+          fetchProfile();
+     }, []);
+
+     if (loading) {
+          return <div>Loading...</div>;
+     }
+
+     if (profile.length === 0) {
+          return (
+               <SidebarLayout>
+                    <div className="bg-[#D9D9D98B] rounded-[15px]">
+                         <div className="p-8">
+                              <div className="flex items-center justify-between">
+                                   <div className="">
+                                        <Button width={249} height={47} color='white' bgColor='#0890EA' rounded={5} >
+                                             <Link to='/profil-desa'>
+                                                  Tambah Profil
+                                             </Link>
+                                        </Button>
+                                   </div>
+                              </div>
+                              <div className="bg-white rounded-[15px] mt-6">
+                                   <div className="p-10 mb-6 border-b border-gray-200">
+                                        <div className="font-bold text-[20px] mb-4">Data belum di set</div>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+               </SidebarLayout>
+          )
+     }
+
+
      return (
           <SidebarLayout>
                <div className="bg-[#D9D9D98B] rounded-[15px]">
                     <div className="p-8">
-                         <div className="flex items-center justify-between">
-                              {/* <div className="relative w-[376px]">
-                                   <FontAwesomeIcon icon={faSearch} className="absolute top-[10px] left-[10px]" />
-                                   <Input placeholder="Ketikkan kata kunci..." className="pl-[35px] rounded-[23px]" />
-                              </div> */}
-                              <div className="">
-                                   <Button width={249} height={47} color='white' bgColor='#0890EA' rounded={5} >
-                                        <Link to='/profil-desa'>
-                                             Edit Profil
-                                        </Link>
-                                   </Button>
-                              </div>
-                         </div>
+
                          <div className="bg-white rounded-[15px] mt-6">
-                              <div className="p-10 ">
-                                   <div className="mb-10">
-                                        <div className="">
-                                             <img src="assets/desa.jpeg" alt="" className='rounded-[15px] w-full h-[300px]' />
+                              {profile.map((item, index) => (
+
+                                   <div key={index} className="p-10 mb-6 border-b border-gray-200">
+                                        <div className="flex items-end justify-end">
+                                             <div className="mb-8">
+                                                  <Button width={249} height={47} color='white' bgColor='#0890EA' rounded={5} >
+                                                       <Link to={`/profil-desa/${item.id}`}>
+                                                            Edit Profil
+                                                       </Link>
+                                                  </Button>
+                                             </div>
+                                        </div>
+                                        <div className="flex justify-center">
+                                             <img src={`http://localhost:3000/images/profile/${item.gambar_desa}`} alt={item.nama_desa} className='rounded-[15px] ' />
                                         </div>
                                         <div className="mt-4">
                                              <div className="font-bold text-[20px]" >
-                                                  Desa Sosor  Dolok.
+                                                  {item.nama_desa}
                                              </div>
                                              <div className="mt-[1px] flex items-center text-[16px]">
                                                   <MapIcon size={20} color='black' />
                                                   <div className="ml-2">
-                                                       Jln Efrata, Kec. Harian, Kabupaten Samosir, Provinsi Sumatera Utara
+                                                       {item.alamat_kantor} - Kecamatan {item.kecamatan}, {item.kabupaten}, {item.provinsi}
                                                   </div>
-                                             </div>
-                                             <div className="mt-4 text-justify">
-                                                  Desa Sosor Dolok merupakan kawasan pariwisata diSumatera Utara yang masuk dalam administratif  Kecamatan Harian,
-                                                  Kabupaten Samosir. Perdesaan di pesisir Danau Toba ini memiliki satu
-                                                  destinasi wisata alam yang masih jarang dikunjungi, Air Terjun Efrat.
                                              </div>
                                         </div>
                                         <div className="mt-4 w-[100px] text-[18px] font-bold">
                                              <div className="">Profil Desa</div>
                                              <div className="bg-[#0890EA] h-1"></div>
                                         </div>
-                                        <div className="text-[14px] text-justify">
-                                             Desa Sosor Dolok terletak di daerah dataran tinggi, menawarkan pemandangan alam yang menakjubkan dengan latar belakang pegunungan yang megah dan udara yang sejuk. Desa ini terkenal dengan kebun teh yang membentang luas, menciptakan panorama hijau yang menyejukkan mata. Penduduk desa yang mayoritas adalah petani teh, menjalani hidup dengan ritme yang tenang dan penuh kesederhanaan, jauh dari hiruk-pikuk kota.
-                                             Keunikan Desa Sosor Dolok tidak hanya terletak pada keindahan alamnya, tetapi juga pada kekayaan budayanya. Warga desa masih memegang teguh adat istiadat dan tradisi yang turun-temurun, termasuk upacara-upacara yang berkaitan dengan pertanian dan kepercayaan lokal. Di sini, pengunjung dapat menyaksikan langsung berbagai festival budaya yang diadakan dengan penuh warna dan keceriaan. Selain itu, keramahan penduduk lokal menjadikan setiap pengalaman kunjungan menjadi lebih berkesan dan autentik.
-                                        </div>
+                                        <div className="text-[14px] text-justify" dangerouslySetInnerHTML={{ __html: item.profil_singkat }} />
+
                                         <div className="mt-4 w-[100px] text-[18px] font-bold">
                                              <div className="">Visi</div>
                                              <div className="bg-[#0890EA] h-1"></div>
                                         </div>
-                                        <div className="text-[14px] text-justify">
-                                             Visi Desa Sosor Dolok adalah menjadi desa wisata yang berkelanjutan, yang memadukan kearifan lokal dengan inovasi modern untuk mewujudkan kesejahteraan dan kebahagiaan bagi seluruh warganya serta memberikan pengalaman yang unik dan berkesan bagi para pengunjung. Desa ini berkomitmen untuk mengembangkan ekonomi lokal melalui pemanfaatan sumber daya alam dan budaya yang berkelanjutan, sekaligus melestarikan lingkungan dan adat istiadat yang ada.
-                                        </div>
+                                        <div className="text-[14px] text-justify" dangerouslySetInnerHTML={{ __html: item.visi_desa }} />
+
                                         <div className="mt-4 w-[100px] text-[18px] font-bold">
                                              <div className="">Misi</div>
                                              <div className="bg-[#0890EA] h-1"></div>
                                         </div>
-                                        <div className="text-[14px] text-justify">
-                                             Visi Desa Sosor Dolok adalah menjadi desa wisata yang berkelanjutan, yang memadukan kearifan lokal dengan inovasi modern untuk mewujudkan kesejahteraan dan kebahagiaan bagi seluruh warganya serta memberikan pengalaman yang unik dan berkesan bagi para pengunjung. Desa ini berkomitmen untuk mengembangkan ekonomi lokal melalui pemanfaatan sumber daya alam dan budaya yang berkelanjutan, sekaligus melestarikan lingkungan dan adat istiadat yang ada.
-                                        </div>
+                                        <div className="text-[14px] text-justify" dangerouslySetInnerHTML={{ __html: item.misi_desa }} />
+
                                         <div className="mt-4 w-[120px] text-[18px] font-bold">
                                              <div className="">Sejarah Desa</div>
                                              <div className="bg-[#0890EA] h-1"></div>
                                         </div>
-                                        <div className="text-[14px] text-justify">
-                                             Desa Sosor Dolok terletak di daerah dataran tinggi, menawarkan pemandangan alam yang menakjubkan dengan latar belakang pegunungan yang megah dan udara yang sejuk. Desa ini terkenal dengan kebun teh yang membentang luas, menciptakan panorama hijau yang menyejukkan mata. Penduduk desa yang mayoritas adalah petani teh, menjalani hidup dengan ritme yang tenang dan penuh kesederhanaan, jauh dari hiruk-pikuk kota.
-                                             Keunikan Desa Sosor Dolok tidak hanya terletak pada keindahan alamnya, tetapi juga pada kekayaan budayanya. Warga desa masih memegang teguh adat istiadat dan tradisi yang turun-temurun, termasuk upacara-upacara yang berkaitan dengan pertanian dan kepercayaan lokal. Di sini, pengunjung dapat menyaksikan langsung berbagai festival budaya yang diadakan dengan penuh warna dan keceriaan. Selain itu, keramahan penduduk lokal menjadikan setiap pengalaman kunjungan menjadi lebih berkesan dan autentik.
-                                        </div>
+                                        <div className="text-[14px] text-justify" dangerouslySetInnerHTML={{ __html: item.sejarah_desa }} />
+
                                         <div className="mt-4 w-[150px] text-[18px] font-bold">
                                              <div className="">Letak Geografis</div>
                                              <div className="bg-[#0890EA] h-1"></div>
@@ -87,7 +123,7 @@ export default function DataDesa() {
                                                   Sebelah Utara
                                              </div>
                                              <div className="">
-                                                  : Desa Partungko Naginjang Kecamatan Harian
+                                                  : {item.batas_utara}
                                              </div>
                                         </div>
                                         <div className="flex text-[18px]">
@@ -95,7 +131,7 @@ export default function DataDesa() {
                                                   Sebelah Timur
                                              </div>
                                              <div className="">
-                                                  : Desa Turpuk Malau/Turpuk Sagala Kecamatan Harian
+                                                  : {item.batas_timur}
                                              </div>
                                         </div>
                                         <div className="flex text-[18px]">
@@ -103,7 +139,7 @@ export default function DataDesa() {
                                                   Sebelah Selatan
                                              </div>
                                              <div className="">
-                                                  : Desa Partungko Naginjang Kecamatan Harian 
+                                                  : {item.batas_selatan}
                                              </div>
                                         </div>
                                         <div className="flex text-[18px]">
@@ -111,18 +147,14 @@ export default function DataDesa() {
                                                   Sebelah Barat
                                              </div>
                                              <div className="">
-                                                  : Desa Partungko Naginjang Kecamatan Harian
+                                                  : {item.batas_barat}
                                              </div>
                                         </div>
                                    </div>
-
-
-
-
-                              </div>
+                              ))}
                          </div>
                     </div>
                </div>
           </SidebarLayout>
-     )
+     );
 }

@@ -39,6 +39,7 @@ export default function TambahPengumuman() {
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleEditorChange = (event: any, editor: { getData: () => any }) => {
     const deskripsi_pengumuman = editor.getData();
     setPengumuman({ ...pengumuman, deskripsi_pengumuman });

@@ -1,6 +1,7 @@
 export interface PendudukDesa{
+     id: any;
      
-    nik : number,
+    nik : string,
      nama : string,
      agama : string,
      alamat : string,

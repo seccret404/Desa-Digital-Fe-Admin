@@ -1,9 +1,9 @@
 export interface Pemerintah{
-     id:number,
      nama:string,
-     nik:number,
+     nik:string,
      jabatan:string,
-     tahun_jabatan:string,
-     profil:string,
+     tahun_mulai:string,
+     tahun_selesai:string,
+     profil: string | File,
      
 }

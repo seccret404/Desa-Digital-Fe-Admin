@@ -1,11 +1,15 @@
 import { Agenda } from '../interfaces/agenda';
+import { Bantuan } from '../interfaces/bantuan';
 import { Berita } from '../interfaces/berita';
 import { Dusun } from '../interfaces/dusun';
+import { Tugas } from '../interfaces/jabatan';
 import { Laporan } from '../interfaces/laporan';
 import { Organisasi } from '../interfaces/organisasi';
 import { Pemerintah } from '../interfaces/pemerintah';
 import { PendudukDesa } from '../interfaces/penduduk';
+import { Penerima } from '../interfaces/penerimaBantuan';
 import { Pengumuman } from '../interfaces/pengumuman';
+import { Profil } from '../interfaces/profil';
 
 // const API_URL = 'https://desa-digital-bakend-jf9ckkwwo-seccret404s-projects.vercel.app/api';
 const API_URL = 'http://localhost:3000/api';
@@ -43,6 +47,25 @@ export const getBerita = async (): Promise<Berita[]> =>{
     throw new Error('Gagal mendapatkan data berita');
   }
 }
+export const getProfil = async (): Promise<Profil[]> => {
+  try {
+    const response = await fetch(`${API_URL}/profile`, {
+      headers: {
+        'Origin': 'http://localhost:3000'
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
+    const data = await response.json();
+    return data as Profil[];
+  } catch (error) {
+    console.error('Error:', error);
+    throw new Error('Gagal mendapatkan data profil');
+  }
+};
 export const getLaporanAgenda = async (): Promise<Laporan[]> =>{
   try{
     const response = await fetch(`${API_URL}/agenda/laporan`,{
@@ -74,6 +97,21 @@ export const getPengumuman = async (): Promise<Pengumuman[]> =>{
   }
 }
 
+export const getPemerintah = async (): Promise<Pemerintah[]> =>{
+  try{
+    const response = await fetch(`${API_URL}/pemerintah`,{
+      headers:{
+        'Origin': 'http://localhost:3000'
+      }
+    });
+    if (!response.ok) throw new Error(response.statusText);
+    const data = await response.json();
+    return data as Pemerintah[];
+  } catch (error) {
+    console.error('Error:', error);
+    throw new Error('Gagal mendapatkan data pemerintah');
+  }
+}
 
 export const getPenduduk = async (): Promise<PendudukDesa[]> =>{
   try{
@@ -87,6 +125,20 @@ export const getPenduduk = async (): Promise<PendudukDesa[]> =>{
   } catch (error) {
     console.error('Error:', error);
     throw new Error('Gagal mendapatkan data dusun');
+  }
+}
+export const getBantuan = async (): Promise<Bantuan[]> =>{
+  try{
+    const response = await  fetch(`${API_URL}/bantuan`,{
+      headers: {
+        'Origin': 'http://localhost:3000'
+      }
+    }); if (!response.ok) throw new Error(response.statusText);
+    const data = await response.json();
+    return data as Bantuan[];
+  } catch (error) {
+    console.error('Error:', error);
+    throw new Error('Gagal mendapatkan data bantuan');
   }
 }
 
@@ -114,6 +166,21 @@ export const getAgenda = async(): Promise<Agenda[]> =>{
   }); if (!response.ok) throw new Error(response.statusText);
   const data = await response.json();
   return data as Agenda[];
+} catch (error) {
+  console.error('Error:', error);
+  throw new Error('Gagal mendapatkan data organisasi');
+}
+
+}
+export const getPenerimaBantuan = async(): Promise<Penerima[]> =>{
+  try{
+    const response = await  fetch(`${API_URL}/penerima-bantuan`,{
+    headers: {
+      'Origin': 'http://localhost:3000'
+    }
+  }); if (!response.ok) throw new Error(response.statusText);
+  const data = await response.json();
+  return data as Penerima[];
 } catch (error) {
   console.error('Error:', error);
   throw new Error('Gagal mendapatkan data organisasi');
@@ -158,6 +225,65 @@ export const addBerita = async (data: Berita): Promise<void> => {
     throw new Error('Gagal menambahkan berita');
   }
 }
+export const addPemerintah = async (data: Pemerintah): Promise<void> => {
+  try {
+    const formData = new FormData();
+    formData.append('nama', data.nama);
+    formData.append('nik', data.nik);
+    formData.append('jabatan', data.jabatan);
+    formData.append('tahun_mulai', data.tahun_mulai);
+    formData.append('tahun_selesai', data.tahun_selesai);
+    if (data.profil instanceof File) {
+      formData.append('profil', data.profil);
+    } else if (typeof data.profil === 'string') {
+      formData.append('profil_url', data.profil);
+    }
+    
+    const response = await fetch(`${API_URL}/pemerintah`, {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const responseData = await response.json();
+    console.log("Response from server:", responseData); // Log successful response
+  } catch (error) {
+    console.error('Error:', error);
+    throw new Error('Gagal menambahkan pemerintah');
+  }
+}
+
+
+export const addProfil= async (data: Profil): Promise<void> => {
+  try {
+    const formData = new FormData();
+    formData.append('nama_desa', data.nama_desa);
+    formData.append('alamat_kantor', data.alamat_kantor);
+    formData.append('kecamatan', data.kecamatan);
+    formData.append('kabupaten', data.kabupaten);
+    formData.append('provinsi', data.provinsi);
+    formData.append('profil_singkat', data.profil_singkat);
+    formData.append('gambar_desa', data.gambar_desa);
+    formData.append('batas_barat', data.batas_barat);
+    formData.append('batas_timur', data.batas_timur);
+    formData.append('batas_utara', data.batas_utara);
+    formData.append('batas_selatan', data.batas_selatan);
+    formData.append('sejarah_desa', data.sejarah_desa);
+    formData.append('visi_desa', data.visi_desa);
+    formData.append('misi_desa', data.misi_desa);
+    
+    await fetch(`${API_URL}/profile`, {
+      method: 'POST',
+      body: formData,
+    });
+  } catch (error) {
+    console.error('Error:', error);
+    throw new Error('Gagal menambahkan profil');
+  }
+}
 
 export const addPengumuman = async (data: Pengumuman): Promise<void> => {
   try {
@@ -183,6 +309,54 @@ export const addPengumuman = async (data: Pengumuman): Promise<void> => {
 export const addDusun = async (data: Dusun): Promise<void> =>{
   try{
     await fetch(`${API_URL}/dusun`,{
+      method:'POST',
+      headers:{
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+  }
+  catch (error) {
+    console.error('Error:', error);
+    throw new Error('Gagal menambahkan agenda');
+  }
+};
+export const addTugas = async (data: Tugas): Promise<void> =>{
+  try{
+    await fetch(`${API_URL}/tugas`,{
+      method:'POST',
+      headers:{
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+  }
+  catch (error) {
+    console.error('Error:', error);
+    throw new Error('Gagal menambahkan tugas');
+  }
+};
+export const addPenerima = async (data: Penerima): Promise<void> =>{
+  try{
+    await fetch(`${API_URL}/penerima-bantuan`,{
+      method:'POST',
+      headers:{
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+  }
+  catch (error) {
+    console.error('Error:', error);
+    throw new Error('Gagal menambahkan penerima');
+  }
+};
+export const addBantuan = async (data: Bantuan): Promise<void> =>{
+  try{
+    await fetch(`${API_URL}/bantuan`,{
       method:'POST',
       headers:{
         'Content-Type': 'application/json',
@@ -249,24 +423,6 @@ export const addPenduduk = async (data: PendudukDesa): Promise<void> => {
   }
 };
 
-
-export const addPemerintah = async(data:Pemerintah): Promise<void>=>{
-  try{
-    await fetch(`${API_URL}/pemerintah`,{
-      method:'POST',
-      headers:{
-        'Content-Type': 'application/json',
-        
-      },
-      body: JSON.stringify(data),
-    });
-  }catch(error){
-    console.error('error:', error);
-    throw new Error('Gagal Menambah Pemerintah');
-  }
-}
-
-
 //
 //get bY ID
 //
@@ -296,6 +452,21 @@ export const getBeritaById= async (id: string): Promise<Berita> => {
     if (!response.ok) throw new Error(response.statusText);
     const data = await response.json();
     return data as Berita;
+  } catch (error) {
+    console.error('Error:', error);
+    throw new Error('Gagal mendapatkan data berita');
+  }
+};
+export const getProfilById= async (id: string): Promise<Profil> => {
+  try {
+    const response = await fetch(`${API_URL}/profile/${id}`, {
+      headers: {
+        'Origin': 'http://localhost:3000'
+      }
+    });
+    if (!response.ok) throw new Error(response.statusText);
+    const data = await response.json();
+    return data as Profil;
   } catch (error) {
     console.error('Error:', error);
     throw new Error('Gagal mendapatkan data berita');
@@ -457,6 +628,44 @@ export const updatePengumuman = async (id: string, data: Pengumuman): Promise<vo
   } catch (error) {
     console.error('Error:', error);
     throw new Error('Gagal memperbarui pengumuman');
+  }
+}
+
+export const updateProfil = async (id: string, data: Profil): Promise<void> => {
+  try {
+    const formData = new FormData();
+
+    // Append data to FormData
+    formData.append('nama_desa', data.nama_desa);
+    formData.append('alamat_kantor', data.alamat_kantor);
+    formData.append('kecamatan', data.kecamatan);
+    formData.append('kabupaten', data.kabupaten);
+    formData.append('provinsi', data.provinsi);
+    formData.append('profil_singkat', data.profil_singkat);
+    formData.append('visi_desa', data.visi_desa);
+    formData.append('misi_desa', data.misi_desa);
+    formData.append('sejarah_desa', data.sejarah_desa);
+    formData.append('batas_barat', data.batas_barat);
+    formData.append('batas_utara', data.batas_utara);
+    formData.append('batas_selatan', data.batas_selatan);
+    
+    // Append gambar_desa if it exists
+    if (data.gambar_desa instanceof File) {
+      formData.append('gambar_desa', data.gambar_desa);
+    }
+
+    // Send the PUT request to update the profile
+    const response = await fetch(`http://localhost:3000/api/profile/${id}`, {
+      method: 'PUT',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error('Gagal memperbarui profil');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    throw new Error('Gagal memperbarui profil');
   }
 }
 

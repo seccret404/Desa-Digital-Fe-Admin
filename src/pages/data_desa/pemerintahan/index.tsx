@@ -5,8 +5,29 @@ import { Input } from '../../../components/ui/input'
 import Button from '../../../components/ui/button'
 import { Link } from 'react-router-dom'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../../components/ui/table'
+import { useEffect, useState } from 'react'
+import { Pemerintah } from '../../../interfaces/pemerintah'
+import { getPemerintah } from '../../../services/desaServices'
 
 export default function Pemerintahan() {
+
+      const [pemerintah, setPemerintah] = useState<Pemerintah[]>([]);
+
+      useEffect(() =>{
+          async function fetchPemerintah(){
+               try{
+                    const data = await getPemerintah();
+                    setPemerintah(data);
+               }catch(error){
+                    if (error instanceof Error) {
+                         console.error('error:', error.message);
+                    } else {
+                         console.error('An unexpected error occurred:', error);
+                    }
+               }
+          }
+          fetchPemerintah();
+      },[])
      
      return (
           <SidebarLayout>
@@ -39,21 +60,18 @@ export default function Pemerintahan() {
                                              <TableHead className='text-center'>Aksi</TableHead>
                                         </TableHeader>
                                         <TableBody>
-                                            
-                                                  <TableRow >
-                                                       <TableCell></TableCell>
-                                                       <TableCell></TableCell>
-                                                       <TableCell></TableCell>
-                                                       <TableCell></TableCell>
+                                            {pemerintah.map((p, index) =>
+                                        <TableRow key={p.id} >
+                                                       <TableCell>{index+1}</TableCell>
+                                                       <TableCell>{p.nama}</TableCell>
+                                                       <TableCell>{p.nik}</TableCell>
+                                                       <TableCell>{p.jabatan}</TableCell>
                                                        {/* <TableCell className='text-[#0D9276] font-medium'>{new Date(b.tgl_publikasi).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: '2-digit' })}</TableCell> */}
                                                        <TableCell>
-                                                            {/* {b.cover && (
-                                                                 b.cover.endsWith('.jpg') || b.cover.endsWith('.png') || b.cover.endsWith('.jpeg') ? (
-                                                                      <img src={`http://localhost:3000/images/cover/${b.cover}`} alt="Cover Berita" className="w-20 h-auto" />
-                                                                 ) : (
-                                                                      <a href={`http://localhost:3000/images/cover/${b.cover}`} target="_blank" rel="noopener noreferrer">{b.cover}</a>
-                                                                 )
-                                                            )} */}
+                                                            <a href={`http://localhost:3000/images/pemerintah/${p.profil}`}>
+                                                            <img src={`http://localhost:3000/images/pemerintah/${p.profil}`} alt="Images" width={100} height={150} />
+
+                                                            </a>
                                                        </TableCell>
                                                        <TableCell>
                                                             <div className="flex justify-center ml-4 mr-4">
@@ -69,6 +87,8 @@ export default function Pemerintahan() {
                                                        </TableCell>
                                                   </TableRow>
                                          
+                                        )}
+                                                  
 
 
                                         </TableBody>

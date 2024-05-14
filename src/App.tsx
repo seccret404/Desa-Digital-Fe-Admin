@@ -35,6 +35,8 @@ import Pemerintahan from './pages/data_desa/pemerintahan'
 import TambahPemerintah from './pages/data_desa/pemerintahan/tambah'
 import TugasWewenang from './pages/data_desa/TugasWewenang'
 import TambahTugasWewenang from './pages/data_desa/TugasWewenang/tambah'
+import ProfilEdit from './pages/data_desa/editdesa'
+import EditPenerimaBantuan from './pages/banntuan/edit_penerima'
 
 export default function App() {
   return (
@@ -55,6 +57,7 @@ export default function App() {
         <Route path='detail-wisata' element={<DetailWisata/>}/>
         <Route path='/data-desa' element={<DataDesa/>}/>
         <Route path='/profil-desa' element={<ProfilForm/>}/>
+        <Route path='/profil-desa/:id' element={<ProfilEdit/>}/>
         <Route path='/pemerintahan' element={<Pemerintahan/>}/>
         <Route path='/tambah-pemerintah' element={<TambahPemerintah/>}/>
         <Route path='/tugas-wewenang' element={<TugasWewenang/>}/>
@@ -75,6 +78,7 @@ export default function App() {
         <Route path='/tambah-bantuan' element={<DaftarBantuanPage/>} />
         <Route path='/tambah-daftar' element={<TambahDaftarBantuan/>} />
         <Route path='/tambah-penerima' element={<TambahPenerimaBantuan/>} />
+        <Route path='/edit-penerima/:id' element={<EditPenerimaBantuan/>} />
 
       </Routes> 
     </Router>
