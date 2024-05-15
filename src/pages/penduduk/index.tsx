@@ -69,7 +69,7 @@ export default function Penduduk() {
                                         <TableHead>Nama</TableHead>
                                         <TableHead >NIK</TableHead>
                                         <TableHead >Alamat</TableHead>
-                                        <TableHead >Status</TableHead>
+                                        <TableHead >Status Perkawinan</TableHead>
                                         <TableHead className='text-center'>Aksi</TableHead>
                                    </TableHeader>
                                    <TableBody>

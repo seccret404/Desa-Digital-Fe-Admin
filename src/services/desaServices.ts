@@ -1,4 +1,5 @@
 import { Agenda } from '../interfaces/agenda';
+import { Anggaran } from '../interfaces/anggaran';
 import { Bantuan } from '../interfaces/bantuan';
 import { Berita } from '../interfaces/berita';
 import { Dusun } from '../interfaces/dusun';
@@ -12,7 +13,8 @@ import { Pengumuman } from '../interfaces/pengumuman';
 import { Profil } from '../interfaces/profil';
 
 // const API_URL = 'https://desa-digital-bakend-jf9ckkwwo-seccret404s-projects.vercel.app/api';
-const API_URL = 'http://localhost:3000/api';
+// const API_URL = 'http://localhost:3000/api';
+const API_URL = 'https://desa-digital-bakend-production.up.railway.app/api';
 
 //
 // GET API
@@ -32,6 +34,23 @@ export const getDusun = async (): Promise<Dusun[]> =>{
     throw new Error('Gagal mendapatkan data dusun');
   }
 };
+
+export const getAnggaran = async (): Promise<Anggaran[]> =>{
+  try {
+    const response = await fetch(`${API_URL}/anggaran`, {
+      headers: {
+        'Origin': 'http://localhost:3000'
+      }
+    });
+    if (!response.ok) throw new Error(response.statusText);
+    const data = await response.json();
+    return data as Anggaran[];
+  } catch (error) {
+    console.error('Error:', error);
+    throw new Error('Gagal mendapatkan data anggaran');
+  }
+};
+
 export const getBerita = async (): Promise<Berita[]> =>{
   try{
     const response = await fetch(`${API_URL}/berita`,{
@@ -171,7 +190,23 @@ export const getAgenda = async(): Promise<Agenda[]> =>{
   throw new Error('Gagal mendapatkan data organisasi');
 }
 
+
 }
+export const getTugas = async(): Promise<Tugas[]> =>{
+  try{
+    const response = await  fetch(`${API_URL}/tugas`,{
+    headers: {
+      'Origin': 'http://localhost:3000'
+    }
+  }); if (!response.ok) throw new Error(response.statusText);
+  const data = await response.json();
+  return data as Tugas[];
+} catch (error) {
+  console.error('Error:', error);
+  throw new Error('Gagal mendapatkan data tugas');
+}
+}
+
 export const getPenerimaBantuan = async(): Promise<Penerima[]> =>{
   try{
     const response = await  fetch(`${API_URL}/penerima-bantuan`,{
@@ -217,6 +252,33 @@ export const addBerita = async (data: Berita): Promise<void> => {
     formData.append('file', data.file);
     
     await fetch(`${API_URL}/create`, {
+      method: 'POST',
+      body: formData,
+    });
+  } catch (error) {
+    console.error('Error:', error);
+    throw new Error('Gagal menambahkan berita');
+  }
+}
+export const addOrganisasi = async (data: Organisasi): Promise<void> => {
+  try {
+    const formData = new FormData();
+    formData.append('nama_lembaga', data.nama_lembaga);
+    formData.append('singkatan', data.singkatan);
+    formData.append('alamat_organisasi', data.alamat_organisasi);
+    formData.append('tahun_berdiri', data.tahun_berdiri);
+    formData.append('ketua', data.ketua);
+    formData.append('wakil_ketua', data.wakil_ketua);
+    formData.append('sekretaris', data.sekretaris);
+    formData.append('bendahara', data.bendahara);
+    formData.append('jumlah_anggota', data.jumlah_anggota);
+    formData.append('deskripsi', data.deskripsi);
+    if (data.logo_organisasi instanceof File) {
+      formData.append('logo_organisasi', data.logo_organisasi);
+    } else if (typeof data.logo_organisasi === 'string') {
+      formData.append('logo_organisasi', data.logo_organisasi);
+    }
+    await fetch(`${API_URL}/organisasi`, {
       method: 'POST',
       body: formData,
     });
@@ -320,6 +382,22 @@ export const addDusun = async (data: Dusun): Promise<void> =>{
   catch (error) {
     console.error('Error:', error);
     throw new Error('Gagal menambahkan agenda');
+  }
+};
+export const addAnggaran = async (data: Anggaran): Promise<void> =>{
+  try{
+    await fetch(`${API_URL}/anggaran`,{
+      method:'POST',
+      headers:{
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+  }
+  catch (error) {
+    console.error('Error:', error);
+    throw new Error('Gagal menambahkan anggaran');
   }
 };
 export const addTugas = async (data: Tugas): Promise<void> =>{
@@ -441,6 +519,21 @@ export const getPendudukById = async (id: string): Promise<PendudukDesa> => {
     throw new Error('Gagal mendapatkan data penduduk');
   }
 };
+export const getAnggaranById = async (id: string): Promise<Anggaran> => {
+  try {
+    const response = await fetch(`${API_URL}/anggaran/${id}`, {
+      headers: {
+        'Origin': 'http://localhost:3000'
+      }
+    });
+    if (!response.ok) throw new Error(response.statusText);
+    const data = await response.json();
+    return data as Anggaran;
+  } catch (error) {
+    console.error('Error:', error);
+    throw new Error('Gagal mendapatkan data anggaran');
+  }
+};
 
 export const getBeritaById= async (id: string): Promise<Berita> => {
   try {
@@ -452,6 +545,21 @@ export const getBeritaById= async (id: string): Promise<Berita> => {
     if (!response.ok) throw new Error(response.statusText);
     const data = await response.json();
     return data as Berita;
+  } catch (error) {
+    console.error('Error:', error);
+    throw new Error('Gagal mendapatkan data berita');
+  }
+};
+export const getOrganisasiById= async (id: string): Promise<Organisasi> => {
+  try {
+    const response = await fetch(`${API_URL}/organisasi/${id}`, {
+      headers: {
+        'Origin': 'http://localhost:3000'
+      }
+    });
+    if (!response.ok) throw new Error(response.statusText);
+    const data = await response.json();
+    return data as Organisasi;
   } catch (error) {
     console.error('Error:', error);
     throw new Error('Gagal mendapatkan data berita');
@@ -551,6 +659,20 @@ export const updatePenduduk = async (id: string, data: PendudukDesa): Promise<vo
     throw new Error('Gagal memperbarui penduduk');
   }
 };
+export const updateAnggaran = async (id: string, data: Anggaran): Promise<void> => {
+  try {
+    await fetch(`${API_URL}/anggaran/${id}`, {
+      method: 'PUT', 
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+  } catch (error) {
+    console.error('Error:', error);
+    throw new Error('Gagal memperbarui anggaran');
+  }
+};
 
 export const updateDusun = async(id: string, data: Dusun): Promise<void>=>{
   try{
@@ -630,6 +752,41 @@ export const updatePengumuman = async (id: string, data: Pengumuman): Promise<vo
     throw new Error('Gagal memperbarui pengumuman');
   }
 }
+
+
+export const updateOrganisasi = async (id: string, data: Organisasi): Promise<void> => {
+  try {
+    const formData = new FormData();
+    formData.append('nama_lembaga', data.nama_lembaga);
+    formData.append('singkatan', data.singkatan);
+    formData.append('alamat_organisasi', data.alamat_organisasi);
+    formData.append('tahun_berdiri', data.tahun_berdiri);
+    formData.append('ketua', data.ketua);
+    formData.append('wakil_ketua', data.wakil_ketua);
+    formData.append('sekretaris', data.sekretaris);
+    formData.append('bendahara', data.bendahara);
+    formData.append('jumlah_anggota', data.jumlah_anggota);
+    formData.append('deskripsi', data.deskripsi);
+
+    if (data.logo_organisasi instanceof File) {
+      formData.append('logo_organisasi', data.logo_organisasi);
+    } else if (typeof data.logo_organisasi === 'string') {
+      formData.append('logo_organisasi', data.logo_organisasi);
+    }
+
+    const response = await fetch(`http://localhost:3000/api/organisasi/${id}`, {
+      method: 'PUT',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to update organisasi');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    throw new Error('Gagal memperbarui organisasi');
+  }
+};
 
 export const updateProfil = async (id: string, data: Profil): Promise<void> => {
   try {

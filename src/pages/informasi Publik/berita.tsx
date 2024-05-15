@@ -68,9 +68,9 @@ export default function BeritaPage() {
                                                        <TableCell>
                                                             {b.cover && (
                                                                  b.cover.endsWith('.jpg') || b.cover.endsWith('.png') || b.cover.endsWith('.jpeg') ? (
-                                                                      <img src={`http://localhost:3000/images/cover/${b.cover}`} alt="Cover Berita" className="w-20 h-auto" />
+                                                                      <img src={`https://desa-digital-bakend-production.up.railway.app/images/cover/${b.cover}`} alt="Cover Berita" className="w-20 h-auto" />
                                                                  ) : (
-                                                                      <a href={`http://localhost:3000/images/cover/${b.cover}`} target="_blank" rel="noopener noreferrer">{b.cover}</a>
+                                                                      <a href={`https://desa-digital-bakend-production.up.railway.app/images/cover/${b.cover}`} target="_blank" rel="noopener noreferrer">{b.cover}</a>
                                                                  )
                                                             )}
                                                        </TableCell>

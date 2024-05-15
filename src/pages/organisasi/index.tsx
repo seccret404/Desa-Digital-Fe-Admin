@@ -61,18 +61,24 @@ export default function OrganisasiPage() {
                                         </TableHeader>
                                         <TableBody>
                                         {organisasi.map((p, index) => (
-                                    <TableRow key={p.id}>
+                                        <TableRow key={p.id}>
                                         <TableCell>{index + 1}</TableCell>
                                         <TableCell>{p.nama_lembaga}</TableCell>
-                                        <TableCell>{p.tahun_berdiri}</TableCell>
-                                        <TableCell>{p.alamat_organisasi}</TableCell>
+                                        <TableCell>{new Date(p.tahun_berdiri).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: '2-digit' })}</TableCell>
+                                        <TableCell>
+                                        <a href={`https://desa-digital-bakend-production.up.railway.app/images/organisasi/${p.logo_organisasi}`}>
+                                                            <img src={`https://desa-digital-bakend-production.up.railway.app/images/organisasi/${p.logo_organisasi}`} alt="Images" width={100} height={150} />
+                                                            </a>
+                                        </TableCell>
                                         <TableCell>{p.ketua}</TableCell>
                                         <TableCell>
                                              <div className="flex justify-center ml-4 mr-4">
 
                                                   <div className="flex justify-center text-[#0890EA] text-[12px] bg-[#0890EA60] w-[70px] h-[23px] text-center rounded-[5px]">
                                                        <Button>
+                                                            <Link to={`/organisasi/${p.id}`}>
                                                             Edit
+                                                            </Link>
                                                        </Button>
                                                   </div>
                                              </div>

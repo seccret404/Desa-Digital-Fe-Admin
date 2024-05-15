@@ -3,75 +3,98 @@ import HomeIcon from '../../components/icon/homeIcon';
 import { Input } from '../../components/ui/input';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getPendudukById, updatePenduduk } from '../../services/desaServices';
+import { getDusun, getPendudukById, updatePenduduk } from '../../services/desaServices';
 import { PendudukDesa } from '../../interfaces/penduduk';
 import ArrowRIghtIcon from '../../components/icon/arrowRightIcon';
 import { useToast } from '../../components/ui/use-toast';
 import { useNavigate } from 'react-router-dom';
+import { Dusun } from '../../interfaces/dusun';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField'
 export default function EditPenduduk() {
-    const { id } = useParams<{ id: string }>();
-    const {toast} = useToast();
-    const navigate = useNavigate();
-    const [penduduk, setPenduduk] = useState<PendudukDesa>({
-        nama: '',
-        agama: '',
-        alamat: '',
-        tempat_lahir: '',
-        pekerjaan: '',
-        status_hidup: '',
-        no_kk: 0,
-        nik: 0,
-        jenis_kelamin: '',
-        status_perkawinan: '',
-        tanggal_lahir: '',
-        kewarganegaraan: '',
-        pendidikan_terakhir: '',
-        dusun: '',
-        id_dusun:0
-    });
+     const { id } = useParams<{ id: string }>();
+     const { toast } = useToast();
+     const navigate = useNavigate();
+     const [penduduk, setPenduduk] = useState<PendudukDesa>({
+          nama: '',
+          agama: '',
+          alamat: '',
+          tempat_lahir: '',
+          pekerjaan: '',
+          status_hidup: '',
+          no_kk: 0,
+          nik: 0,
+          jenis_kelamin: '',
+          status_perkawinan: '',
+          tanggal_lahir: '',
+          kewarganegaraan: '',
+          pendidikan_terakhir: '',
+          dusun: '',
+          id_dusun: 0
+     });
+     const [dusunOptions, setDusunOptions] = useState<Dusun[]>([]);
+     const [selectedDusun, setSelectedDusun] = useState<Dusun | null>(null);
 
-    useEffect(() => {
-        async function fetchPendudukData() {
-            try {
-                const data = await getPendudukById(id);
-                if (data.tanggal_lahir) {
-                    const formattedDate = new Date(data.tanggal_lahir).toISOString().split('T')[0];
-                    data.tanggal_lahir = formattedDate;
-                }
-                setPenduduk(data);
-            } catch (error) {
-                console.error('Error fetching penduduk:', error);
-            }
-        }
-        fetchPendudukData();
-    }, [id]);
+     useEffect(() => {
+          const fetchData = async () => {
+               try {
+                    const [pendudukData, dusunData] = await Promise.all([
+                         getPendudukById(id),
+                         getDusun()
+                    ]);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        setPenduduk(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    };
+                    if (pendudukData.tanggal_lahir) {
+                         const formattedDate = new Date(pendudukData.tanggal_lahir).toISOString().split('T')[0];
+                         pendudukData.tanggal_lahir = formattedDate;
+                    }
+                    setPenduduk(pendudukData);
+                    setDusunOptions(dusunData);
+                    setSelectedDusun(dusunData.find(dusun => dusun.id === pendudukData.id_dusun) || null);
+               } catch (error) {
+                    console.error('Error fetching data:', error);
+               }
+          };
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        try {
-            await updatePenduduk(id, penduduk);
-            console.log('Penduduk updated successfully');
-            toast({
-               title:"Data Penduduk",
-               description:'Data Penduduk Berhasil di Update'
-            })
-            navigate('/data-penduduk')
-        } catch (error) {
-            console.error('Error updating penduduk:', error);
-            toast({
-               title:"Data Penduduk",
-               description:'Data Penduduk Gagal di Update'
-            })
-        }
-    };
+          fetchData();
+     }, [id]);
+
+     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+          const { name, value } = e.target;
+          setPenduduk(prevState => ({
+               ...prevState,
+               [name]: value
+          }));
+     };
+
+     const handleDusunChange = (_event: React.ChangeEvent<object>, value: Dusun | null) => {
+          setSelectedDusun(value);
+      };
+      
+
+      const handleSubmit = async (e: React.FormEvent) => {
+          e.preventDefault();
+          try {
+              await updatePenduduk(id, {
+                  ...penduduk,
+                  id_dusun: selectedDusun ? selectedDusun.id : 0, // Sesuaikan dengan kebutuhan API Anda
+                  dusun: selectedDusun ? selectedDusun.nama_dusun : ''
+              });
+              console.log('Penduduk updated successfully');
+              toast({
+                  title: "Data Penduduk",
+                  description: 'Data Penduduk Berhasil di Update'
+              });
+              navigate('/data-penduduk');
+          } catch (error) {
+              console.error('Error updating penduduk:', error);
+              toast({
+                  title: "Data Penduduk",
+                  description: 'Data Penduduk Gagal di Update'
+              });
+          }
+      };
+      
+
 
      return (
           <SidebarLayout>
@@ -112,9 +135,9 @@ export default function EditPenduduk() {
                                                   <div className="">
 
                                                        <select className='w-[416px] h-[40px] font-bold border border-gray-300 rounded-md px-2' name='agama' value={penduduk.agama} onChange={handleChange} >
-                                                     
-                                                       <option>Pilih Agama</option>
-                                                       <option value="Kristen Protestan">Kristen Protestan</option>
+
+                                                            <option>Pilih Agama</option>
+                                                            <option value="Kristen Protestan">Kristen Protestan</option>
                                                             <option value="Kristen Khatolik">Kristen Khatolik</option>
                                                             <option value="Islam">Islam</option>
                                                             <option value="Budha">Budha</option>
@@ -153,11 +176,11 @@ export default function EditPenduduk() {
                                                        Status Hidup
                                                   </div>
                                                   <div className="">
-                                                  <select className='w-[416px] h-[40px] font-bold border border-gray-300 rounded-md px-2' name='status_hidup' value={penduduk.status_hidup} onChange={handleChange}>
-                                                     <option >Pilih Status</option>
-                                                     <option value="Hidup">Hidup</option>
-                                                     <option value="Wafat">Wafat</option>
-                                                </select>
+                                                       <select className='w-[416px] h-[40px] font-bold border border-gray-300 rounded-md px-2' name='status_hidup' value={penduduk.status_hidup} onChange={handleChange}>
+                                                            <option >Pilih Status</option>
+                                                            <option value="Hidup">Hidup</option>
+                                                            <option value="Wafat">Wafat</option>
+                                                       </select>
                                                   </div>
                                              </div>
                                              <div className="mt-4">
@@ -183,11 +206,11 @@ export default function EditPenduduk() {
                                                        Jenis Kelamin
                                                   </div>
                                                   <div className="">
-                                                  <select  className='w-[416px] h-[40px] font-bold border border-gray-300 rounded-md px-2' name='jenis_kelamin' value={penduduk.jenis_kelamin} onChange={handleChange}>
-                                                     <option>Pilih Jenis</option>
-                                                     <option value="Laki-laki">Laki-laki</option>
-                                                     <option value="Perempuan">Perempuan</option>
-                                                </select>
+                                                       <select className='w-[416px] h-[40px] font-bold border border-gray-300 rounded-md px-2' name='jenis_kelamin' value={penduduk.jenis_kelamin} onChange={handleChange}>
+                                                            <option>Pilih Jenis</option>
+                                                            <option value="Laki-laki">Laki-laki</option>
+                                                            <option value="Perempuan">Perempuan</option>
+                                                       </select>
                                                   </div>
                                              </div>
                                              <div className="mt-4">
@@ -195,13 +218,13 @@ export default function EditPenduduk() {
                                                        Status Perkawinan
                                                   </div>
                                                   <div className="">
-                                                  <select className='w-[416px] h-[40px] font-bold border border-gray-300 rounded-md px-2' name='status_perkawinan' value={penduduk.status_perkawinan} onChange={handleChange}>
-                                                     <option>Pilih Status</option>
-                                                     <option value="Kawin">Kawin</option>
-                                                     <option value="Belum Kawin">Belum Kawin</option>
-                                                     <option value="Cerai Hidup">Cerai Hidup</option>
-                                                     <option value="Cerai Mati">Cerai Mati</option>
-                                                </select>
+                                                       <select className='w-[416px] h-[40px] font-bold border border-gray-300 rounded-md px-2' name='status_perkawinan' value={penduduk.status_perkawinan} onChange={handleChange}>
+                                                            <option>Pilih Status</option>
+                                                            <option value="Kawin">Kawin</option>
+                                                            <option value="Belum Kawin">Belum Kawin</option>
+                                                            <option value="Cerai Hidup">Cerai Hidup</option>
+                                                            <option value="Cerai Mati">Cerai Mati</option>
+                                                       </select>
                                                   </div>
                                              </div>
                                              <div className="mt-4">
@@ -222,11 +245,11 @@ export default function EditPenduduk() {
                                                        Kewarganegaraan
                                                   </div>
                                                   <div className="">
-                                                  <select className='w-[416px] h-[40px] font-bold border border-gray-300 rounded-md px-2' name='kewarganegaraan' value={penduduk.kewarganegaraan} onChange={handleChange}>
-                                                    <option >Pilih Kewarganegaraan</option>
-                                                    <option value="WNI">Warga Negara Indonesia</option>
-                                                    <option value="WNA">Warga Negara Asing</option>
-                                                </select>
+                                                       <select className='w-[416px] h-[40px] font-bold border border-gray-300 rounded-md px-2' name='kewarganegaraan' value={penduduk.kewarganegaraan} onChange={handleChange}>
+                                                            <option >Pilih Kewarganegaraan</option>
+                                                            <option value="WNI">Warga Negara Indonesia</option>
+                                                            <option value="WNA">Warga Negara Asing</option>
+                                                       </select>
                                                   </div>
                                              </div>
                                              <div className="mt-4">
@@ -234,14 +257,14 @@ export default function EditPenduduk() {
                                                        Pendidikan
                                                   </div>
                                                   <div className="">
-                                                  <select className='w-[416px] h-[40px] font-bold border border-gray-300 rounded-md px-2' name='pendidikan_terakhir' value={penduduk.pendidikan_terakhir} onChange={handleChange}>
-                                                    <option >Pilih Pendidikan</option>
-                                                    <option value="SD">Sekolah Dasar</option>
-                                                    <option value="SMP">Sekolah Mengengah Pertama</option>
-                                                    <option value="SMA">Sekolah Mengengah Atas</option>
-                                                    <option value="D4">Diploma</option>
-                                                    <option value="S1">Sarjana</option>
-                                                </select>
+                                                       <select className='w-[416px] h-[40px] font-bold border border-gray-300 rounded-md px-2' name='pendidikan_terakhir' value={penduduk.pendidikan_terakhir} onChange={handleChange}>
+                                                            <option >Pilih Pendidikan</option>
+                                                            <option value="SD">Sekolah Dasar</option>
+                                                            <option value="SMP">Sekolah Mengengah Pertama</option>
+                                                            <option value="SMA">Sekolah Mengengah Atas</option>
+                                                            <option value="D4">Diploma</option>
+                                                            <option value="S1">Sarjana</option>
+                                                       </select>
                                                   </div>
                                              </div>
                                              <div className="mt-4">
@@ -249,10 +272,16 @@ export default function EditPenduduk() {
                                                        Dusun
                                                   </div>
                                                   <div className="">
-                                                  <select className='w-[416px] h-[40px] font-bold border border-gray-300 rounded-md px-2' name='dusun' value={penduduk.dusun} onChange={handleChange}>
-                                                    <option >Pilih Dusun</option>
-                                                    <option value="Dusun Pagaran">Dusun Pagaran</option>
-                                                </select>
+                                                       <div className="">
+                                                            <Autocomplete
+                                                                 value={selectedDusun}
+                                                                 onChange={handleDusunChange}
+                                                                 options={dusunOptions}
+                                                                 getOptionLabel={(option) => option.nama_dusun} // Mengambil nilai dari properti 'nama_dusun'
+                                                                 renderInput={(params) => <TextField {...params} label="Pilih Dusun" variant="outlined" />}
+                                                            />
+
+                                                       </div>
                                                   </div>
                                              </div>
                                         </div>
@@ -260,7 +289,7 @@ export default function EditPenduduk() {
                                    <div className="p-6 flex justify-end">
 
                                         <button type='submit' className='text-white bg-[#0890EA] rounded-[5px] w-[200px] h-[40px]' >
-                                             Tambah Data Penduduk
+                                             Simpan
                                         </button>
                                    </div>
                               </form>

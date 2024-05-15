@@ -92,7 +92,7 @@ export default function TambahPenerimaBantuan() {
           nama_bantuan: selectedBantuan.nama_bantuan,
           status_bantuan: status,
           tgl_terima: tglTerima,
-          jumlah_terima: jumlahTerima.toString(), // Mengonversi jumlahTerima ke tipe string
+          jumlah_terima: jumlahTerima.toString(), 
           bentuk_terima: bentukTerima,
           id: undefined
         };
@@ -103,13 +103,13 @@ export default function TambahPenerimaBantuan() {
           description: "Penerima berhasil ditambahkan!"
         });
         navigate('/bantuan');
-        // Reset form fields
+
         setSelectedPenduduk(null);
         setSelectedBantuan(null);
         setStatus('');
         setJenisBantuan('');
         setTglTerima('');
-        setBentukTerima(''); // Mengatur nilai bentuk terima kembali ke string kosong
+        setBentukTerima(''); 
         setJumlahTerima(null);
       } else {
         console.error('Please fill all fields');

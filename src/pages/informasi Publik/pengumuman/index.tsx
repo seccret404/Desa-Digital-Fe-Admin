@@ -66,9 +66,9 @@ export default function PengumumanPage() {
                                                        <TableCell>
                                                             {p.cover_pengumuman && (
                                                                  p.cover_pengumuman.endsWith('.jpg') || p.cover_pengumuman.endsWith('.png') || p.cover_pengumuman.endsWith('.jpeg') ? (
-                                                                      <img src={`http://localhost:3000/images/pengumuman/cover/${p.cover_pengumuman}`} alt="Cover Pengumuman" className="w-20 h-auto" />
+                                                                      <img src={`https://desa-digital-bakend-production.up.railway.app/images/pengumuman/cover/${p.cover_pengumuman}`} alt="Cover Pengumuman" className="w-20 h-auto" />
                                                                  ) : (
-                                                                      <a href={`http://localhost:3000/images/pengumuman/cover/${p.cover_pengumuman}`} target="_blank" rel="noopener noreferrer">{p.cover_pengumuman}</a>
+                                                                      <a href={`https://desa-digital-bakend-production.up.railway.app/images/pengumuman/cover/${p.cover_pengumuman}`} target="_blank" rel="noopener noreferrer">{p.cover_pengumuman}</a>
                                                                  )
                                                             )}
 

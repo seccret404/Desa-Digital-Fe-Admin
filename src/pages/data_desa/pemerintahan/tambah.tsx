@@ -53,10 +53,7 @@ export default function TambahPemerintah() {
       return;
     }
   
-    // if (new Date(tanggalMulai) >= new Date(tanggalSelesai)) {
-    //   toast({ title: "Error", description: "Tanggal mulai harus sebelum tanggal selesai"});
-    //   return;
-    // }
+ 
   
     const data = {
       nama: selectedPenduduk.nama,

@@ -4,9 +4,30 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { Input } from '../../components/ui/input'
 import Button from '../../components/ui/button'
 import { Link } from 'react-router-dom'
-import { Table, TableBody, TableCell, TableHead, TableHeader } from '../../components/ui/table'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table'
+import { useEffect, useState } from 'react'
+import { Anggaran } from '../../interfaces/anggaran'
+import { getAnggaran } from '../../services/desaServices'
 
 export default function ApbdesPage() {
+     const [anggaran, setAnggaran] = useState<Anggaran[]>([]);
+
+
+     useEffect(() =>{
+          async function fetchAnggaran(){
+               try{
+                    const data = await getAnggaran();
+                    setAnggaran(data)
+               }catch (error) {
+                    if (error instanceof Error) {
+                         console.error('error:', error.message);
+                    } else {
+                         console.error('An unexpected error occurred:', error);
+                    }
+               }
+          }
+          fetchAnggaran();
+     }, [])
      return (
           <SidebarLayout>
                <div className="bg-[#D9D9D98B] rounded-[15px]">
@@ -37,17 +58,25 @@ export default function ApbdesPage() {
                                              <TableHead>Aksi</TableHead>
                                         </TableHeader>
                                         <TableBody>
-                                             <TableCell>1</TableCell>
-                                             <TableCell>APBDes 2023</TableCell>
-                                             <TableCell>2023</TableCell>
-                                             <TableCell>23 Maret 2023</TableCell>
+                                             {anggaran.map((a, index) =>
+                                             <TableRow key={a.id}>
+                                                  <TableCell>{index+1}</TableCell>
+                                             <TableCell>{a.judul}</TableCell>
+                                             <TableCell>{a.tahun_anggaran}</TableCell>
+                                             <TableCell>{new Date(a.createdAt).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: '2-digit' })}</TableCell>
                                              <TableCell>
                                              <div className="flex justify-center text-[#0890EA] text-[12px] bg-[#0890EA60] w-[70px] h-[23px] text-center rounded-[5px]">
                                                             <Button>
+                                                               <Link to={`/anggaran/${a.id}`}>
                                                                  Edit
+                                                               </Link>
                                                             </Button>
                                                        </div>
                                              </TableCell>
+                                             </TableRow>
+                                             )}
+                                             
+                                             
                                         </TableBody>
                                    </Table>
                               </div>

@@ -5,8 +5,29 @@ import { Input } from '../../../components/ui/input'
 import Button from '../../../components/ui/button'
 import { Link } from 'react-router-dom'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../../components/ui/table'
+import { useEffect, useState } from 'react'
+import { Tugas } from '../../../interfaces/jabatan'
+import { getTugas } from '../../../services/desaServices'
 
 export default function TugasWewenang() {
+
+     const [tugas, setTugas] = useState<Tugas[]>([]);
+
+     useEffect(() =>{
+          async function fetchTugas(){
+               try{
+                    const data = await getTugas();
+                    setTugas(data);
+               }catch (error) {
+                    if (error instanceof Error) {
+                         console.error('error:', error.message);
+                    } else {
+                         console.error('An unexpected error occurred:', error);
+                    }
+               }
+          }
+          fetchTugas();
+     },[])
      
      return (
           <SidebarLayout>
@@ -38,20 +59,15 @@ export default function TugasWewenang() {
                                              <TableHead className='text-center'>Aksi</TableHead>
                                         </TableHeader>
                                         <TableBody>
-                                            
-                                                  <TableRow >
-                                                       <TableCell></TableCell>
-                                                       <TableCell></TableCell>
-                                                       <TableCell></TableCell>
-                                                       {/* <TableCell className='text-[#0D9276] font-medium'>{new Date(b.tgl_publikasi).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: '2-digit' })}</TableCell> */}
+                                            {tugas.map((t, index) =>
+
+                                              <TableRow key={t.id}>
+                                                       <TableCell>{index+1}</TableCell>
+                                                       <TableCell>{t.jabatan}</TableCell>
+                                                       <TableCell>{t.tugas}</TableCell>
+                                                      
                                                        <TableCell>
-                                                            {/* {b.cover && (
-                                                                 b.cover.endsWith('.jpg') || b.cover.endsWith('.png') || b.cover.endsWith('.jpeg') ? (
-                                                                      <img src={`http://localhost:3000/images/cover/${b.cover}`} alt="Cover Berita" className="w-20 h-auto" />
-                                                                 ) : (
-                                                                      <a href={`http://localhost:3000/images/cover/${b.cover}`} target="_blank" rel="noopener noreferrer">{b.cover}</a>
-                                                                 )
-                                                            )} */}
+                                                            {t.wewenang}
                                                        </TableCell>
                                                        <TableCell>
                                                             <div className="flex justify-center ml-4 mr-4">
@@ -66,6 +82,8 @@ export default function TugasWewenang() {
                                                             </div>
                                                        </TableCell>
                                                   </TableRow>
+                                            )}
+                                                 
                                          
 
 

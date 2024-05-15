@@ -1,5 +1,5 @@
 export interface Organisasi{
-     id:number,
+     // id:number,
      nama_lembaga: string,
      singkatan: string,
      alamat_organisasi: string,
@@ -8,7 +8,7 @@ export interface Organisasi{
      wakil_ketua:string,
      sekretaris:string,
      bendahara:string,
-     logo:string,
+     logo_organisasi: File | string,
      jumlah_anggota:string,
-     createdAt : Date,
+     deskripsi:string,
 }

@@ -37,6 +37,8 @@ import TugasWewenang from './pages/data_desa/TugasWewenang'
 import TambahTugasWewenang from './pages/data_desa/TugasWewenang/tambah'
 import ProfilEdit from './pages/data_desa/editdesa'
 import EditPenerimaBantuan from './pages/banntuan/edit_penerima'
+import EditOrganisasi from './pages/organisasi/edit'
+import EditAddApbdes from './pages/apbdes/edit'
 
 export default function App() {
   return (
@@ -67,9 +69,11 @@ export default function App() {
         <Route path='/edit-agenda/:id' element={<EditAgenda/>}/>
         <Route path='/laporan-agenda/:id' element={<LaporanAgenda/>}/>
         <Route path='/apbdes' element={<ApbdesPage/>} />
+        <Route path='/anggaran/:id' element={<EditAddApbdes/>} />
         <Route path='/laporan-detail/:id' element={<DetailLaporan/>}/>
         <Route path='/tambah-apbdes' element={<AddApbdes/>} />
         <Route path='/organisasi' element={<OrganisasiPage/>} />
+        <Route path='/organisasi/:id' element={<EditOrganisasi/>} />
         <Route path='/tambah-organisasi' element={<AddOrganisasi/>} />
         <Route path='/pengumuman' element={<PengumumanPage/>} />
         <Route path='/tambah-pengumuman' element={<TambahPengumuman/>} />
