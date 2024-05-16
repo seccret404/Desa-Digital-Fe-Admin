@@ -10,15 +10,15 @@ import { Agenda } from '../../interfaces/agenda';
 import { useToast } from '../../components/ui/use-toast';
 
 export default function EditAgenda() {
-    const { id } = useParams<{ id: string }>();
-    const navigate = useNavigate();
-    const { toast } = useToast();
-    const [agendaData, setAgendaData] = useState<Agenda | null>(null);
+        const { id } = useParams<{ id: string }>();
+        const navigate = useNavigate();
+        const { toast } = useToast();
+        const [agendaData, setAgendaData] = useState<Agenda | null>(null);
 
-    useEffect(() => {
-        async function fetchAgenda() {
-            try {
-                const data = await getAgendaById(id);
+        useEffect(() => {
+            async function fetchAgenda() {
+                try {
+                    const data = await getAgendaById(id);
                 setAgendaData(data);
             } catch (error) {
                 console.error('Error fetching agenda:', error);

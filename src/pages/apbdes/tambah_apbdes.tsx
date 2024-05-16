@@ -65,7 +65,7 @@ export default function AddApbdes() {
 
      useEffect(() => {
           setSelectedYear(currentYear.toString());
-     }, []);//[]
+     }, [currentYear]);//[]
 
      const generateYearOptions = () => {
           const years = [];
@@ -131,7 +131,7 @@ export default function AddApbdes() {
                    realisasi_pembentukandanacadangan: realisasiPembentukanCadangan,
                    rencana_penyertaanmodaldesa: rencanaPenyertaanModal,
                    realisasi_penyertaanmodaldesa: realisasiPenyertaanModal,
-               
+                   createdAt: ''
               };
               await addAnggaran(data);
               console.log(data)
