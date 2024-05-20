@@ -29,6 +29,10 @@ export default function TambahDusun() {
      }, []);
      const handleSubmit = async (event: { preventDefault: () => void }) => {
           event.preventDefault();
+          if(!dusun || !ketua){
+               toast({ title: "Error", description: "Tolong isi semua kolom!"});
+               return;
+          }
           const dusunData = {
                nama_dusun: dusun,
                nama_ketua: ketua

@@ -130,8 +130,8 @@ export default function AddApbdes() {
                    rencana_pembentukandanacadangan: rencanaPembentukanCadangan,
                    realisasi_pembentukandanacadangan: realisasiPembentukanCadangan,
                    rencana_penyertaanmodaldesa: rencanaPenyertaanModal,
-                   realisasi_penyertaanmodaldesa: realisasiPenyertaanModal,
-                   createdAt: ''
+                   realisasi_penyertaanmodaldesa: realisasiPenyertaanModal
+               //     createdAt: ''
               };
               await addAnggaran(data);
               console.log(data)
@@ -217,18 +217,18 @@ export default function AddApbdes() {
                                                                       </TableRow>
                                                                       <TableRow >
                                                                            <TableCell>Hasil Aset</TableCell>
-                                                                           <TableCell><Input placeholder='Rp.' value={rencanaHasilAset} onChange={(e) => setRencanaHasilAset(e.target.value)} /></TableCell>
-                                                                           <TableCell><Input placeholder='Rp.' value={realisasiHasilAset} onChange={(e) => setRealisasiHasilAset(e.target.value)}/></TableCell>
+                                                                           <TableCell><Input type='number' placeholder='Rp.' value={rencanaHasilAset} onChange={(e) => setRencanaHasilAset(e.target.value)} /></TableCell>
+                                                                           <TableCell><Input type='number' placeholder='Rp.' value={realisasiHasilAset} onChange={(e) => setRealisasiHasilAset(e.target.value)}/></TableCell>
                                                                       </TableRow>
                                                                       <TableRow >
                                                                            <TableCell>Hasil Usaha</TableCell>
-                                                                           <TableCell><Input placeholder='Rp.' value={rencanaHasilUsaha} onChange={(e) => setRencanaHasilUsaha(e.target.value)}/></TableCell>
-                                                                           <TableCell><Input placeholder='Rp.' value={realisasiHasilUsaha} onChange={(e) => setRealisasiHasilUsaha(e.target.value)}/></TableCell>
+                                                                           <TableCell><Input type='number' placeholder='Rp.' value={rencanaHasilUsaha} onChange={(e) => setRencanaHasilUsaha(e.target.value)}/></TableCell>
+                                                                           <TableCell><Input type='number'  placeholder='Rp.' value={realisasiHasilUsaha} onChange={(e) => setRealisasiHasilUsaha(e.target.value)}/></TableCell>
                                                                       </TableRow>
                                                                       <TableRow >
                                                                            <TableCell>Swadiya, Partisipasi, Gotong Royong</TableCell>
-                                                                           <TableCell><Input placeholder='Rp.' value={rencanaSwadia} onChange={(e) => setRencanaSwadia(e.target.value)}/></TableCell>
-                                                                           <TableCell><Input placeholder='Rp.' value={realisasiSwadia} onChange={(e) => setRealisasiSwadia(e.target.value)}/></TableCell>
+                                                                           <TableCell><Input type='number' placeholder='Rp.' value={rencanaSwadia} onChange={(e) => setRencanaSwadia(e.target.value)}/></TableCell>
+                                                                           <TableCell><Input type='number' placeholder='Rp.' value={realisasiSwadia} onChange={(e) => setRealisasiSwadia(e.target.value)}/></TableCell>
                                                                       </TableRow>
                                                                       <TableRow >
                                                                            <TableCell className='text-[#0890ea] font-bold'>Pendapata Transfer</TableCell>
@@ -238,28 +238,28 @@ export default function AddApbdes() {
 
                                                                       <TableRow >
                                                                            <TableCell>Dana Desa</TableCell>
-                                                                           <TableCell><Input placeholder='Rp.' value={rencanaDanaDesa} onChange={(e) => setRencanaDanaDesa(e.target.value)}/></TableCell>
-                                                                           <TableCell><Input placeholder='Rp.' value={realisasiDanaDesa} onChange={(e) => setRealisasiDanaDesa(e.target.value)}/></TableCell>
+                                                                           <TableCell><Input type='number' placeholder='Rp.' value={rencanaDanaDesa} onChange={(e) => setRencanaDanaDesa(e.target.value)}/></TableCell>
+                                                                           <TableCell><Input type='number' placeholder='Rp.' value={realisasiDanaDesa} onChange={(e) => setRealisasiDanaDesa(e.target.value)}/></TableCell>
                                                                       </TableRow>
                                                                       <TableRow >
                                                                            <TableCell>Bagi Hasil Pajak & Retribusi</TableCell>
-                                                                           <TableCell><Input placeholder='Rp.' value={rencanaHasilPajak} onChange={(e) => setRencanaHasilPajak(e.target.value)}/></TableCell>
-                                                                           <TableCell><Input placeholder='Rp.' value={realisasiHasilPajak} onChange={(e) => setRealisasiHasilPajak(e.target.value)}/></TableCell>
+                                                                           <TableCell><Input type='number' placeholder='Rp.' value={rencanaHasilPajak} onChange={(e) => setRencanaHasilPajak(e.target.value)}/></TableCell>
+                                                                           <TableCell><Input type='number' placeholder='Rp.' value={realisasiHasilPajak} onChange={(e) => setRealisasiHasilPajak(e.target.value)}/></TableCell>
                                                                       </TableRow>
                                                                       <TableRow >
                                                                            <TableCell>Alokasi Dana Desa</TableCell>
-                                                                           <TableCell><Input placeholder='Rp.' value={rencanaAlokasiDana} onChange={(e) => setRencanaAlokasiDana(e.target.value)}/></TableCell>
-                                                                           <TableCell><Input placeholder='Rp.' value={realisasiAlokasiDana} onChange={(e) => setRealisasiAlokasiDana(e.target.value)}/></TableCell>
+                                                                           <TableCell><Input type='number' placeholder='Rp.' value={rencanaAlokasiDana} onChange={(e) => setRencanaAlokasiDana(e.target.value)}/></TableCell>
+                                                                           <TableCell><Input type='number' placeholder='Rp.' value={realisasiAlokasiDana} onChange={(e) => setRealisasiAlokasiDana(e.target.value)}/></TableCell>
                                                                       </TableRow>
                                                                       <TableRow >
                                                                            <TableCell>Bantuan Keuangan Kabupaten</TableCell>
-                                                                           <TableCell><Input placeholder='Rp.' value={rencanaBantuanKabupaten} onChange={(e) => setRencanaBantuanKabupaten(e.target.value)}/></TableCell>
-                                                                           <TableCell><Input placeholder='Rp.' value={realisasiBantuanKabupaten} onChange={(e) => setRealisasiBantuanKabupaten(e.target.value)}/></TableCell>
+                                                                           <TableCell><Input type='number' placeholder='Rp.' value={rencanaBantuanKabupaten} onChange={(e) => setRencanaBantuanKabupaten(e.target.value)}/></TableCell>
+                                                                           <TableCell><Input type='number' placeholder='Rp.' value={realisasiBantuanKabupaten} onChange={(e) => setRealisasiBantuanKabupaten(e.target.value)}/></TableCell>
                                                                       </TableRow>
                                                                       <TableRow >
                                                                            <TableCell>Bantuan Keuangan Provinsi</TableCell>
-                                                                           <TableCell><Input placeholder='Rp.' value={rencanaBantuanProvinsi} onChange={(e) => setRencanaBantuanProvinsi(e.target.value)}/></TableCell>
-                                                                           <TableCell><Input placeholder='Rp.' value={realisasiBantuanProvinsi} onChange={(e) => setRealisasiBantuanProvinsi(e.target.value)}/></TableCell>
+                                                                           <TableCell><Input type='number' placeholder='Rp.' value={rencanaBantuanProvinsi} onChange={(e) => setRencanaBantuanProvinsi(e.target.value)}/></TableCell>
+                                                                           <TableCell><Input type='number' placeholder='Rp.' value={realisasiBantuanProvinsi} onChange={(e) => setRealisasiBantuanProvinsi(e.target.value)}/></TableCell>
                                                                       </TableRow>
                                                                       <TableRow >
                                                                            <TableCell className='text-[#0890ea] font-bold'>Pendapata Lain-lain</TableCell>
@@ -268,18 +268,18 @@ export default function AddApbdes() {
                                                                       </TableRow>
                                                                       <TableRow >
                                                                            <TableCell>Hibah</TableCell>
-                                                                           <TableCell><Input placeholder='Rp.' value={rencanaHibah} onChange={(e) => setRencanaHibah(e.target.value)}/></TableCell>
-                                                                           <TableCell><Input placeholder='Rp.' value={realisasiHibah} onChange={(e) => setRealisasiHibah(e.target.value)}/></TableCell>
+                                                                           <TableCell><Input type='number' placeholder='Rp.' value={rencanaHibah} onChange={(e) => setRencanaHibah(e.target.value)}/></TableCell>
+                                                                           <TableCell><Input type='number' placeholder='Rp.' value={realisasiHibah} onChange={(e) => setRealisasiHibah(e.target.value)}/></TableCell>
                                                                       </TableRow>
                                                                       <TableRow >
                                                                            <TableCell>Sumbangan Pihak ketiga</TableCell>
-                                                                           <TableCell><Input placeholder='Rp.' value={rencanaSumbangan} onChange={(e) => setRencanaSumbangan(e.target.value)}/></TableCell>
-                                                                           <TableCell><Input placeholder='Rp.'value={realisasiSumbangan} onChange={(e) => setRealisasiSumbangan(e.target.value)} /></TableCell>
+                                                                           <TableCell><Input type='number' placeholder='Rp.' value={rencanaSumbangan} onChange={(e) => setRencanaSumbangan(e.target.value)}/></TableCell>
+                                                                           <TableCell><Input type='number' placeholder='Rp.'value={realisasiSumbangan} onChange={(e) => setRealisasiSumbangan(e.target.value)} /></TableCell>
                                                                       </TableRow>
                                                                       <TableRow >
                                                                            <TableCell>Pendapatan Lain-lain</TableCell>
-                                                                           <TableCell><Input placeholder='Rp.' value={rencanaPendapatanLain} onChange={(e) => setRencanaPendapatanLain(e.target.value)}/></TableCell>
-                                                                           <TableCell><Input placeholder='Rp.' value={realisasiPendapatanLain} onChange={(e) => setRealisasiPendapatanLain(e.target.value)}/></TableCell>
+                                                                           <TableCell><Input type='number' placeholder='Rp.' value={rencanaPendapatanLain} onChange={(e) => setRencanaPendapatanLain(e.target.value)}/></TableCell>
+                                                                           <TableCell><Input type='number' placeholder='Rp.' value={realisasiPendapatanLain} onChange={(e) => setRealisasiPendapatanLain(e.target.value)}/></TableCell>
                                                                       </TableRow>
                                                                  </TableBody>
                                                             </Table>
@@ -300,28 +300,28 @@ export default function AddApbdes() {
 
                                                             <TableRow >
                                                                  <TableCell className='text-[#0890ea] font-bold'>PENYELENGGARAAN PEMERINTAHAN DESA</TableCell>
-                                                                 <TableCell><Input placeholder='Rp.' value={rencanaPenyelenggaraanPemerintah} onChange={(e) => setRencanaPenyelenggaraanPemerintah(e.target.value)}/></TableCell>
-                                                                 <TableCell><Input placeholder='Rp.' value={realisasiPenyelenggaraanPemerintah} onChange={(e) => setRealisasiPenyelenggaraanPemerintah(e.target.value)}/></TableCell>
+                                                                 <TableCell><Input type='number' placeholder='Rp.' value={rencanaPenyelenggaraanPemerintah} onChange={(e) => setRencanaPenyelenggaraanPemerintah(e.target.value)}/></TableCell>
+                                                                 <TableCell><Input type='number' placeholder='Rp.' value={realisasiPenyelenggaraanPemerintah} onChange={(e) => setRealisasiPenyelenggaraanPemerintah(e.target.value)}/></TableCell>
                                                             </TableRow>
                                                             <TableRow >
                                                                  <TableCell className='text-[#0890ea] font-bold'>PELAKSANAAN PEMBANGUNAN DESA</TableCell>
-                                                                 <TableCell><Input placeholder='Rp.' value={rencanaPembangunanDesa} onChange={(e) => setRencanaPembangunanDesa(e.target.value)}/></TableCell>
-                                                                 <TableCell><Input placeholder='Rp.' value={realisasiPembangunanDesa} onChange={(e) => setRealisasiPembangunanDesa(e.target.value)}/></TableCell>
+                                                                 <TableCell><Input type='number' placeholder='Rp.' value={rencanaPembangunanDesa} onChange={(e) => setRencanaPembangunanDesa(e.target.value)}/></TableCell>
+                                                                 <TableCell><Input type='number' placeholder='Rp.' value={realisasiPembangunanDesa} onChange={(e) => setRealisasiPembangunanDesa(e.target.value)}/></TableCell>
                                                             </TableRow>
                                                             <TableRow >
                                                                  <TableCell className='text-[#0890ea] font-bold'>PEMBINAAN KEMASYARAKATAN DESA</TableCell>
-                                                                 <TableCell><Input placeholder='Rp.' value={rencanaPembinaanMasyarakat} onChange={(e) => setRencanaPembinaanMasyarakat(e.target.value)}/></TableCell>
-                                                                 <TableCell><Input placeholder='Rp.' value={realisasiPembinaanMasyarakat} onChange={(e) => setRealisasiPembinaanMasyarakat(e.target.value)}/></TableCell>
+                                                                 <TableCell><Input type='number' placeholder='Rp.' value={rencanaPembinaanMasyarakat} onChange={(e) => setRencanaPembinaanMasyarakat(e.target.value)}/></TableCell>
+                                                                 <TableCell><Input type='number' placeholder='Rp.' value={realisasiPembinaanMasyarakat} onChange={(e) => setRealisasiPembinaanMasyarakat(e.target.value)}/></TableCell>
                                                             </TableRow>
                                                             <TableRow >
                                                                  <TableCell className='text-[#0890ea] font-bold'>PEMBERDAYAAN KEMASYARAKATAN DESA</TableCell>
-                                                                 <TableCell><Input placeholder='Rp.' value={rencanaPemerdayaanMasyarakat} onChange={(e) => setRencanaPemerdayaanMasyarakat(e.target.value)}/></TableCell>
-                                                                 <TableCell><Input placeholder='Rp.' value={realisasiPemerdayaanMasyarakat} onChange={(e) => setRealisasiPemerdayaanMasyarakat(e.target.value)}/></TableCell>
+                                                                 <TableCell><Input type='number' placeholder='Rp.' value={rencanaPemerdayaanMasyarakat} onChange={(e) => setRencanaPemerdayaanMasyarakat(e.target.value)}/></TableCell>
+                                                                 <TableCell><Input type='number' placeholder='Rp.' value={realisasiPemerdayaanMasyarakat} onChange={(e) => setRealisasiPemerdayaanMasyarakat(e.target.value)}/></TableCell>
                                                             </TableRow>
                                                             <TableRow >
                                                                  <TableCell className='text-[#0890ea] font-bold'>BELANJA TAK TERDUGA</TableCell>
-                                                                 <TableCell><Input placeholder='Rp.' value={rencanaBelanjaTakterduga} onChange={(e) => setRencanaBelanjaTakterduga(e.target.value)}/></TableCell>
-                                                                 <TableCell><Input placeholder='Rp.' value={realisasiBelanjaTakterduga} onChange={(e) => setRealisasiBelanjaTakterduga(e.target.value)}/></TableCell>
+                                                                 <TableCell><Input type='number' placeholder='Rp.' value={rencanaBelanjaTakterduga} onChange={(e) => setRencanaBelanjaTakterduga(e.target.value)}/></TableCell>
+                                                                 <TableCell><Input type='number' placeholder='Rp.' value={realisasiBelanjaTakterduga} onChange={(e) => setRealisasiBelanjaTakterduga(e.target.value)}/></TableCell>
                                                             </TableRow>
 
 
@@ -346,18 +346,18 @@ export default function AddApbdes() {
                                                             </TableRow>
                                                             <TableRow >
                                                                  <TableCell>SiLPA</TableCell>
-                                                                 <TableCell><Input placeholder='Rp.' value={rencanaSilpa} onChange={(e) => setRencanaSilpa(e.target.value)}/></TableCell>
-                                                                 <TableCell><Input placeholder='Rp.' value={realisasiSilpa} onChange={(e) => setRealisasiSilpa(e.target.value)}/></TableCell>
+                                                                 <TableCell><Input type='number' placeholder='Rp.' value={rencanaSilpa} onChange={(e) => setRencanaSilpa(e.target.value)}/></TableCell>
+                                                                 <TableCell><Input type='number' placeholder='Rp.' value={realisasiSilpa} onChange={(e) => setRealisasiSilpa(e.target.value)}/></TableCell>
                                                             </TableRow>
                                                             <TableRow >
                                                                  <TableCell>Pencairan Dana Cadangan</TableCell>
-                                                                 <TableCell><Input placeholder='Rp.' value={rencanaPencairanCadangan} onChange={(e) => setRencanaPencairanCadangan(e.target.value)}/></TableCell>
-                                                                 <TableCell><Input placeholder='Rp.' value={realisasiPencairanCadangan} onChange={(e) => setRealisasiPencairanCadangan(e.target.value)} /></TableCell>
+                                                                 <TableCell><Input type='number' placeholder='Rp.' value={rencanaPencairanCadangan} onChange={(e) => setRencanaPencairanCadangan(e.target.value)}/></TableCell>
+                                                                 <TableCell><Input type='number' placeholder='Rp.' value={realisasiPencairanCadangan} onChange={(e) => setRealisasiPencairanCadangan(e.target.value)} /></TableCell>
                                                             </TableRow>
                                                             <TableRow >
                                                                  <TableCell>Hasil penjualan kekayaan Desa yang dipisahkan</TableCell>
-                                                                 <TableCell><Input placeholder='Rp.' value={rencanaHasilPenjualan} onChange={(e) => setRencanaHasilPenjualan(e.target.value)}/></TableCell>
-                                                                 <TableCell><Input placeholder='Rp.' value={realisasiHasilPenjualan} onChange={(e) => setRealisasiHasilPenjualan(e.target.value)}/></TableCell>
+                                                                 <TableCell><Input type='number' placeholder='Rp.' value={rencanaHasilPenjualan} onChange={(e) => setRencanaHasilPenjualan(e.target.value)}/></TableCell>
+                                                                 <TableCell><Input type='number' placeholder='Rp.' value={realisasiHasilPenjualan} onChange={(e) => setRealisasiHasilPenjualan(e.target.value)}/></TableCell>
                                                             </TableRow>
                                                             <TableRow >
                                                                  <TableCell className='text-[#0890ea] font-bold'>Pendapatan Transfer</TableCell>
@@ -366,13 +366,13 @@ export default function AddApbdes() {
                                                             </TableRow>
                                                             <TableRow >
                                                                  <TableCell>Pembentukan Dana Cadangan</TableCell>
-                                                                 <TableCell><Input placeholder='Rp.' value={rencanaPembentukanCadangan} onChange={(e) => setRencanaPembentukanCadangan(e.target.value)}/></TableCell>
-                                                                 <TableCell><Input placeholder='Rp.' value={realisasiPembentukanCadangan} onChange={(e) => setRealisasiPembentukanCadangan(e.target.value)}/></TableCell>
+                                                                 <TableCell><Input type='number' placeholder='Rp.' value={rencanaPembentukanCadangan} onChange={(e) => setRencanaPembentukanCadangan(e.target.value)}/></TableCell>
+                                                                 <TableCell><Input type='number' placeholder='Rp.' value={realisasiPembentukanCadangan} onChange={(e) => setRealisasiPembentukanCadangan(e.target.value)}/></TableCell>
                                                             </TableRow>
                                                             <TableRow >
                                                                  <TableCell>Penyertaan Modal Desa</TableCell>
-                                                                 <TableCell><Input placeholder='Rp.' value={rencanaPenyertaanModal} onChange={(e) => setRencanaPenyertaanModal(e.target.value)}/></TableCell>
-                                                                 <TableCell><Input placeholder='Rp.' value={realisasiPenyertaanModal} onChange={(e) => setRealisasiPenyertaanModal(e.target.value)}/></TableCell>
+                                                                 <TableCell><Input type='number' placeholder='Rp.' value={rencanaPenyertaanModal} onChange={(e) => setRencanaPenyertaanModal(e.target.value)}/></TableCell>
+                                                                 <TableCell><Input type='number' placeholder='Rp.' value={realisasiPenyertaanModal} onChange={(e) => setRealisasiPenyertaanModal(e.target.value)}/></TableCell>
                                                             </TableRow>
 
 

@@ -22,6 +22,16 @@ export default function TambahPengumuman() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (
+      !pengumuman.judul_pengumuman ||
+      !pengumuman.deskripsi_pengumuman ||
+      !pengumuman.cover_pengumuman ||
+      !pengumuman.file_pengumuman 
+      // !pengumuman.tgl_publikasiz
+    ) {
+      toast({ title: "Error", description: "Tolong isi semua kolom!" });
+      return;
+    }
 
     try {
       await addPengumuman(pengumuman);
@@ -40,7 +50,7 @@ export default function TambahPengumuman() {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleEditorChange = (event: any, editor: { getData: () => any }) => {
+  const handleEditorChange = (_event: any, editor: { getData: () => any }) => {
     const deskripsi_pengumuman = editor.getData();
     setPengumuman({ ...pengumuman, deskripsi_pengumuman });
   };
@@ -72,30 +82,32 @@ export default function TambahPengumuman() {
               <div className="ml-4 flex">
                 <ArrowRIghtIcon color='#000000' size={10} />
               </div>
-              <div className="text-[#D9D9D9] text-[16px] ml-4">Tambah Berita Desa</div>
+              <div className="text-[#D9D9D9] text-[16px] ml-4">Tambah Pengumuman Desa</div>
             </div>
           </div>
           <div className="bg-white rounded-[15px] mt-6 ">
             <form onSubmit={handleSubmit}>
               <div className="pl-6 pr-6 pt-6">
-                <div className="">Judul Berita</div>
+                <div className="">Judul Pengumuman</div>
                 <div className="">
                   <Input
                     className=' h-[40px] font-bold'
-                    placeholder='Judul berita'
+                    placeholder='Judul Pengumuman'
                     name="judul_pengumuman"
                     value={pengumuman.judul_pengumuman}
                     onChange={handleChange}
+                    
                   />
                 </div>
               </div>
               <div className="flex items-center mt-2 pl-6 pr-6">
                 <div className="w-full">
-                  <div className="">Isi Berita</div>
+                  <div className="">Isi Pengumuman</div>
                   <CKEditor
                     editor={ClassicEditor}
                     onChange={handleEditorChange}
                     data={pengumuman.deskripsi_pengumuman}
+                    
                   />
                 </div>
               </div>

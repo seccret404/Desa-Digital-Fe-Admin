@@ -52,6 +52,13 @@ export default function TambahPenduduk() {
 
     const handleSubmit = async (event: { preventDefault: () => void }) => {
         event.preventDefault();
+        if(!nik || !nama || !agama || !alamat || !tanggalLahir || !tempatLahir ||
+            !jenisKelamin || !pekerjaan || !kewarganegaraan || !pendidikan_terakhir ||
+            !statusHidup || !statusPerkawinan || !noKK || !dusun || !dusunOptions
+        ){
+            toast({ title: "Error", description: "Tolong isi semua kolom!"});
+      return;
+        }
 
         const pendudukData = {
             nik: Number(nik),

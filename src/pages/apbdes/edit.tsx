@@ -186,18 +186,18 @@ export default function EditAddApbdes() {
                                                                       </TableRow>
                                                                       <TableRow >
                                                                            <TableCell>Hasil Aset</TableCell>
-                                                                           <TableCell><Input onChange={handleChange} name='rencana_hasilaset' placeholder='Rp.' value={anggaran.rencana_hasilaset} /></TableCell>
-                                                                           <TableCell><Input onChange={handleChange} name='realisasi_hasilaset' placeholder='Rp.' value={anggaran.realisasi_hasilaset} /></TableCell>
+                                                                           <TableCell><Input type='number' onChange={handleChange} name='rencana_hasilaset' placeholder='Rp.' value={anggaran.rencana_hasilaset} /></TableCell>
+                                                                           <TableCell><Input type='number' onChange={handleChange} name='realisasi_hasilaset' placeholder='Rp.' value={anggaran.realisasi_hasilaset} /></TableCell>
                                                                       </TableRow>
                                                                       <TableRow >
                                                                            <TableCell>Hasil Usaha</TableCell>
-                                                                           <TableCell><Input onChange={handleChange} name='rencana_hasilusaha' placeholder='Rp.' value={anggaran.rencana_hasilusaha} /></TableCell>
-                                                                           <TableCell><Input onChange={handleChange} name='realisasi_hasilusaha' placeholder='Rp.' value={anggaran.realisasi_hasilusaha} /></TableCell>
+                                                                           <TableCell><Input type='number' onChange={handleChange} name='rencana_hasilusaha' placeholder='Rp.' value={anggaran.rencana_hasilusaha} /></TableCell>
+                                                                           <TableCell><Input type='number' onChange={handleChange} name='realisasi_hasilusaha' placeholder='Rp.' value={anggaran.realisasi_hasilusaha} /></TableCell>
                                                                       </TableRow>
                                                                       <TableRow >
                                                                            <TableCell>Swadiya, Partisipasi, Gotong Royong</TableCell>
-                                                                           <TableCell><Input onChange={handleChange} name='rencana_swadia' placeholder='Rp.' value={anggaran.rencana_swadia} /></TableCell>
-                                                                           <TableCell><Input onChange={handleChange} name='realisasi_swadia' placeholder='Rp.' value={anggaran.realisasi_swadia} /></TableCell>
+                                                                           <TableCell><Input type='number' onChange={handleChange} name='rencana_swadia' placeholder='Rp.' value={anggaran.rencana_swadia} /></TableCell>
+                                                                           <TableCell><Input type='number' onChange={handleChange} name='realisasi_swadia' placeholder='Rp.' value={anggaran.realisasi_swadia} /></TableCell>
                                                                       </TableRow>
                                                                       <TableRow >
                                                                            <TableCell className='text-[#0890ea] font-bold'>Pendapata Transfer</TableCell>
@@ -206,28 +206,28 @@ export default function EditAddApbdes() {
                                                                       </TableRow>
                                                                       <TableRow >
                                                                            <TableCell>Dana Desa</TableCell>
-                                                                           <TableCell><Input onChange={handleChange} name='rencana_danadesa' placeholder='Rp.' value={anggaran.rencana_danadesa} /></TableCell>
-                                                                           <TableCell><Input onChange={handleChange} name='realisasi_danadesa' placeholder='Rp.' value={anggaran.realisasi_danadesa} /></TableCell>
+                                                                           <TableCell><Input type='number' onChange={handleChange} name='rencana_danadesa' placeholder='Rp.' value={anggaran.rencana_danadesa} /></TableCell>
+                                                                           <TableCell><Input type='number' onChange={handleChange} name='realisasi_danadesa' placeholder='Rp.' value={anggaran.realisasi_danadesa} /></TableCell>
                                                                       </TableRow>
                                                                       <TableRow >
                                                                            <TableCell>Bagi Hasil Pajak & Retribusi</TableCell>
-                                                                           <TableCell><Input onChange={handleChange} name='rencana_hasilpajak' placeholder='Rp.' value={anggaran.rencana_hasilpajak} /></TableCell>
-                                                                           <TableCell><Input onChange={handleChange} name='realisasi_hasilpajak' placeholder='Rp.' value={anggaran.realisasi_hasilpajak} /></TableCell>
+                                                                           <TableCell><Input type='number' onChange={handleChange} name='rencana_hasilpajak' placeholder='Rp.' value={anggaran.rencana_hasilpajak} /></TableCell>
+                                                                           <TableCell><Input type='number' onChange={handleChange} name='realisasi_hasilpajak' placeholder='Rp.' value={anggaran.realisasi_hasilpajak} /></TableCell>
                                                                       </TableRow>
                                                                       <TableRow >
                                                                            <TableCell>Alokasi Dana Desa</TableCell>
-                                                                           <TableCell><Input onChange={handleChange} name='rencana_alokasidana' placeholder='Rp.' value={anggaran.rencana_alokasidana} /></TableCell>
-                                                                           <TableCell><Input onChange={handleChange} name='realisasi_alokasidana' placeholder='Rp.' value={anggaran.realisasi_alokasidana} /></TableCell>
+                                                                           <TableCell><Input type='number' onChange={handleChange} name='rencana_alokasidana' placeholder='Rp.' value={anggaran.rencana_alokasidana} /></TableCell>
+                                                                           <TableCell><Input type='number' onChange={handleChange} name='realisasi_alokasidana' placeholder='Rp.' value={anggaran.realisasi_alokasidana} /></TableCell>
                                                                       </TableRow>
                                                                       <TableRow >
                                                                            <TableCell>Bantuan Keuangan Kabupaten</TableCell>
-                                                                           <TableCell><Input onChange={handleChange} name='rencana_bantuankeuangankabupaten' placeholder='Rp.' value={anggaran.rencana_bantuankeuangankabupaten} /></TableCell>
-                                                                           <TableCell><Input onChange={handleChange} name='realisasi_bantuankeuangankabupaten' placeholder='Rp.' value={anggaran.realisasi_bantuankeuangankabupaten} /></TableCell>
+                                                                           <TableCell><Input type='number' onChange={handleChange} name='rencana_bantuankeuangankabupaten' placeholder='Rp.' value={anggaran.rencana_bantuankeuangankabupaten} /></TableCell>
+                                                                           <TableCell><Input type='number' onChange={handleChange} name='realisasi_bantuankeuangankabupaten' placeholder='Rp.' value={anggaran.realisasi_bantuankeuangankabupaten} /></TableCell>
                                                                       </TableRow>
                                                                       <TableRow >
                                                                            <TableCell>Bantuan Keuangan Provinsi</TableCell>
-                                                                           <TableCell><Input onChange={handleChange} name='rencana_bantuankeuanganprovinsi' placeholder='Rp.' value={anggaran.rencana_bantuankeuanganprovinsi} /></TableCell>
-                                                                           <TableCell><Input onChange={handleChange} name='realisasi_bantuankeuanganprovinsi' placeholder='Rp.' value={anggaran.realisasi_bantuankeuanganprovinsi} /></TableCell>
+                                                                           <TableCell><Input type='number' onChange={handleChange} name='rencana_bantuankeuanganprovinsi' placeholder='Rp.' value={anggaran.rencana_bantuankeuanganprovinsi} /></TableCell>
+                                                                           <TableCell><Input type='number' onChange={handleChange} name='realisasi_bantuankeuanganprovinsi' placeholder='Rp.' value={anggaran.realisasi_bantuankeuanganprovinsi} /></TableCell>
                                                                       </TableRow>
                                                                       <TableRow >
                                                                            <TableCell className='text-[#0890ea] font-bold'>Pendapatan Lain-lain</TableCell>
@@ -236,18 +236,18 @@ export default function EditAddApbdes() {
                                                                       </TableRow>
                                                                       <TableRow >
                                                                            <TableCell>Hibah</TableCell>
-                                                                           <TableCell><Input onChange={handleChange} name='rencana_hibah' placeholder='Rp.' value={anggaran.rencana_hibah} /></TableCell>
-                                                                           <TableCell><Input onChange={handleChange} name='realisasi_hibah' placeholder='Rp.' value={anggaran.realisasi_hibah} /></TableCell>
+                                                                           <TableCell><Input type='number' onChange={handleChange} name='rencana_hibah' placeholder='Rp.' value={anggaran.rencana_hibah} /></TableCell>
+                                                                           <TableCell><Input type='number' onChange={handleChange} name='realisasi_hibah' placeholder='Rp.' value={anggaran.realisasi_hibah} /></TableCell>
                                                                       </TableRow>
                                                                       <TableRow >
                                                                            <TableCell>Sumbangan Pihak ketiga</TableCell>
-                                                                           <TableCell><Input onChange={handleChange} name='rencana_sumbanganpihakketiga' placeholder='Rp.' value={anggaran.rencana_sumbanganpihakketiga} /></TableCell>
-                                                                           <TableCell><Input onChange={handleChange} name='realisasi_sumbanganpihakketiga' placeholder='Rp.' value={anggaran.realisasi_sumbanganpihakketiga} /></TableCell>
+                                                                           <TableCell><Input type='number' onChange={handleChange} name='rencana_sumbanganpihakketiga' placeholder='Rp.' value={anggaran.rencana_sumbanganpihakketiga} /></TableCell>
+                                                                           <TableCell><Input type='number' onChange={handleChange} name='realisasi_sumbanganpihakketiga' placeholder='Rp.' value={anggaran.realisasi_sumbanganpihakketiga} /></TableCell>
                                                                       </TableRow>
                                                                       <TableRow >
                                                                            <TableCell>Pendapatan Lain-lain</TableCell>
-                                                                           <TableCell><Input onChange={handleChange} name='rencana_pendapatanlain' placeholder='Rp.' value={anggaran.rencana_pendapatanlain} /></TableCell>
-                                                                           <TableCell><Input onChange={handleChange} name='realisasi_pendapatanlain' placeholder='Rp.' value={anggaran.realisasi_pendapatanlain} /></TableCell>
+                                                                           <TableCell><Input type='number' onChange={handleChange} name='rencana_pendapatanlain' placeholder='Rp.' value={anggaran.rencana_pendapatanlain} /></TableCell>
+                                                                           <TableCell><Input type='number' onChange={handleChange} name='realisasi_pendapatanlain' placeholder='Rp.' value={anggaran.realisasi_pendapatanlain} /></TableCell>
                                                                       </TableRow>
                                                                  </TableBody>
                                                             </Table>
@@ -267,27 +267,27 @@ export default function EditAddApbdes() {
 
                                                             <TableRow >
                                                                  <TableCell className='text-[#0890ea] font-bold'>PENYELENGGARAAN PEMERINTAHAN DESA</TableCell>
-                                                                 <TableCell><Input onChange={handleChange} name='rencana_penyelenggaraanpemerintah' placeholder='Rp.' value={anggaran.rencana_penyelenggaraanpemerintah} /></TableCell>
-                                                                 <TableCell><Input onChange={handleChange} name='realisasi_penyelenggaraanpemerintah' placeholder='Rp.' value={anggaran.realisasi_penyelenggaraanpemerintah} /></TableCell>
+                                                                 <TableCell><Input type='number' onChange={handleChange} name='rencana_penyelenggaraanpemerintah' placeholder='Rp.' value={anggaran.rencana_penyelenggaraanpemerintah} /></TableCell>
+                                                                 <TableCell><Input type='number' onChange={handleChange} name='realisasi_penyelenggaraanpemerintah' placeholder='Rp.' value={anggaran.realisasi_penyelenggaraanpemerintah} /></TableCell>
                                                             </TableRow>
                                                             <TableRow >
                                                                  <TableCell className='text-[#0890ea] font-bold'>PELAKSANAAN PEMBANGUNAN DESA</TableCell>
-                                                                 <TableCell><Input onChange={handleChange} name='rencana_pembangunandesa' placeholder='Rp.' value={anggaran.rencana_pembangunandesa} /></TableCell>
-                                                                 <TableCell><Input onChange={handleChange} name='realisasi_pembangunandesa' placeholder='Rp.' value={anggaran.realisasi_pembangunandesa} /></TableCell>
+                                                                 <TableCell><Input type='number' onChange={handleChange} name='rencana_pembangunandesa' placeholder='Rp.' value={anggaran.rencana_pembangunandesa} /></TableCell>
+                                                                 <TableCell><Input type='number' onChange={handleChange} name='realisasi_pembangunandesa' placeholder='Rp.' value={anggaran.realisasi_pembangunandesa} /></TableCell>
                                                             </TableRow>
                                                             <TableRow >
                                                                  <TableCell className='text-[#0890ea] font-bold'>PEMBINAAN KEMASYARAKATAN DESA</TableCell>
-                                                                 <TableCell><Input onChange={handleChange} name='rencana_pembinaanmasyarakat' placeholder='Rp.' value={anggaran.rencana_pembinaanmasyarakat} /></TableCell>
-                                                                 <TableCell><Input onChange={handleChange} name='realisasi_pembinaanmasyarakat' placeholder='Rp.' value={anggaran.realisasi_pembinaanmasyarakat} /></TableCell>
+                                                                 <TableCell><Input type='number' onChange={handleChange} name='rencana_pembinaanmasyarakat' placeholder='Rp.' value={anggaran.rencana_pembinaanmasyarakat} /></TableCell>
+                                                                 <TableCell><Input type='number' onChange={handleChange} name='realisasi_pembinaanmasyarakat' placeholder='Rp.' value={anggaran.realisasi_pembinaanmasyarakat} /></TableCell>
                                                             </TableRow>
                                                             <TableRow >
                                                                  <TableCell className='text-[#0890ea] font-bold'>PEMBERDAYAAN KEMASYARAKATAN DESA</TableCell>
-                                                                 <TableCell><Input onChange={handleChange}   name='rencana_pemerdayaanmasyarakat' placeholder='Rp.' value={anggaran.rencana_pemerdayaanmasyarakat} /></TableCell>
-                                                                 <TableCell><Input onChange={handleChange}  name='realisasi_pemerdayaanmasyarakat' placeholder='Rp.' value={anggaran.realisasi_pemerdayaanmasyarakat} /></TableCell>
+                                                                 <TableCell><Input type='number' onChange={handleChange}   name='rencana_pemerdayaanmasyarakat' placeholder='Rp.' value={anggaran.rencana_pemerdayaanmasyarakat} /></TableCell>
+                                                                 <TableCell><Input type='number' onChange={handleChange}  name='realisasi_pemerdayaanmasyarakat' placeholder='Rp.' value={anggaran.realisasi_pemerdayaanmasyarakat} /></TableCell>
                                                             </TableRow>
                                                             <TableRow >
                                                                  <TableCell className='text-[#0890ea] font-bold'>BELANJA TAK TERDUGA</TableCell>
-                                                                 <TableCell><Input onChange={handleChange}  name='rencana_belanjatakterduga' placeholder='Rp.' value={anggaran.rencana_belanjatakterduga} /></TableCell>
+                                                                 <TableCell><Input type='number' onChange={handleChange}  name='rencana_belanjatakterduga' placeholder='Rp.' value={anggaran.rencana_belanjatakterduga} /></TableCell>
                                                                  <TableCell><Input  onChange={handleChange} name='realisasi_rencanatakterduga' placeholder='Rp.' value={anggaran.realisasi_rencanatakterduga} /></TableCell>
                                                             </TableRow>
                                                        </TableBody>
@@ -311,18 +311,18 @@ export default function EditAddApbdes() {
                                                             </TableRow>
                                                             <TableRow >
                                                                  <TableCell>SiLPA</TableCell>
-                                                                 <TableCell><Input onChange={handleChange}  name='rencana_silpa' placeholder='Rp.' value={anggaran.rencana_silpa} /></TableCell>
-                                                                 <TableCell><Input onChange={handleChange}  name='realisasi_silpa' placeholder='Rp.' value={anggaran.realisasi_silpa} /></TableCell>
+                                                                 <TableCell><Input type='number' onChange={handleChange}  name='rencana_silpa' placeholder='Rp.' value={anggaran.rencana_silpa} /></TableCell>
+                                                                 <TableCell><Input type='number' onChange={handleChange}  name='realisasi_silpa' placeholder='Rp.' value={anggaran.realisasi_silpa} /></TableCell>
                                                             </TableRow>
                                                             <TableRow >
                                                                  <TableCell>Pencairan Dana Cadangan</TableCell>
-                                                                 <TableCell><Input onChange={handleChange}  name='rencana_pencairandanacadangan' placeholder='Rp.' value={anggaran.rencana_pencairandanacadangan} /></TableCell>
-                                                                 <TableCell><Input onChange={handleChange}  name='realisasi_pencairandanacadangan' placeholder='Rp.' value={anggaran.realisasi_pencairandanacadangan} /></TableCell>
+                                                                 <TableCell><Input type='number' onChange={handleChange}  name='rencana_pencairandanacadangan' placeholder='Rp.' value={anggaran.rencana_pencairandanacadangan} /></TableCell>
+                                                                 <TableCell><Input type='number' onChange={handleChange}  name='realisasi_pencairandanacadangan' placeholder='Rp.' value={anggaran.realisasi_pencairandanacadangan} /></TableCell>
                                                             </TableRow>
                                                             <TableRow >
                                                                  <TableCell>Hasil penjualan kekayaan Desa yang dipisahkan</TableCell>
-                                                                 <TableCell><Input onChange={handleChange}  name='rencana_hasilpenjualan' placeholder='Rp.' value={anggaran.rencana_hasilpenjualan} /></TableCell>
-                                                                 <TableCell><Input onChange={handleChange}  name='realisasi_hasilpenjualan' placeholder='Rp.' value={anggaran.realisasi_hasilpenjualan} /></TableCell>
+                                                                 <TableCell><Input type='number' onChange={handleChange}  name='rencana_hasilpenjualan' placeholder='Rp.' value={anggaran.rencana_hasilpenjualan} /></TableCell>
+                                                                 <TableCell><Input type='number' onChange={handleChange}  name='realisasi_hasilpenjualan' placeholder='Rp.' value={anggaran.realisasi_hasilpenjualan} /></TableCell>
                                                             </TableRow>
                                                             <TableRow >
                                                                  <TableCell className='text-[#0890ea] font-bold'>Pendapatan Transfer</TableCell>
@@ -331,13 +331,13 @@ export default function EditAddApbdes() {
                                                             </TableRow>
                                                             <TableRow >
                                                                  <TableCell>Pembentukan Dana Cadangan</TableCell>
-                                                                 <TableCell><Input onChange={handleChange}  name='rencana_pembentukandanacadangan' placeholder='Rp.' value={anggaran.rencana_pembentukandanacadangan} /></TableCell>
-                                                                 <TableCell><Input onChange={handleChange}  name='realisasi_pembentukandanacadangan' placeholder='Rp.' value={anggaran.realisasi_pembentukandanacadangan} /></TableCell>
+                                                                 <TableCell><Input type='number' onChange={handleChange}  name='rencana_pembentukandanacadangan' placeholder='Rp.' value={anggaran.rencana_pembentukandanacadangan} /></TableCell>
+                                                                 <TableCell><Input type='number' onChange={handleChange}  name='realisasi_pembentukandanacadangan' placeholder='Rp.' value={anggaran.realisasi_pembentukandanacadangan} /></TableCell>
                                                             </TableRow>
                                                             <TableRow >
                                                                  <TableCell>Penyertaan Modal Desa</TableCell>
-                                                                 <TableCell><Input onChange={handleChange}  name='rencana_penyertaanmodaldesa' placeholder='Rp.' value={anggaran.rencana_penyertaanmodaldesa} /></TableCell>
-                                                                 <TableCell><Input onChange={handleChange}  name='realisasi_penyertaanmodaldesa' placeholder='Rp.' value={anggaran.realisasi_penyertaanmodaldesa} /></TableCell>
+                                                                 <TableCell><Input type='number' onChange={handleChange}  name='rencana_penyertaanmodaldesa' placeholder='Rp.' value={anggaran.rencana_penyertaanmodaldesa} /></TableCell>
+                                                                 <TableCell><Input type='number' onChange={handleChange}  name='realisasi_penyertaanmodaldesa' placeholder='Rp.' value={anggaran.realisasi_penyertaanmodaldesa} /></TableCell>
                                                             </TableRow>
                                                        </TableBody>
                                                   </Table>

@@ -58,6 +58,10 @@ export default function TambahTugasWewenang() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    if(!jabatan || !selectedJabatan || !tugas || !wewenang || !fungsi){
+      toast({ title: "Error", description: "Tolong isi semua kolom!"});
+      return;
+    }
     try {
       if (selectedJabatan && tugas && fungsi && wewenang) {
         const data: Tugas = {

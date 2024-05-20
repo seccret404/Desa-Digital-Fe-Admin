@@ -49,7 +49,7 @@ export default function TambahPemerintah() {
     event.preventDefault();
   
     if (!selectedPenduduk || !profil || !selectedJabatan || !tanggalMulai || !tanggalSelesai) {
-      toast({ title: "Error", description: "Please fill in all required fields"});
+      toast({ title: "Error", description: "Tolong isi semua kolom!"});
       return;
     }
   

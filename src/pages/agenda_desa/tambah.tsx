@@ -26,6 +26,11 @@ export default function TambahAgenda() {
            };
           const handleSave = async (event: { preventDefault: () => void }) => {
                event.preventDefault();
+               if(!namaKegiatan || !tanggalKegiatan || !lokasi || !tujuan || !deskripsi){
+                    toast({ title: "Error", description: "Please fill in all required fields"});
+                    return; 
+                    
+               }
                const agendaData = {
 
                     nama_kegiatan:namaKegiatan,

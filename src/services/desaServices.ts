@@ -13,8 +13,8 @@ import { Pengumuman } from '../interfaces/pengumuman';
 import { Profil } from '../interfaces/profil';
 
 // const API_URL = 'https://desa-digital-bakend-jf9ckkwwo-seccret404s-projects.vercel.app/api';
-// const API_URL = 'http://localhost:3000/api';
-const API_URL = 'https://desa-digital-bakend-production.up.railway.app/api';
+const API_URL = 'http://localhost:3000/api';
+// const API_URL = 'https://desa-digital-bakend-production.up.railway.app/api';
 
 //
 // GET API
@@ -826,3 +826,28 @@ export const updateProfil = async (id: string, data: Profil): Promise<void> => {
   }
 }
 
+
+
+export const deleteDusun = async (id: number): Promise<void> => {
+  try {
+    const response = await fetch(`${API_URL}/dusun/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        throw new Error(`Dusun dengan id ${id} tidak ditemukan.`);
+      } else {
+        throw new Error(`Gagal menghapus dusun dengan id ${id}.`);
+      }
+    }
+
+    console.log(`Dusun dengan id ${id} berhasil dihapus.`);
+  } catch (error) {
+    console.error('Error:', error);
+    throw new Error('Gagal menghapus dusun');
+  }
+};

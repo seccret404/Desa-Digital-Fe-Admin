@@ -22,6 +22,10 @@ export default function TambahBerita() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!berita.judul_berita || !berita.isi_berita || !berita.cover || !berita.file) {
+      toast({ title: "Error", description: "Tolong isi semua kolom!" });
+      return;
+    }
 
     try {
       await addBerita(berita);
