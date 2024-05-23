@@ -6,7 +6,7 @@ import { Input } from '../../components/ui/input'
 import { Link } from 'react-router-dom'
 import PrintIcon from '../../components/icon/printIcon'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table'
-import { getAgenda,getLaporanAgenda } from '../../services/desaServices'
+import { getAgenda, getLaporanAgenda } from '../../services/desaServices'
 import { useState, useEffect } from 'react';
 import * as XLSX from 'xlsx'
 import { Agenda } from '../../interfaces/agenda';
@@ -16,6 +16,10 @@ export default function AgendaPage() {
   const [agenda, setAgenda] = useState<Agenda[]>([]);
   const [laporanAgenda, setLaporanAgenda] = useState<Laporan[]>([]);
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const itemsPerPage = 10;
+
   const currentYear = new Date().getFullYear();
 
   useEffect(() => {
@@ -51,6 +55,11 @@ export default function AgendaPage() {
     setSelectedYear(event.target.value);
   };
 
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+    setCurrentPage(1);
+  };
+
   const generateYearOptions = () => {
     const currentYear = new Date().getFullYear();
     const years = [];
@@ -60,7 +69,13 @@ export default function AgendaPage() {
     return years;
   };
 
-  const filteredAgenda = selectedYear ? agenda.filter(item => new Date(item.tanggal_kegiatan).getFullYear().toString() === selectedYear) : agenda;
+  const filteredAgenda = agenda
+    .filter(item => (selectedYear ? new Date(item.tanggal_kegiatan).getFullYear().toString() === selectedYear : true))
+    .filter(item => item.nama_kegiatan.toLowerCase().includes(searchQuery.toLowerCase()));
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredAgenda.slice(indexOfFirstItem, indexOfLastItem);
 
   const exportToExcel = () => {
     let fileName = "Agenda.xlsx";
@@ -75,13 +90,18 @@ export default function AgendaPage() {
 
   return (
     <SidebarLayout>
-      <div className="bg-[#D9D9D98B] rounded-[15px]">
+      <div className="bg-[#] rounded-[15px]">
         <div className="p-8">
           <div className="flex items-center justify-between">
             {/* Search Bar */}
             <div className="relative w-[376px]">
               <FontAwesomeIcon icon={faSearch} className="absolute top-[10px] left-[10px]" />
-              <Input placeholder="Ketikkan kata kunci..." className="pl-[35px] rounded-[23px]" />
+              <Input
+                placeholder="Ketikkan kata kunci..."
+                className="pl-[35px] rounded-[23px] border border-[2px] border-[#0B0B2A]"
+                value={searchQuery}
+                onChange={handleSearchChange}
+              />
             </div>
             {/* Add Agenda Button */}
             <div className="">
@@ -118,20 +138,18 @@ export default function AgendaPage() {
           <div className="bg-white rounded-[15px] mt-6">
             <div className="p-4">
               <Table>
-                <TableHeader style={{
-                  borderBottom: '#0890EA solid',
-                }}>
+                <TableHeader style={{ borderBottom: '#0890EA solid' }}>
                   <TableHead>NO</TableHead>
                   <TableHead>Nama Kegiatan</TableHead>
-                  <TableHead >Hari/Tanggal</TableHead>
-                  <TableHead >Lokasi</TableHead>
-                  <TableHead >Laporan</TableHead>
+                  <TableHead>Hari/Tanggal</TableHead>
+                  <TableHead>Lokasi</TableHead>
+                  <TableHead>Laporan</TableHead>
                   <TableHead className='text-center'>Aksi</TableHead>
                 </TableHeader>
                 <TableBody>
-                  {filteredAgenda.map((p, index) => (
+                  {currentItems.map((p, index) => (
                     <TableRow key={p.id}>
-                      <TableCell>{index + 1}</TableCell>
+                      <TableCell>{indexOfFirstItem + index + 1}</TableCell>
                       <TableCell>{p.nama_kegiatan}</TableCell>
                       <TableCell>{new Date(p.tanggal_kegiatan).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: '2-digit' })}</TableCell>
                       <TableCell>{p.lokasi}</TableCell>
@@ -141,9 +159,9 @@ export default function AgendaPage() {
                             Lihat Laporan
                           </Link>
                         ) : (
-                         <Link to={`/laporan-agenda/${p.id}`}>
-                         Buat Laporan
-                       </Link>
+                          <Link to={`/laporan-agenda/${p.id}`}>
+                            Buat Laporan
+                          </Link>
                         )}
                       </TableCell>
                       <TableCell>
@@ -161,10 +179,26 @@ export default function AgendaPage() {
                   ))}
                 </TableBody>
               </Table>
+              <div className="flex justify-between mt-4">
+                <button
+                  disabled={currentPage === 1}
+                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                  className="bg-[#0890EA] text-white px-4 py-2 rounded"
+                >
+                  Kembali
+                </button>
+                <button
+                  disabled={indexOfLastItem >= filteredAgenda.length}
+                  onClick={() => setCurrentPage(prev => prev + 1)}
+                  className="bg-[#0890EA] text-white px-4 py-2 rounded"
+                >
+                  Selanjutnya
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </SidebarLayout>
-  )
+  );
 }

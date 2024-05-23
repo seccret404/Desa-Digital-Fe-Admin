@@ -13,13 +13,23 @@ export default function Penduduk() {
     const [penduduk, setPenduduk] = useState<PendudukDesa[]>([]);
     const [searchKeyword, setSearchKeyword] = useState<string>('');
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const itemsPerPage = 15;
-
+    const itemsPerPage = 10;
+    const [totalPopulation, setTotalPopulation] = useState<number>(0);
+    const [totalMan, setTotalMan] = useState<number>(0);
+    const [totalWoman, setTotalWoman] = useState<number>(0);
     useEffect(() => {
         async function fetchPenduduk() {
             try {
                 const data = await getPenduduk();
                 setPenduduk(data);
+                const totalPop = data.length;
+                const totalM = data.filter(p => p.jenis_kelamin === 'Laki-laki').length;
+                const totalW = data.filter(p => p.jenis_kelamin === 'Perempuan').length;
+
+
+                setTotalPopulation(totalPop);
+                setTotalMan(totalM);
+                setTotalWoman(totalW);
             } catch (error) {
                 if (error instanceof Error) {
                     console.error('error:', error.message);
@@ -52,27 +62,45 @@ export default function Penduduk() {
 
     return (
         <SidebarLayout>
-            <div className="bg-[#D9D9D98B] rounded-[15px]">
-                <div className="p-8">
+             <div className="bg-[#ffffff] rounded-[8px] mt-4">
+                    <div className="p-4 flex justify-between items-center">
+                         <div className="">
+                              <div className="text-[16px] font-bold">Total Penduduk</div>
+                              <div className="text-center text-[#146ADC] font-medium text-[20px] mt-2">{totalPopulation} Jiwa</div>
+                         </div>
+                         <div className="h-12 border border-gray-300 mx-4"></div>
+                         <div className="">
+                              <div className="text-[16px] font-bold">Total Laki-laki</div>
+                              <div className="text-center mt-2 text-[#146ADC] font-medium text-[20px]">{totalMan} Jiwa</div>
+                         </div>
+                         <div className="h-12 border border-gray-300 mx-4"></div>
+                         <div className="">
+                              <div className="text-[16px] font-bold">Total Perempuan</div>
+                              <div className="text-center mt-2 text-[#146ADC] font-medium text-[20px]">{totalWoman} Jiwa</div>
+                         </div>
+                    </div>
+               </div>
+            <div className="bg-[#ffffff] rounded-[5px] mt-4">
+                <div className="p-4">
                     <div className="flex items-center justify-between">
                         <div className="relative w-[376px]">
                             <FontAwesomeIcon icon={faSearch} className="absolute top-[10px] left-[10px]" />
                             <Input
                                 placeholder="Ketikkan kata kunci..."
-                                className="pl-[35px] rounded-[23px]"
+                                className="pl-[35px] rounded-[23px] border border-[2px] border-[#0B0B2A]"
                                 value={searchKeyword}
                                 onChange={handleSearchChange}
                             />
                         </div>
                         <div className="">
-                            <Button width={249} height={47} color='white' bgColor='#0890EA' rounded={5} >
+                            <Button width={249} height={47} color='white' bgColor='#0B0B2A' rounded={5} >
                                 <Link to='/tambah-penduduk'>
                                     Tambah Data Penduduk
                                 </Link>
                             </Button>
                         </div>
                     </div>
-                    <div className="bg-white rounded-[15px] mt-6">
+                    <div className="bg-white rounded-[5px] mt-6">
                         <Table>
                             <TableHeader style={{
                                 borderBottom: '#0890EA solid',

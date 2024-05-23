@@ -57,8 +57,6 @@ export default function TambahBerita() {
       setBerita({ ...berita, [name]: value });
     }
   };
-
-
   const back = () => {
     navigate('/berita');
   }

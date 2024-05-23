@@ -121,9 +121,10 @@ export default function TambahPenduduk() {
 
     return (
         <SidebarLayout>
-            <div className="bg-[#D9D9D98B] rounded-[15px]">
+            
+            <div className="bg-[#] rounded-[5px]">
                 <div className="p-8">
-                    <div className="bg-white flex justify-between p-1 rounded-[7px]">
+                    <div className="bg-white flex justify-between p-2 rounded-[7px]">
                         <div className="text-[16px]">
                             Form Tambah Data Penduduk
                         </div>
@@ -139,24 +140,24 @@ export default function TambahPenduduk() {
                             </div>
                         </div>
                     </div>
-                    <div className="bg-white mt-4 rounded-[15px]">
+                    <div className="bg-white mt-4 rounded-[5px]">
                         <form action="">
                             <div className="p-6 flex justify-between">
                                 <div className="">
                                     <div className="mt-4">
-                                        <div className="mb-2 text-[16px] ">
+                                        <div className="mb-2 text-[16px] font-medium">
                                             Nama Lengkap
                                         </div>
                                         <div className="">
-                                            <Input className='w-[416px] h-[40px] font-bold' placeholder='Nama lengkap' value={nama} onChange={(e) => setNama(e.target.value)} />
+                                            <Input className='w-[416px] bg-[#D9D9D92C] h-[40px] border border-[1px]' placeholder='Nama lengkap' value={nama} onChange={(e) => setNama(e.target.value)} />
                                         </div>
                                     </div>
-                                    <div className="mt-4">
-                                        <div className="mb-2 ">
+                                    <div className="mt-6">
+                                        <div className="mb-2 font-medium">
                                             Agama
                                         </div>
                                         <div className="">
-                                            <select value={agama} onChange={handleChangeAgama} className='w-[416px] h-[40px] font-bold border border-gray-300 rounded-md px-2'>
+                                            <select value={agama} onChange={handleChangeAgama} className='w-[416px] h-[40px]  border border-gray-300 rounded-md px-2 bg-[#D9D9D92C]'>
                                                 <option>Pilih Agama</option>
                                                 <option value="Kristen Protestan">Kristen Protestan</option>
                                                 <option value="Kristen Khatolik">Kristen Khatolik</option>
@@ -167,78 +168,78 @@ export default function TambahPenduduk() {
                                             </select>
                                         </div>
                                     </div>
-                                    <div className="mt-4">
-                                        <div className="mb-2 text-[16px]">
+                                    <div className="mt-6">
+                                        <div className="mb-2 text-[16px] font-medium">
                                             Alamat
                                         </div>
                                         <div className="">
-                                            <Input className='w-[416px] h-[40px] font-bold' placeholder='Alamat' value={alamat} onChange={(e) => setAlamat(e.target.value)} />
+                                            <Input className='w-[416px] h-[40px] bg-[#D9D9D92C]' placeholder='Alamat' value={alamat} onChange={(e) => setAlamat(e.target.value)} />
                                         </div>
                                     </div>
-                                    <div className="mt-4">
-                                        <div className="mb-2">
+                                    <div className="mt-6">
+                                        <div className="mb-2 font-medium">
                                             Tempat Lahir
                                         </div>
                                         <div className="">
-                                            <Input className='w-[416px] h-[40px] font-bold' placeholder='Tempat Lahir' value={tempatLahir} onChange={(e) => setTempatLahir(e.target.value)} />
+                                            <Input className='w-[416px] h-[40px] bg-[#D9D9D92C]' placeholder='Tempat Lahir' value={tempatLahir} onChange={(e) => setTempatLahir(e.target.value)} />
                                         </div>
                                     </div>
-                                    <div className="mt-4">
-                                        <div className="mb-2 text-[16px]">
+                                    <div className="mt-6">
+                                        <div className="mb-2 text-[16px] font-medium">
                                             Pekerjaan
                                         </div>
                                         <div className="">
-                                            <Input className='w-[416px] h-[40px] font-bold' placeholder='Pekerjaan' value={pekerjaan} onChange={(e) => setPekerjaan(e.target.value)} />
+                                            <Input className='w-[416px] h-[40px] bg-[#D9D9D92C]' placeholder='Pekerjaan' value={pekerjaan} onChange={(e) => setPekerjaan(e.target.value)} />
                                         </div>
                                     </div>
-                                    <div className="mt-4">
-                                        <div className="mb-2 text-[16px]">
+                                    <div className="mt-6">
+                                        <div className="mb-2 text-[16px] font-medium">
                                             Status Hidup
                                         </div>
                                         <div className="">
-                                            <select value={statusHidup} onChange={handleChangeSh} className='w-[416px] h-[40px] font-bold border border-gray-300 rounded-md px-2'>
+                                            <select value={statusHidup} onChange={handleChangeSh} className='bg-[#D9D9D92C] w-[416px] h-[40px] font-bold border border-gray-300 rounded-md px-2'>
                                                 <option>Pilih Status</option>
                                                 <option value="Hidup">Hidup</option>
                                                 <option value="Wafat">Wafat</option>
                                             </select>
                                         </div>
                                     </div>
-                                    <div className="mt-4">
-                                        <div className="mb-2 text-[16px]">
+                                    <div className="mt-6">
+                                        <div className="mb-2 text-[16px] font-medium">
                                             Nomor Kartu Keluarga
                                         </div>
                                         <div className="">
-                                            <Input className='w-[416px] h-[40px] font-bold ' placeholder='no kk' value={noKK} onChange={(e) => setNoKK(e.target.value)} />
+                                            <Input className='w-[416px] h-[40px] bg-[#D9D9D92C]' placeholder='no kk' value={noKK} onChange={(e) => setNoKK(e.target.value)} />
                                         </div>
                                     </div>
                                 </div>
                                 <div className="">
-                                    <div className="mt-4">
-                                        <div className="mb-2 text-[16px]">
+                                    <div className="mt-6">
+                                        <div className="mb-2 text-[16px] font-medium">
                                             NIK
                                         </div>
                                         <div className="">
-                                            <Input className='w-[416px] h-[40px] font-bold' placeholder='NIK' value={nik} onChange={(e) => setNik(e.target.value)} />
+                                            <Input className='w-[416px] h-[40px] bg-[#D9D9D92C]' placeholder='NIK' value={nik} onChange={(e) => setNik(e.target.value)} />
                                         </div>
                                     </div>
-                                    <div className="mt-4">
-                                        <div className="mb-2 text-[16px]">
+                                    <div className="mt-6">
+                                        <div className="mb-2 text-[16px] font-medium">
                                             Jenis Kelamin
                                         </div>
                                         <div className="">
-                                            <select value={jenisKelamin} onChange={handleJk} className='w-[416px] h-[40px] font-bold border border-gray-300 rounded-md px-2'>
+                                            <select value={jenisKelamin} onChange={handleJk} className='w-[416px] bg-[#D9D9D92C] h-[40px]  border border-gray-300 rounded-md px-2'>
                                                 <option>Pilih Jenis</option>
                                                 <option value="Laki-laki">Laki-laki</option>
                                                 <option value="Perempuan">Perempuan</option>
                                             </select>
                                         </div>
                                     </div>
-                                    <div className="mt-4">
-                                        <div className="mb-2">
+                                    <div className="mt-6">
+                                        <div className="mb-2 font-medium">
                                             Status Perkawinan
                                         </div>
                                         <div className="">
-                                            <select value={statusPerkawinan} onChange={handleKawin} className='w-[416px] h-[40px] font-bold border border-gray-300 rounded-md px-2'>
+                                            <select value={statusPerkawinan} onChange={handleKawin} className='w-[416px] bg-[#D9D9D92C] h-[40px]  border border-gray-300 rounded-md px-2'>
                                                 <option>Pilih Status</option>
                                                 <option value="Kawin">Kawin</option>
                                                 <option value="Belum Kawin">Belum Kawin</option>
@@ -247,37 +248,37 @@ export default function TambahPenduduk() {
                                             </select>
                                         </div>
                                     </div>
-                                    <div className="mt-4">
-                                        <div className="mb-2 text-[16px]">
+                                    <div className="mt-6">
+                                        <div className="mb-2 text-[16px] font-medium ">
                                             Tanggal Lahir
                                         </div>
                                         <div className="">
                                             <Input
-                                                className='w-[416px] h-[40px] font-bold'
+                                                className='w-[416px] h-[40px] bg-[#D9D9D92C]'
                                                 type='date'
                                                 value={tanggalLahir.toISOString().split('T')[0]}
                                                 onChange={(e) => setTanggalLahir(new Date(e.target.value))}
                                             />
                                         </div>
                                     </div>
-                                    <div className="mt-4">
-                                        <div className="mb-2 text-[16px]">
+                                    <div className="mt-6">
+                                        <div className="mb-2 text-[16px] font-medium">
                                             Kewarganegaraan
                                         </div>
                                         <div className="">
-                                            <select value={kewarganegaraan} onChange={handleWarga} className='w-[416px] h-[40px] font-bold border border-gray-300 rounded-md px-2'>
+                                            <select value={kewarganegaraan} onChange={handleWarga} className='w-[416px] h-[40px] border border-gray-300 rounded-md bg-[#D9D9D92C] px-2'>
                                                 <option>Pilih Kewarganegaraan</option>
                                                 <option value="WNI">Warga Negara Indonesia</option>
                                                 <option value="WNA">Warga Negara Asing</option>
                                             </select>
                                         </div>
                                     </div>
-                                    <div className="mt-4">
-                                        <div className="mb-2 text-[16px]">
+                                    <div className="mt-6">
+                                        <div className="mb-2 text-[16px] font-medium">
                                             Pendidikan
                                         </div>
                                         <div className="">
-                                            <select value={pendidikan_terakhir} onChange={handlePendidikan} className='w-[416px] h-[40px] font-bold border border-gray-300 rounded-md px-2'>
+                                            <select value={pendidikan_terakhir} onChange={handlePendidikan} className='bg-[#D9D9D92C] w-[416px] h-[40px] border border-gray-300 rounded-md px-2'>
                                                 <option>Pilih Pendidikan</option>
                                                 <option value="SD">Sekolah Dasar</option>
                                                 <option value="SMP">Sekolah Mengengah Pertama</option>
@@ -287,8 +288,8 @@ export default function TambahPenduduk() {
                                             </select>
                                         </div>
                                     </div>
-                                    <div className="mt-4">
-                                        <div className="mb-2 text-[16px]">
+                                    <div className="mt-6">
+                                        <div className="mb-2 text-[16px] font-medium">
                                             Dusun
                                         </div>
                                         <div className="">

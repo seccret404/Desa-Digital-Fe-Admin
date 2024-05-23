@@ -29,12 +29,12 @@ export default function PengumumanPage() {
      }, [])
      return (
           <SidebarLayout>
-               <div className="bg-[#D9D9D98B] rounded-[15px]">
+               <div className="bg-[#] rounded-[15px]">
                     <div className="p-8">
                          <div className="flex items-center justify-between">
                               <div className="relative w-[376px]">
                                    <FontAwesomeIcon icon={faSearch} className="absolute top-[10px] left-[10px]" />
-                                   <Input placeholder="Ketikkan kata kunci..." className="pl-[35px] rounded-[23px]" />
+                                   <Input placeholder="Ketikkan kata kunci..." className="pl-[35px] rounded-[23px] border border-[2px] border-[#0B0B2A]" />
                               </div>
                               <div className="">
                                    <Button width={249} height={47} color='white' bgColor='#0890EA' rounded={5} >

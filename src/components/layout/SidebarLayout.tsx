@@ -9,9 +9,9 @@ export default function SidebarLayout({
 }) {
      return (
           <>
-               <div className="flex w-full min-h-screen flex-row bg-[#F2F2F2]">
+               <div className="flex w-full min-h-screen flex-row bg-[#F5F5F5]">
                     <Sidebar />
-                    <div className=" ml-1 flex-[6]">
+                    <div className=" ml-4 mr-4 flex-[6]">
                          <ScrollArea className='h-screen pt-4'>
                               {children}
                          </ScrollArea>

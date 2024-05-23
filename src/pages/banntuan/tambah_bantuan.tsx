@@ -48,7 +48,7 @@ export default function TambahDaftarBantuan() {
      
      return (
           <SidebarLayout>
-               <div className="bg-[#D9D9D98B] rounded-[15px]">
+               <div className="bg-[#] rounded-[5px]">
                     <div className="p-8">
                          <div className="bg-white flex justify-between p-4 rounded-[7px]">
                               <div className="text-[16px]">
@@ -67,7 +67,7 @@ export default function TambahDaftarBantuan() {
                               </div>
                          </div>
                        <div className="flex justify-center items-center">
-                       <div className="bg-white w-[600px] rounded-[15px] mt-6 flex justify-center">
+                       <div className="bg-white w-[600px] rounded-[5px] mt-6 flex justify-center">
                               <div className="p-2 mb-6" >
                                    <form action="">
 
@@ -94,16 +94,6 @@ export default function TambahDaftarBantuan() {
                                                  />
                                              </div>
                                         </div>
-                                        <div className="flex items-center mt-4">
-                                             <div className="w-[150px] text-[16px]">
-                                                  Bentuk Terima
-                                             </div>
-                                             <div className="w-[350px]">
-                                                 <Input placeholder='Bentuk terima..'/>
-                                             </div>
-                                        </div>
-
-
                                         <div className="flex justify-end mt-6">
                                              <div className="mr-6">
                                                   <button onClick={Back} className='bg-[#F61616] text-white rounded-[5px] w-[142px] h-[30px]'>
