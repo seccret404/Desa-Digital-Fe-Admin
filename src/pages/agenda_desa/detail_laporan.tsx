@@ -8,13 +8,12 @@ import { Laporan } from '../../interfaces/laporan';
 
 export default function DetailLaporan() {
   const { id } = useParams<{ id: string }>(); // Ambil id dari parameter URL
-  const [laporan, setLaporan] = useState<Laporan | null>(null); // State untuk menyimpan data laporan
-  const [namaKegiatan, setNamaKegiatan] = useState<string>(''); // State untuk menyimpan nama kegiatan
-
+  const [laporan, setLaporan] = useState<Laporan | null>(null); 
+  const [namaKegiatan, setNamaKegiatan] = useState<string>(''); 
   useEffect(() => {
     async function fetchLaporan() {
       try {
-        const data = await getLaporanById(id); // Ambil data laporan berdasarkan id
+        const data = await getLaporanById(id!); 
         setLaporan(data);
       } catch (error) {
         console.error('Error fetching laporan:', error);

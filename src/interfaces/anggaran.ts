@@ -1,4 +1,6 @@
 export interface Anggaran {
+  createdAt?: Date;
+    id?:string,
      judul: string;
      tahun_anggaran: string;
      rencana_hasilusaha: string;
@@ -43,6 +45,6 @@ export interface Anggaran {
      realisasi_pembentukandanacadangan: string;
      rencana_penyertaanmodaldesa: string;
      realisasi_penyertaanmodaldesa: string;
-     createdAt:string;
+
  }
  

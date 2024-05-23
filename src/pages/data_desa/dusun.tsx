@@ -30,13 +30,16 @@ export default function DusunPage() {
     fetchDusun();
   }, []);
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string) => {
     try {
+      if (!id) {
+        return;
+      }
       await deleteDusun(id);
       toast({ title: "Success", description: "Dusun berhasil dihapus!" });
-      // Update state by filtering out the deleted dusun
       setDusun(dusun.filter(d => d.id !== id));
-    } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       toast({ title: "Error", description: error.message });
     }
   };
@@ -82,10 +85,14 @@ export default function DusunPage() {
                               Edit
                             </Link>
                           </Button>
-                          
+
                         </div>
                         <div className="flex ml-4 justify-center text-[#EA081F] text-[12px] bg-[#EA083160] w-[70px] h-[23px] text-center rounded-[5px]">
-                        <button onClick={() => handleDelete(d.id)}>Hapus</button>
+                          <button onClick={() => {
+                            if (d.id !== undefined) {
+                              handleDelete(d.id);
+                            }
+                          }}>Hapus</button>
                         </div>
                       </div>
                     </TableCell>

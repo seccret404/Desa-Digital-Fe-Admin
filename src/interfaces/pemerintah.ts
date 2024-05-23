@@ -1,4 +1,5 @@
 export interface Pemerintah{
+     id?:string,
      nama:string,
      nik:string,
      jabatan:string,

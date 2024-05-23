@@ -43,6 +43,9 @@ export default function ProfilEdit() {
      useEffect(() => {
           async function fetchProfil() {
                try {
+                    if(!id){
+                         return;
+                    }
                     const data = await getProfilById(id);
                     setProfil(data);
                } catch (error) {
@@ -75,6 +78,9 @@ export default function ProfilEdit() {
      const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
           e.preventDefault();
           try {
+               if(!id){
+                    return;
+               }
             const target = e.target as typeof e.target & {
               gambar_desa: { files: FileList };
             };

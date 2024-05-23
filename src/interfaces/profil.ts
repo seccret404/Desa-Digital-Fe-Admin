@@ -1,4 +1,5 @@
 export interface Profil{
+     id?:string,
      nama_desa:string,
      alamat_kantor:string,
      kecamatan:string,

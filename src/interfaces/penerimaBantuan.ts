@@ -1,5 +1,5 @@
 export interface Penerima{
-     id: Key | null | undefined;
+     id?:string,
      id_penduduk:string,
      id_bantuan:string,
      nama_penerima:string,

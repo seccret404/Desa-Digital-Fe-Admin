@@ -828,7 +828,7 @@ export const updateProfil = async (id: string, data: Profil): Promise<void> => {
 
 
 
-export const deleteDusun = async (id: number): Promise<void> => {
+export const deleteDusun = async (id: string): Promise<void> => {
   try {
     const response = await fetch(`${API_URL}/dusun/${id}`, {
       method: 'DELETE',

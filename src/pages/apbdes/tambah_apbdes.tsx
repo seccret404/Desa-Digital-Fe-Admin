@@ -130,8 +130,8 @@ export default function AddApbdes() {
                    rencana_pembentukandanacadangan: rencanaPembentukanCadangan,
                    realisasi_pembentukandanacadangan: realisasiPembentukanCadangan,
                    rencana_penyertaanmodaldesa: rencanaPenyertaanModal,
-                   realisasi_penyertaanmodaldesa: realisasiPenyertaanModal
-               //     createdAt: ''
+                   realisasi_penyertaanmodaldesa: realisasiPenyertaanModal,
+               
               };
               await addAnggaran(data);
               console.log(data)

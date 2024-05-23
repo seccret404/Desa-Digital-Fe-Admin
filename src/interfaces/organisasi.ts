@@ -1,5 +1,5 @@
 export interface Organisasi{
-     // id:number,
+     id?:string,
      nama_lembaga: string,
      singkatan: string,
      alamat_organisasi: string,

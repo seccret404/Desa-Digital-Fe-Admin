@@ -1,5 +1,5 @@
 export interface Tugas{
-     [x: string]: Key | null | undefined;
+     id?:string;
      jabatan:string,
      tugas:string,
      wewenang:string,

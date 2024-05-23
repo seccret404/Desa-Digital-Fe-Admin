@@ -16,28 +16,65 @@ export default function EditBerita() {
   const [file, setFile] = useState<File | null>(null);
   const { toast } = useToast();
 
-  useEffect(() => {
-    const fetchBerita = async () => {
-      try {
-        const berita = await getBeritaById(id);
-        setJudulBerita(berita.judul_berita);
-        setIsiBerita(berita.isi_berita);
-        setCover(new File([], berita.cover)); // Assuming cover is a string containing the file name
-        setFile(new File([], berita.file));   // Assuming file is a string containing the file name
-      } catch (error) {
-        console.error('Error fetching berita:', error.message);
-        toast({ title: "Error", description: "Gagal mengambil data berita!" });
-      }
-    };
+//   useEffect(() => {
+//     const fetchBerita = async () => {
+//       try {
+//         if (!id) {
+//           return;
+//       }
+//         const berita = await getBeritaById(id);
+//         setJudulBerita(berita.judul_berita);
+//         setIsiBerita(berita.isi_berita);
+//         setCover( berita.cover); 
+//         setFile(berita.file);   
 
-    fetchBerita();
-  }, [id, toast]);
+//       } catch (error: unknown) {
+//     if (error instanceof Error) {
+//         console.error('Error fetching berita:', error.message);
+//     } else {
+//         console.error('Unknown error:', error);
+//     }
+//     toast({ title: "Error", description: "Gagal mengambil data berita!" });
+// }
+//     };
+
+//     fetchBerita();
+//   }, [id, toast]);
+useEffect(() => {
+  const fetchBerita = async () => {
+    try {
+      if (!id) {
+        return;
+      }
+      const berita = await getBeritaById(id);
+      setJudulBerita(berita.judul_berita);
+      setIsiBerita(berita.isi_berita);
+      
+      const coverFile = berita.cover instanceof File ? berita.cover : null;
+      setCover(coverFile);
+
+      const fileFile = berita.file instanceof File ? berita.file : null;
+      setFile(fileFile);
+
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error('Error fetching berita:', error.message);
+      } else {
+        console.error('Unknown error:', error);
+      }
+      toast({ title: "Error", description: "Gagal mengambil data berita!" });
+    }
+  };
+
+  fetchBerita();
+}, [id, toast]);
+
 
   const back = () => {
     navigate('/berita');
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     if (!judulBerita || !isiBerita || !cover || !file) {
       toast({ title: "Error", description: "Tolong isi semua kolom!" });
@@ -45,6 +82,9 @@ export default function EditBerita() {
     }
 
     try {
+      if (!id) {
+        return;
+    }
       const updatedData = {
         judul_berita: judulBerita,
         isi_berita: isiBerita,
@@ -55,8 +95,8 @@ export default function EditBerita() {
       await updateBerita(id, updatedData);
       toast({ title: "Berita", description: "Berita berhasil diperbarui!" });
       navigate('/berita');
-    } catch (error) {
-      console.error('Error updating berita:', error.message);
+    } catch (error: unknown) {
+      console.error('Error updating berita:', error);
       toast({ title: "Error", description: "Gagal memperbarui berita!" });
     }
   };
@@ -88,7 +128,7 @@ export default function EditBerita() {
                   <CKEditor
                     editor={ClassicEditor}
                     data={isiBerita}
-                    onChange={(event, editor) => {
+                    onChange={(_event, editor) => {
                       const data = editor.getData();
                       setIsiBerita(data);
                     }}
@@ -102,7 +142,12 @@ export default function EditBerita() {
                     type="file"
                     className="h-[40px] font-bold"
                     name="cover"
-                    onChange={(e) => setCover(e.target.files[0])}
+                    onChange={(e) => {
+                      const file = e.target.files?.[0]; // Pengecekan nullish
+                      if (file) {
+                        setCover(file);
+                      }
+                    }}
                   />
                   {cover && <div className="bg-[#55C0E4] p-2 mt-1 rounded-[5px] text-white"><b>File sebelumnya : </b>{cover.name}</div>}
                 </div>
@@ -114,7 +159,12 @@ export default function EditBerita() {
                     type="file"
                     className="h-[40px] font-bold"
                     name="file"
-                    onChange={(e) => setFile(e.target.files[0])}
+                    onChange={(e) => {
+                      const file = e.target.files?.[0]; // Pengecekan nullish
+                      if (file) {
+                        setCover(file);
+                      }
+                    }}
                   />
                   {file && <div className="bg-[#55C0E4] p-2 mt-1 rounded-[5px] text-white"><b>File sebelumnya : </b>{file.name}</div>}
                 </div>

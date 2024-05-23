@@ -1,6 +1,5 @@
 export interface PendudukDesa{
-     id: any;
-     
+    id?: string;
     nik : string,
      nama : string,
      agama : string,
@@ -15,5 +14,5 @@ export interface PendudukDesa{
      status_perkawinan : string,
      dusun : string,
      no_kk : number,
-     id_dusun : number
+     id_dusun : string
 }

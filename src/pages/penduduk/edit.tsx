@@ -23,14 +23,14 @@ export default function EditPenduduk() {
           pekerjaan: '',
           status_hidup: '',
           no_kk: 0,
-          nik: 0,
+          nik: '',
           jenis_kelamin: '',
           status_perkawinan: '',
           tanggal_lahir: '',
           kewarganegaraan: '',
           pendidikan_terakhir: '',
           dusun: '',
-          id_dusun: 0
+          id_dusun: ''
      });
      const [dusunOptions, setDusunOptions] = useState<Dusun[]>([]);
      const [selectedDusun, setSelectedDusun] = useState<Dusun | null>(null);
@@ -38,6 +38,10 @@ export default function EditPenduduk() {
      useEffect(() => {
           const fetchData = async () => {
                try {
+                    if (!id) {
+                         // Jika id adalah undefined, tidak perlu melanjutkan permintaan data
+                         return;
+                     }
                     const [pendudukData, dusunData] = await Promise.all([
                          getPendudukById(id),
                          getDusun()
@@ -74,11 +78,16 @@ export default function EditPenduduk() {
       const handleSubmit = async (e: React.FormEvent) => {
           e.preventDefault();
           try {
-              await updatePenduduk(id, {
-                  ...penduduk,
-                  id_dusun: selectedDusun ? selectedDusun.id : 0, // Sesuaikan dengan kebutuhan API Anda
-                  dusun: selectedDusun ? selectedDusun.nama_dusun : ''
-              });
+               if (!id) {
+                    
+                    return;
+                }
+                await updatePenduduk(id, {
+                    ...penduduk,
+                    id_dusun: selectedDusun ? selectedDusun.id || '' : '', 
+                    dusun: selectedDusun ? selectedDusun.nama_dusun || '' : '' 
+                  });
+                  
               console.log('Penduduk updated successfully');
               toast({
                   title: "Data Penduduk",

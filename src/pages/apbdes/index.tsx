@@ -82,7 +82,9 @@ export default function ApbdesPage() {
                       <TableCell>{indexOfFirstItem + index + 1}</TableCell>
                       <TableCell>{a.judul}</TableCell>
                       <TableCell>{a.tahun_anggaran}</TableCell>
-                      <TableCell>{new Date(a.createdAt).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: '2-digit' })}</TableCell>
+                      <TableCell>
+                        {a.createdAt ? new Date(a.createdAt).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: '2-digit' }) : ''}
+                      </TableCell>
                       <TableCell>
                         <div className="flex justify-center text-[#0890EA] text-[12px] bg-[#0890EA60] w-[70px] h-[23px] text-center rounded-[5px]">
                           <Button>

@@ -1,5 +1,5 @@
 export interface Bantuan{
-     id: any;
+     id?: string;
      jenis_bantuan:string,
      nama_bantuan:string
 }

@@ -73,7 +73,7 @@ export default function TambahPenerimaBantuan() {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleEditorChange = (event: any, editor: { getData: () => any; }) => {
+  const handleEditorChange = (_event: any, editor: { getData: () => any; }) => {
     console.log('Editor data:', editor.getData());
     const data = editor.getData();
     setBentukTerima(data);
@@ -84,37 +84,43 @@ export default function TambahPenerimaBantuan() {
     console.log('bentukTerima:', bentukTerima);
     try {
       if (selectedPenduduk && selectedBantuan && status && jenisBantuan && tglTerima && bentukTerima && jumlahTerima !== null) {
-        const data: Penerima = {
-          id_penduduk: selectedPenduduk.id,
-          id_bantuan: selectedBantuan.id,
-          nama_penerima: selectedPenduduk.nama,
-          jenis_bantuan: jenisBantuan,
-          nama_bantuan: selectedBantuan.nama_bantuan,
-          status_bantuan: status,
-          tgl_terima: tglTerima,
-          jumlah_terima: jumlahTerima.toString(), 
-          bentuk_terima: bentukTerima,
-          id: undefined
-        };
-        await addPenerima(data);
-        console.log('Penerima added successfully:', data);
-        toast({
-          title: "Penerima Bantuan",
-          description: "Penerima berhasil ditambahkan!"
-        });
-        navigate('/bantuan');
+        // Periksa apakah selectedBantuan dan selectedBantuan.id tidak bernilai null atau undefined
+        if (selectedBantuan.id !== undefined && selectedPenduduk.id !== undefined) {
+          const data: Penerima = {
+            id_penduduk: selectedPenduduk.id,
+            id_bantuan: selectedBantuan.id,
+            nama_penerima: selectedPenduduk.nama,
+            jenis_bantuan: jenisBantuan,
+            nama_bantuan: selectedBantuan.nama_bantuan,
+            status_bantuan: status,
+            tgl_terima: tglTerima,
+            jumlah_terima: jumlahTerima.toString(), 
+            bentuk_terima: bentukTerima,
+            id: undefined
+          };
+          await addPenerima(data);
+          console.log('Penerima added successfully:', data);
+          toast({
+            title: "Penerima Bantuan",
+            description: "Penerima berhasil ditambahkan!"
+          });
+          navigate('/bantuan');
 
-        setSelectedPenduduk(null);
-        setSelectedBantuan(null);
-        setStatus('');
-        setJenisBantuan('');
-        setTglTerima('');
-        setBentukTerima(''); 
-        setJumlahTerima(null);
+          setSelectedPenduduk(null);
+          setSelectedBantuan(null);
+          setStatus('');
+          setJenisBantuan('');
+          setTglTerima('');
+          setBentukTerima(''); 
+          setJumlahTerima(null);
+        } else {
+          console.error('Selected Bantuan is missing id');
+        }
       } else {
         console.error('Please fill all fields');
       }
-    } catch (error) {
+    } 
+ catch (error) {
       console.error('Error adding penerima:', error);
       toast({
         title: "Penerima Bantuan",
@@ -153,7 +159,7 @@ export default function TambahPenerimaBantuan() {
                         options={pendudukOptions}
                         getOptionLabel={(option) => option.nama}
                         value={selectedPenduduk}
-                        onChange={(event, newValue) => {
+                        onChange={(_event, newValue) => {
                           setSelectedPenduduk(newValue);
                         }}
                         renderInput={(params) => <TextField {...params} label="Nama Penerima" />}
@@ -178,7 +184,7 @@ export default function TambahPenerimaBantuan() {
                         options={bantuanOptions.filter(bantuan => bantuan.jenis_bantuan === jenisBantuan)}
                         getOptionLabel={(option) => option.nama_bantuan}
                         value={selectedBantuan}
-                        onChange={(event, newValue) => {
+                        onChange={(_event, newValue) => {
                           setSelectedBantuan(newValue);
                         }}
                         renderInput={(params) => <TextField {...params} label="Nama Bantuan" />}

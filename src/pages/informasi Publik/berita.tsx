@@ -64,15 +64,19 @@ export default function BeritaPage() {
                                                   <TableRow key={b.id}>
                                                        <TableCell>{index + 1} </TableCell>
                                                        <TableCell>{b.judul_berita} </TableCell>
-                                                       <TableCell className='text-[#0D9276] font-medium'>{new Date(b.tgl_publikasi).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: '2-digit' })}</TableCell>
+                                                       <TableCell className='text-[#0D9276] font-medium'>
+                                                            {b.tgl_publikasi ? new Date(b.tgl_publikasi).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: '2-digit' }) : ''}
+                                                       </TableCell>
+
                                                        <TableCell>
-                                                            {b.cover && (
+                                                            {b.cover && typeof b.cover === 'string' && (
                                                                  b.cover.endsWith('.jpg') || b.cover.endsWith('.png') || b.cover.endsWith('.jpeg') ? (
                                                                       <img src={`http://localhost:3000/images/cover/${b.cover}`} alt="Cover Berita" className="w-20 h-auto" />
                                                                  ) : (
                                                                       <a href={`https://desa-digital-bakend-production.up.railway.app/images/cover/${b.cover}`} target="_blank" rel="noopener noreferrer">{b.cover}</a>
                                                                  )
                                                             )}
+
                                                        </TableCell>
                                                        <TableCell>
                                                             <div className="flex justify-center ml-4 mr-4">

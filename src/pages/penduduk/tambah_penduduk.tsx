@@ -61,7 +61,8 @@ export default function TambahPenduduk() {
         }
 
         const pendudukData = {
-            nik: Number(nik),
+            
+            nik: nik,
             nama: nama,
             agama: agama,
             alamat: alamat,
@@ -75,7 +76,7 @@ export default function TambahPenduduk() {
             status_perkawinan: statusPerkawinan,
             dusun: dusun ? dusun.nama_dusun : '',
             no_kk: Number(noKK),
-            id_dusun: dusun ? dusun.id : null
+            id_dusun: dusun && dusun.id ? dusun.id.toString() : '' 
         };
 
         try {
@@ -298,7 +299,7 @@ export default function TambahPenduduk() {
                                                 options={dusunOptions}
                                                 getOptionLabel={(option) => option.nama_dusun}
                                                 value={dusun}
-                                                onChange={(event, newValue) => {
+                                                onChange={(_event, newValue) => {
                                                     setDusun(newValue);
                                                 }}
                                                 renderInput={(params) => <TextField {...params} label="Nama Dusun" />}

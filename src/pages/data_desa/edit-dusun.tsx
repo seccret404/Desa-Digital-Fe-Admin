@@ -19,6 +19,9 @@ export default function EditDusun() {
      useEffect(() =>{
           async function fetchDusunData(){
                try{
+                    if(!id){
+                         return;
+                    }
                     const data = await getDusunById(id);
                     setDusun(data);
                }catch (error) {
@@ -41,6 +44,9 @@ export default function EditDusun() {
       const handleSubmit = async (e: React.FormEvent) =>{
           e.preventDefault();
           try{
+               if(!id){
+                    return;
+               }
                await updateDusun(id, dusun);
                toast({
                     title:"Data Dusun",

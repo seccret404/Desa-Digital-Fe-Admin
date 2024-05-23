@@ -60,7 +60,7 @@ export default function EditAddApbdes() {
           realisasi_pembentukandanacadangan: '',
           rencana_penyertaanmodaldesa: '',
           realisasi_penyertaanmodaldesa: '',
-          createdAt: ''
+      
      });
 
      const [selectedYear, setSelectedYear] = useState<string | null>(null);
@@ -69,6 +69,9 @@ export default function EditAddApbdes() {
      useEffect(() => {
           async function fetchAnggaran() {
                try {
+                    if(!id){
+                         return;
+                    }
                     const data = await getAnggaranById(id);
                     console.log("Fetched Anggaran:", data);
                     setAnggaran(data);
@@ -107,6 +110,9 @@ export default function EditAddApbdes() {
      const handleSubmit = async (e: React.FormEvent) => {
           e.preventDefault();
           try {
+               if(!id){
+                    return;
+               }
               await updateAnggaran(id, anggaran);
               console.log('Anggaran updated successfully', anggaran);
               toast({

@@ -64,14 +64,13 @@ export default function PengumumanPage() {
                                                        <TableCell>{p.judul_pengumuman}</TableCell>
                                                        <TableCell className='text-[#0D9276] font-medium'>{new Date(p.tgl_publikasi).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: '2-digit' })}</TableCell>
                                                        <TableCell>
-                                                            {p.cover_pengumuman && (
+                                                            {typeof p.cover_pengumuman === 'string' && (
                                                                  p.cover_pengumuman.endsWith('.jpg') || p.cover_pengumuman.endsWith('.png') || p.cover_pengumuman.endsWith('.jpeg') ? (
                                                                       <img src={`https://desa-digital-bakend-production.up.railway.app/images/pengumuman/cover/${p.cover_pengumuman}`} alt="Cover Pengumuman" className="w-20 h-auto" />
                                                                  ) : (
                                                                       <a href={`https://desa-digital-bakend-production.up.railway.app/images/pengumuman/cover/${p.cover_pengumuman}`} target="_blank" rel="noopener noreferrer">{p.cover_pengumuman}</a>
                                                                  )
                                                             )}
-
                                                        </TableCell>
                                                        <TableCell>
                                                             <div className="flex justify-center ml-4 mr-4">
@@ -86,9 +85,7 @@ export default function PengumumanPage() {
                                                             </div>
                                                        </TableCell>
                                                   </TableRow>
-
                                              )}
-
                                         </TableBody>
                                    </Table>
                               </div>

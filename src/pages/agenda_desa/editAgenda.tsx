@@ -18,7 +18,10 @@ export default function EditAgenda() {
         useEffect(() => {
             async function fetchAgenda() {
                 try {
-                    const data = await getAgendaById(id);
+                    if(!id)
+{
+    return;
+}                    const data = await getAgendaById(id);
                 setAgendaData(data);
             } catch (error) {
                 console.error('Error fetching agenda:', error);
@@ -54,24 +57,26 @@ export default function EditAgenda() {
     };
 
     const handleUpdate = async () => {
-     try {
-         if (agendaData) {
-             const formattedDate = formatDate(agendaData.tanggal_kegiatan);
-             await updateAgenda(agendaData.id, { ...agendaData, tanggal_kegiatan: formattedDate });
-             toast({
-                 title: "Agenda Desa",
-                 description: 'Data Berhasil di Update'
-             });
-             navigate('/agenda-desa'); 
-         }
-     } catch (error) {
-         console.error('Error updating agenda:', error);
-         toast({
-             title: "Agenda Desa",
-             description: 'Data Gagal di Update'
-         });
-     }
- };
+        try {
+            if (agendaData) {
+                const formattedDate = formatDate(agendaData.tanggal_kegiatan!);
+                await updateAgenda(agendaData.id!, { ...agendaData, tanggal_kegiatan: formattedDate });
+                toast({
+                    title: "Agenda Desa",
+                    description: 'Data Berhasil di Update'
+                });
+                navigate('/agenda-desa'); 
+            }
+        } catch (error) {
+            console.error('Error updating agenda:', error);
+            toast({
+                title: "Agenda Desa",
+                description: 'Data Gagal di Update'
+            });
+        }
+    };
+    
+    
  
  
 

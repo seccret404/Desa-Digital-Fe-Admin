@@ -5,6 +5,7 @@ import { Input } from '../../../components/ui/input';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { getPengumumanById, updatePengumuman } from '../../../services/desaServices';
+import { Pengumuman } from '../../../interfaces/pengumuman';
 
 
 export default function EditPengumuman() {
@@ -18,14 +19,20 @@ export default function EditPengumuman() {
   useEffect(() => {
     const fetchPengumuman = async () => {
       try {
+        if(!id){
+          return;
+        }
         const berita = await getPengumumanById(id);
         setJudul(berita.judul_pengumuman);
         setDeskripsi(berita.deskripsi_pengumuman);
-        // Assuming cover and file are strings containing the file names
-        setCover(new File([], berita.cover_pengumuman));
-        setFile(new File([], berita.file_pengumuman));
-      } catch (error) {
-        console.error('Error fetching berita:', error.message);
+       
+        const coverFile = berita.cover_pengumuman instanceof File ? berita.cover_pengumuman : null;
+        setCover(coverFile);
+  
+        const fileFile = berita.file_pengumuman instanceof File ? berita.file_pengumuman : null;
+        setFile(fileFile);
+      } catch (error:unknown) {
+        console.error('Error fetching berita:', error);
       }
     };
 
@@ -36,34 +43,26 @@ export default function EditPengumuman() {
     navigate('/pengumuman');
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: { preventDefault: () => void; }) => {
      e.preventDefault();
    
      try {
-       let updatedData = {
-         judul_berita: judulPengumuman,
-         isi_berita: deskripsiPengumuman,
-       };
+      if(!id){
+        return;
+      }
+      const updatedData: Pengumuman = {
+        judul_pengumuman: judulPengumuman,
+        deskripsi_pengumuman: deskripsiPengumuman,
+        cover_pengumuman: cover_pengumuman ?? '', 
+        file_pengumuman: file_pengumuman ?? '',
+        tgl_publikasi: '' 
+      };
    
-       // Check if cover is changed
-       if (cover_pengumuman) {
-         updatedData = {
-           ...updatedData,
-           cover: cover_pengumuman,
-         };
-       }
-   
-       // Check if file is changed
-       if (file_pengumuman) {
-         updatedData = {
-           ...updatedData,
-           file: file_pengumuman,
-         };
-       }
    
        await updatePengumuman(id, updatedData);
        navigate('/pengumuman');
-     } catch (error) {
+     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     } catch (error:any) {
        console.error('Error updating berita:', error.message);
      }
    };
@@ -97,7 +96,7 @@ export default function EditPengumuman() {
                   <CKEditor
                     editor={ClassicEditor}
                     data={deskripsiPengumuman}
-                    onChange={(event, editor) => {
+                    onChange={(_event, editor) => {
                       const data = editor.getData();
                       setDeskripsi(data);
                     }}
@@ -111,7 +110,12 @@ export default function EditPengumuman() {
                     type='file'
                     className=' h-[40px] font-bold'
                     name="cover_pengumuman"
-                    onChange={(e) => setCover(e.target.files[0])}
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        setCover(file);
+                      }
+                    }}
                   />
                   {cover_pengumuman && <div className='bg-[#55C0E4] p-2 mt-1 rounded-[5px] text-white'><b>File sebelumnya : </b>{cover_pengumuman.name}</div>}
                 </div>
@@ -124,7 +128,12 @@ export default function EditPengumuman() {
                     className=' h-[40px] font-bold'
                     placeholder='File'
                     name="file_pengumuman"
-                    onChange={(e) => setFile(e.target.files[0])}
+                    onChange={(e) => {
+                      const file = e.target.files?.[0]; 
+                      if (file) {
+                        setFile(file);
+                      }
+                    }}
                   />
                   {file_pengumuman && <div className='bg-[#55C0E4] p-2 mt-1 rounded-[5px] text-white'><b>File sebelumnya : </b>{file_pengumuman.name}</div>}
                 </div>
