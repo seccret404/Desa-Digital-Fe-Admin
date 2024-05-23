@@ -16,88 +16,59 @@ export default function EditBerita() {
   const [file, setFile] = useState<File | null>(null);
   const { toast } = useToast();
 
-//   useEffect(() => {
-//     const fetchBerita = async () => {
-//       try {
-//         if (!id) {
-//           return;
-//       }
-//         const berita = await getBeritaById(id);
-//         setJudulBerita(berita.judul_berita);
-//         setIsiBerita(berita.isi_berita);
-//         setCover( berita.cover); 
-//         setFile(berita.file);   
+  useEffect(() => {
+    const fetchBerita = async () => {
+      try {
+        if (!id) {
+          return;
+        }
+        const berita = await getBeritaById(id);
+        setJudulBerita(berita.judul_berita);
+        setIsiBerita(berita.isi_berita);
 
-//       } catch (error: unknown) {
-//     if (error instanceof Error) {
-//         console.error('Error fetching berita:', error.message);
-//     } else {
-//         console.error('Unknown error:', error);
-//     }
-//     toast({ title: "Error", description: "Gagal mengambil data berita!" });
-// }
-//     };
+        const coverFile = berita.cover instanceof File ? berita.cover : null;
+        setCover(coverFile);
 
-//     fetchBerita();
-//   }, [id, toast]);
-useEffect(() => {
-  const fetchBerita = async () => {
-    try {
-      if (!id) {
-        return;
+        const fileFile = berita.file instanceof File ? berita.file : null;
+        setFile(fileFile);
+      } catch (error: unknown) {
+        console.error('Error fetching berita:', error);
       }
-      const berita = await getBeritaById(id);
-      setJudulBerita(berita.judul_berita);
-      setIsiBerita(berita.isi_berita);
-      
-      const coverFile = berita.cover instanceof File ? berita.cover : null;
-      setCover(coverFile);
+    };
 
-      const fileFile = berita.file instanceof File ? berita.file : null;
-      setFile(fileFile);
-
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        console.error('Error fetching berita:', error.message);
-      } else {
-        console.error('Unknown error:', error);
-      }
-      toast({ title: "Error", description: "Gagal mengambil data berita!" });
-    }
-  };
-
-  fetchBerita();
-}, [id, toast]);
-
+    fetchBerita();
+  }, [id]);
 
   const back = () => {
     navigate('/berita');
   };
 
-  const handleSubmit = async (e: { preventDefault: () => void; }) => {
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    if (!judulBerita || !isiBerita || !cover || !file) {
-      toast({ title: "Error", description: "Tolong isi semua kolom!" });
-      return;
-    }
 
     try {
       if (!id) {
         return;
-    }
+      }
       const updatedData = {
         judul_berita: judulBerita,
         isi_berita: isiBerita,
-        cover: cover,
-        file: file,
+        cover: cover ?? '',
+        file: file ?? '',
       };
 
       await updateBerita(id, updatedData);
-      toast({ title: "Berita", description: "Berita berhasil diperbarui!" });
       navigate('/berita');
+      toast({
+        title: 'Berita',
+        description: 'Berita Berhasil di Update',
+      });
     } catch (error: unknown) {
       console.error('Error updating berita:', error);
-      toast({ title: "Error", description: "Gagal memperbarui berita!" });
+      toast({
+        title: 'Berita',
+        description: 'Berita Gagal di Update',
+      });
     }
   };
 
@@ -108,7 +79,7 @@ useEffect(() => {
           <div className="bg-white flex justify-between p-4 rounded-[7px]">
             <div className="text-[16px]">Form Edit Berita</div>
           </div>
-          <div className="bg-white rounded-[15px] mt-6">
+          <div className="bg-white rounded-[15px] mt-6 ">
             <form onSubmit={handleSubmit}>
               <div className="pl-6 pr-6 pt-6">
                 <div className="">Judul Berita</div>
@@ -143,7 +114,7 @@ useEffect(() => {
                     className="h-[40px] font-bold"
                     name="cover"
                     onChange={(e) => {
-                      const file = e.target.files?.[0]; // Pengecekan nullish
+                      const file = e.target.files?.[0];
                       if (file) {
                         setCover(file);
                       }
@@ -160,9 +131,9 @@ useEffect(() => {
                     className="h-[40px] font-bold"
                     name="file"
                     onChange={(e) => {
-                      const file = e.target.files?.[0]; // Pengecekan nullish
+                      const file = e.target.files?.[0];
                       if (file) {
-                        setCover(file);
+                        setFile(file);
                       }
                     }}
                   />
@@ -171,7 +142,7 @@ useEffect(() => {
               </div>
               <div className="flex justify-end mt-6">
                 <div className="mr-6">
-                  <button type="button" onClick={back} className="text-white bg-[#F61616] rounded-[5px] w-[142px] h-[30px]">
+                  <button onClick={back} className="text-white bg-[#F61616] rounded-[5px] w-[142px] h-[30px]">
                     Batal
                   </button>
                 </div>

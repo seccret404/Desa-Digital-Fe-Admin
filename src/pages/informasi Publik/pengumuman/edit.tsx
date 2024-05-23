@@ -6,6 +6,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { getPengumumanById, updatePengumuman } from '../../../services/desaServices';
 import { Pengumuman } from '../../../interfaces/pengumuman';
+import { useToast } from '../../../components/ui/use-toast';
 
 
 export default function EditPengumuman() {
@@ -15,7 +16,7 @@ export default function EditPengumuman() {
   const [deskripsiPengumuman, setDeskripsi] = useState('');
   const [cover_pengumuman, setCover] = useState<File | null>(null);
   const [file_pengumuman, setFile] = useState<File | null>(null);
-
+  const { toast } = useToast();
   useEffect(() => {
     const fetchPengumuman = async () => {
       try {
@@ -61,13 +62,19 @@ export default function EditPengumuman() {
    
        await updatePengumuman(id, updatedData);
        navigate('/pengumuman');
+       toast({
+        title: "Pengumuman",
+        description: 'Pengumuman Berhasil di Update'
+    });
      // eslint-disable-next-line @typescript-eslint/no-explicit-any
      } catch (error:any) {
        console.error('Error updating berita:', error.message);
+       toast({
+        title: "Pengumuman",
+        description: 'Pengumuman Gagal di Update'
+    });
      }
    };
-   
-   
 
   return (
     <SidebarLayout>

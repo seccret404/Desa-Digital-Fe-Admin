@@ -10,18 +10,18 @@ import { Agenda } from '../../interfaces/agenda';
 import { useToast } from '../../components/ui/use-toast';
 
 export default function EditAgenda() {
-        const { id } = useParams<{ id: string }>();
-        const navigate = useNavigate();
-        const { toast } = useToast();
-        const [agendaData, setAgendaData] = useState<Agenda | null>(null);
+    const { id } = useParams<{ id: string }>();
+    const navigate = useNavigate();
+    const { toast } = useToast();
+    const [agendaData, setAgendaData] = useState<Agenda | null>(null);
 
-        useEffect(() => {
-            async function fetchAgenda() {
-                try {
-                    if(!id)
-{
-    return;
-}                    const data = await getAgendaById(id);
+    useEffect(() => {
+        async function fetchAgenda() {
+            try {
+                if (!id) {
+                    return;
+                }
+                const data = await getAgendaById(id);
                 setAgendaData(data);
             } catch (error) {
                 console.error('Error fetching agenda:', error);
@@ -56,16 +56,18 @@ export default function EditAgenda() {
         }
     };
 
-    const handleUpdate = async () => {
+    const handleUpdate = async (e: React.FormEvent) => {
+        e.preventDefault();
         try {
             if (agendaData) {
                 const formattedDate = formatDate(agendaData.tanggal_kegiatan!);
                 await updateAgenda(agendaData.id!, { ...agendaData, tanggal_kegiatan: formattedDate });
+                console.log(agendaData);
                 toast({
                     title: "Agenda Desa",
                     description: 'Data Berhasil di Update'
                 });
-                navigate('/agenda-desa'); 
+                navigate('/agenda-desa');
             }
         } catch (error) {
             console.error('Error updating agenda:', error);
@@ -75,17 +77,13 @@ export default function EditAgenda() {
             });
         }
     };
-    
-    
- 
- 
 
     if (!agendaData) {
         return <div>Loading...</div>;
     }
 
-    const back = () =>{
-     navigate('/agenda-desa');
+    const back = () => {
+        navigate('/agenda-desa');
     }
 
     return (
@@ -106,7 +104,7 @@ export default function EditAgenda() {
                     </div>
                     <div className="bg-white rounded-[15px] mt-6 flex justify-center">
                         <div className="p-2 mb-6">
-                            <form>
+                            <form onSubmit={handleUpdate}>
                                 <div className="flex items-center mt-4">
                                     <div className="w-[150px] text-[16px]">Nama Kegiatan</div>
                                     <div className="w-[350px]">
@@ -139,7 +137,7 @@ export default function EditAgenda() {
                                     </div>
                                 </div>
                                 <div className="flex items-center mt-4">
-                                    <div className="w-[150px] text-[16px]">Tujuan Kegitan</div>
+                                    <div className="w-[150px] text-[16px]">Tujuan Kegiatan</div>
                                     <div className="w-[350px]">
                                         <Input
                                             name="tujuan_kegiatan"
@@ -160,18 +158,14 @@ export default function EditAgenda() {
                                 </div>
                                 <div className="flex justify-end mt-6">
                                     <div className="mr-6">
-                                        <button onClick={back} className="text-white bg-[#F61616] rounded-[5px] w-[142px] h-[30px]">
+                                        <button type="button" onClick={back} className="text-white bg-[#F61616] rounded-[5px] w-[142px] h-[30px]">
                                             Batal
                                         </button>
                                     </div>
-                                    <div className="">
-                                    <button
-    className="text-white bg-[#0890EA] rounded-[5px] w-[142px] h-[30px]"
-    onClick={handleUpdate}
->
-    Simpan
-</button>
-
+                                    <div>
+                                        <button type="submit" className="text-white bg-[#0890EA] rounded-[5px] w-[142px] h-[30px]">
+                                            Simpan
+                                        </button>
                                     </div>
                                 </div>
                             </form>
