@@ -7,7 +7,7 @@ import ArrowRightIcon from '../../components/icon/arrowRightIcon';
 import { Laporan } from '../../interfaces/laporan';
 
 export default function DetailLaporan() {
-  const { id } = useParams<{ id: string }>(); // Ambil id dari parameter URL
+  const { id } = useParams<{ id: string }>(); 
   const [laporan, setLaporan] = useState<Laporan | null>(null); 
   const [namaKegiatan, setNamaKegiatan] = useState<string>(''); 
   useEffect(() => {
@@ -20,15 +20,15 @@ export default function DetailLaporan() {
       }
     }
     fetchLaporan();
-  }, [id]); // Panggil fetchLaporan saat id berubah
+  }, [id]); 
 
   useEffect(() => {
     async function fetchAgendaData() {
       try {
-        const agendaData = await getAgenda(); // Ambil semua data agenda
-        const agendaTerkait = agendaData.find(agenda => agenda.id === laporan?.id_agenda); // Cari agenda berdasarkan id_agenda dalam laporan
+        const agendaData = await getAgenda();
+        const agendaTerkait = agendaData.find(agenda => agenda.id === laporan?.id_agenda); 
         if (agendaTerkait) {
-          setNamaKegiatan(agendaTerkait.nama_kegiatan); // Set nama kegiatan jika agenda terkait ditemukan
+          setNamaKegiatan(agendaTerkait.nama_kegiatan); 
         }
       } catch (error) {
         console.error('Error fetching agenda data:', error);
@@ -37,10 +37,10 @@ export default function DetailLaporan() {
     if (laporan) {
       fetchAgendaData();
     }
-  }, [laporan]); // Panggil fetchAgendaData saat laporan berubah
+  }, [laporan]); 
 
   if (!laporan || !namaKegiatan) {
-    return <div>Loading...</div>; // Tampilkan pesan loading jika data laporan atau nama kegiatan belum tersedia
+    return <div>Loading...</div>; 
   }
 
   return (
@@ -64,11 +64,8 @@ export default function DetailLaporan() {
               <div>
                 <div className="text-[18px] font-medium mt-8">Dokumentasi</div>
                 <div className="grid grid-cols-4 gap-4">
-                  {/* {laporan.dokumentasi.map((foto, index) => (
-                    <div key={index}>
-                      <img src={foto} alt={`Dokumentasi ${index}`} />
-                    </div>
-                  ))} */}
+                
+                <img src={`https://desa-digital-bakend-production.up.railway.app/api/dokumentasir/${laporan.dokumentasi}`} alt="" />
                 </div>
               </div>
               <div>
