@@ -56,7 +56,7 @@ export default function Sidebar() {
                                    onMouseLeave={handleMouseLeave}
                                    onClick={handleClick}
                                  
-                                   component={<Link to="/" />}
+                                   component={<Link to="/dashboard" />}
                               > Dashboard </MenuItem>
                               <SubMenu label='Penduduk'>
                                    <MenuItem component={<Link to="/data-penduduk" />} icon={<GroupUcerIcon size={18} color='black' />} >Data Penduduk</MenuItem>
@@ -94,7 +94,7 @@ export default function Sidebar() {
                               </SubMenu>
                              
                               <MenuItem disabled className='mt-6'></MenuItem>
-                              <MenuItem className='text-center rounded-[5px] bg-[#fdcece] text-[#f84444]'>Keluar</MenuItem>
+                              <MenuItem component={<Link to='/logout'/>} className='text-center rounded-[5px] bg-[#fdcece] text-[#f84444]'>Keluar</MenuItem>
                          </Menu>
                     </Side>
                </ScrollArea>

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
 import Dashboard from './pages/dashboard'
 import Penduduk from './pages/penduduk'
 import TambahPenduduk from './pages/penduduk/tambah_penduduk'
@@ -39,12 +39,23 @@ import ProfilEdit from './pages/data_desa/editdesa'
 import EditPenerimaBantuan from './pages/banntuan/edit_penerima'
 import EditOrganisasi from './pages/organisasi/edit'
 import EditAddApbdes from './pages/apbdes/edit'
+import Login from './pages/auth/login'
+import Logout from './pages/auth/logout'
+import { useState } from 'react'
 
 export default function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<Dashboard />} />
+      <Route path='/' element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+
+      <Route path='/dashboard' element={<PrivateRoute isLoggedIn={isLoggedIn} />} />
+
+      <Route path='/logout' element={<Logout />} />
+        <Route path='/Dashboard' element={<Dashboard />} />
         <Route path='/data-penduduk' element={<Penduduk />} />
         <Route path='/tambah-penduduk' element={<TambahPenduduk />} />
         <Route path='/edit-penduduk/:id' element={<EditPenduduk />} />
@@ -83,8 +94,16 @@ export default function App() {
         <Route path='/tambah-daftar' element={<TambahDaftarBantuan/>} />
         <Route path='/tambah-penerima' element={<TambahPenerimaBantuan/>} />
         <Route path='/edit-penerima/:id' element={<EditPenerimaBantuan/>} />
+  
+        <Route path='*' element={<Navigate to="/dashboard" />} />
+        
 
       </Routes> 
     </Router>
   )
+}
+
+
+function PrivateRoute({ isLoggedIn }: { isLoggedIn: boolean }) {
+  return isLoggedIn ? <Dashboard /> : <Navigate to="/" />;
 }

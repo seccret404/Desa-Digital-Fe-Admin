@@ -1,5 +1,6 @@
 import { Agenda } from '../interfaces/agenda';
 import { Anggaran } from '../interfaces/anggaran';
+import { LoginResponse } from '../interfaces/auth';
 import { Bantuan } from '../interfaces/bantuan';
 import { Berita } from '../interfaces/berita';
 import { Dusun } from '../interfaces/dusun';
@@ -13,9 +14,29 @@ import { Pengumuman } from '../interfaces/pengumuman';
 import { Profil } from '../interfaces/profil';
 
 // const API_URL = 'https://desa-digital-bakend-jf9ckkwwo-seccret404s-projects.vercel.app/api';
-const API_URL = 'http://localhost:3000/api';
-// const API_URL = 'https://desa-digital-bakend-production.up.railway.app/api';
+// const API_URL = 'http://localhost:3000/api';
+const API_URL = 'https://desa-digital-bakend-production.up.railway.app/api';
 
+
+//auth
+export async function login(username: string, password: string): Promise<LoginResponse> {
+  const response = await fetch(`${API_URL}/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ username, password })
+  });
+
+  if (!response.ok) {
+    const errorMessage = await response.text();
+    throw new Error(errorMessage);
+  }
+
+  const data = await response.json();
+  return data as LoginResponse;
+}
+//endauth
 //
 // GET API
 //
