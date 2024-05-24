@@ -62,24 +62,24 @@ export default function Penduduk() {
 
     return (
         <SidebarLayout>
-             <div className="bg-[#ffffff] rounded-[8px] mt-4">
-                    <div className="p-4 flex justify-between items-center">
-                         <div className="">
-                              <div className="text-[16px] font-bold">Total Penduduk</div>
-                              <div className="text-center text-[#146ADC] font-medium text-[20px] mt-2">{totalPopulation} Jiwa</div>
-                         </div>
-                         <div className="h-12 border border-gray-300 mx-4"></div>
-                         <div className="">
-                              <div className="text-[16px] font-bold">Total Laki-laki</div>
-                              <div className="text-center mt-2 text-[#146ADC] font-medium text-[20px]">{totalMan} Jiwa</div>
-                         </div>
-                         <div className="h-12 border border-gray-300 mx-4"></div>
-                         <div className="">
-                              <div className="text-[16px] font-bold">Total Perempuan</div>
-                              <div className="text-center mt-2 text-[#146ADC] font-medium text-[20px]">{totalWoman} Jiwa</div>
-                         </div>
+            <div className="bg-[#ffffff] rounded-[8px] mt-4">
+                <div className="p-4 flex justify-between items-center">
+                    <div className="">
+                        <div className="text-[16px] font-bold">Total Penduduk</div>
+                        <div className="text-center text-[#146ADC] font-medium text-[20px] mt-2">{totalPopulation} Jiwa</div>
                     </div>
-               </div>
+                    <div className="h-12 border border-gray-300 mx-4"></div>
+                    <div className="">
+                        <div className="text-[16px] font-bold">Total Laki-laki</div>
+                        <div className="text-center mt-2 text-[#146ADC] font-medium text-[20px]">{totalMan} Jiwa</div>
+                    </div>
+                    <div className="h-12 border border-gray-300 mx-4"></div>
+                    <div className="">
+                        <div className="text-[16px] font-bold">Total Perempuan</div>
+                        <div className="text-center mt-2 text-[#146ADC] font-medium text-[20px]">{totalWoman} Jiwa</div>
+                    </div>
+                </div>
+            </div>
             <div className="bg-[#ffffff] rounded-[5px] mt-4">
                 <div className="p-4">
                     <div className="flex items-center justify-between">
@@ -125,7 +125,7 @@ export default function Penduduk() {
                                                 <div className="flex justify-center text-[#0890EA] text-[12px] bg-[#0890EA60] w-[70px] h-[23px] text-center rounded-[5px]">
                                                     <Button>
                                                         <Link to={`/edit-penduduk/${p.id}`} >
-                                                            Edit
+                                                            Ubah
                                                         </Link>
                                                     </Button>
                                                 </div>

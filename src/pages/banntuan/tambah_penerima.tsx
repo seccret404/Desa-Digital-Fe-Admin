@@ -94,7 +94,7 @@ export default function TambahPenerimaBantuan() {
             nama_bantuan: selectedBantuan.nama_bantuan,
             status_bantuan: status,
             tgl_terima: tglTerima,
-            jumlah_terima: jumlahTerima.toString(), 
+            jumlah_terima: jumlahTerima.toString(),
             bentuk_terima: bentukTerima,
             id: undefined
           };
@@ -111,7 +111,7 @@ export default function TambahPenerimaBantuan() {
           setStatus('');
           setJenisBantuan('');
           setTglTerima('');
-          setBentukTerima(''); 
+          setBentukTerima('');
           setJumlahTerima(null);
         } else {
           console.error('Selected Bantuan is missing id');
@@ -119,8 +119,8 @@ export default function TambahPenerimaBantuan() {
       } else {
         console.error('Please fill all fields');
       }
-    } 
- catch (error) {
+    }
+    catch (error) {
       console.error('Error adding penerima:', error);
       toast({
         title: "Penerima Bantuan",
@@ -136,7 +136,7 @@ export default function TambahPenerimaBantuan() {
       <div className="bg-[#D9D9D98B] rounded-[15px]">
         <div className="p-8">
           <div className="bg-white flex justify-between p-4 rounded-[7px]">
-            <div className="text-[16px]">Form Tambah Data Organisasi</div>
+            <div className="text-[16px]">Form Tambah Data Penerima Bantuan</div>
             <div className="flex ">
               <div className="flex">
                 <HomeIcon color="#0890EA" size={16} />
@@ -144,7 +144,7 @@ export default function TambahPenerimaBantuan() {
               <div className="ml-4 flex">
                 <ArrowRightIcon color="#000000" size={10} />
               </div>
-              <div className="text-[#D9D9D9] text-[16px] ml-4">Tambah Data Organisasi</div>
+              <div className="text-[#D9D9D9] text-[16px] ml-4">Tambah Data Penerima Bantua</div>
             </div>
           </div>
           <div className="bg-white rounded-[15px] mt-6">

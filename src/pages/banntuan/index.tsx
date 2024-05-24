@@ -62,7 +62,7 @@ export default function BantuanPage() {
             <div className="">
               <Button width={249} height={47} color='white' bgColor='#0890EA' rounded={5}>
                 <Link to='/tambah-penerima'>
-                  Tambah Penerima
+                  Tambah Data Penerima Bantuan
                 </Link>
               </Button>
             </div>

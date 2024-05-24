@@ -82,7 +82,7 @@ export default function DusunPage() {
                         <div className="flex justify-center text-[#0890EA] text-[12px] bg-[#0890EA60] w-[70px] h-[23px] text-center rounded-[5px]">
                           <Button>
                             <Link to={`/edit-dusun/${d.id}`}>
-                              Edit
+                              Ubah
                             </Link>
                           </Button>
 

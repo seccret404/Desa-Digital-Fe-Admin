@@ -13,7 +13,10 @@ export default function DetailLaporan() {
   useEffect(() => {
     async function fetchLaporan() {
       try {
-        const data = await getLaporanById(id!); 
+        if(!id){
+          return;
+        }
+        const data = await getLaporanById(id); 
         setLaporan(data);
       } catch (error) {
         console.error('Error fetching laporan:', error);
@@ -75,7 +78,7 @@ export default function DetailLaporan() {
               <div>
                 <div className="text-[18px] font-medium mt-8">Jumlah Peserta</div>
                 <div>{laporan.jumlah_peserta} orang</div>
-              </div>
+              </div>  
               <div>
                 <div className="text-[18px] font-medium mt-8">Lokasi</div>
                 <div>{laporan.lokasi_kegiatan}</div>

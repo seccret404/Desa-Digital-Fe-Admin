@@ -81,7 +81,7 @@ export default function EditPengumuman() {
       <div className="bg-[#D9D9D98B] rounded-[15px]">
         <div className="p-8">
           <div className="bg-white flex justify-between p-4 rounded-[7px]">
-            <div className="text-[16px]">Form Edit Berita</div>
+            <div className="text-[16px]">Form Ubah Berita</div>
           </div>
           <div className="bg-white rounded-[15px] mt-6 ">
             <form onSubmit={handleSubmit}>

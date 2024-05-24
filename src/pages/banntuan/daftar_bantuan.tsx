@@ -13,12 +13,12 @@ import { getBantuan } from '../../services/desaServices'
 export default function DaftarBantuanPage() {
      const [bantuan, setBantuan] = useState<Bantuan[]>([]);
 
-     useEffect(()=>{
-          async function fetchBantuan(){
-               try{
+     useEffect(() => {
+          async function fetchBantuan() {
+               try {
                     const data = await getBantuan();
                     setBantuan(data);
-               }catch(error){
+               } catch (error) {
                     if (error instanceof Error) {
                          console.error('error:', error.message);
                     } else {
@@ -27,8 +27,8 @@ export default function DaftarBantuanPage() {
                }
           }
           fetchBantuan();
-     },[])
-    
+     }, [])
+
      return (
           <SidebarLayout>
                <div className="bg-[#D9D9D98B] rounded-[15px]">
@@ -42,7 +42,7 @@ export default function DaftarBantuanPage() {
                               <div className="">
                                    <Button width={249} height={47} color='white' bgColor='#0890EA' rounded={5} >
                                         <Link to='/tambah-daftar'>
-                                             Tambah Bantuan
+                                             Tambah Data Bantuan
                                         </Link>
                                    </Button>
                               </div>
@@ -58,9 +58,9 @@ export default function DaftarBantuanPage() {
                                         <TableHead className='text-center'>Aksi</TableHead>
                                    </TableHeader>
                                    <TableBody>
-                                     
-                                 {bantuan.map((b, index) =>
-                               <TableRow key={b.id}>
+
+                                        {bantuan.map((b, index) =>
+                                             <TableRow key={b.id}>
                                                   <TableCell>{index + 1}</TableCell>
                                                   <TableCell>{b.nama_bantuan}</TableCell>
                                                   <TableCell>{b.jenis_bantuan}</TableCell>
@@ -77,9 +77,9 @@ export default function DaftarBantuanPage() {
                                                        </div>
                                                   </TableCell>
                                              </TableRow>
-                              )}
-                                            
-                                  
+                                        )}
+
+
 
                                    </TableBody>
                               </Table>

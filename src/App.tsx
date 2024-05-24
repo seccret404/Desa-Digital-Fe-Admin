@@ -42,68 +42,59 @@ import EditAddApbdes from './pages/apbdes/edit'
 import Login from './pages/auth/login'
 import Logout from './pages/auth/logout'
 import { useState } from 'react'
+import PrivateRoute from './components/privateRoute'
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  
   return (
-    <Router>
-      <Routes>
-      <Route path='/' element={<Login setIsLoggedIn={setIsLoggedIn} />} />
-
-      <Route path='/dashboard' element={<PrivateRoute isLoggedIn={isLoggedIn} />} />
-
-      <Route path='/logout' element={<Logout />} />
-        <Route path='/Dashboard' element={<Dashboard />} />
-        <Route path='/data-penduduk' element={<Penduduk />} />
-        <Route path='/tambah-penduduk' element={<TambahPenduduk />} />
-        <Route path='/edit-penduduk/:id' element={<EditPenduduk />} />
-        <Route path='/dusun' element={<DusunPage />} />
-        <Route path='/tambah-dusun' element={<TambahDusun />} />
-        <Route path='/edit-dusun/:id' element={<EditDusun />} />
-        <Route path='/tambah-umkm' element={<AddUmkm />} />
-        <Route path='/detail-umkm' element={<DetailUmkm />} />
-        <Route path='/berita' element={<BeritaPage/>}/>
-        <Route path='/edit-berita/:id' element={<EditBerita/>}/>
-        <Route path='/tambah-berita' element={<TambahBerita/>}/>
-        <Route path='detail-wisata' element={<DetailWisata/>}/>
-        <Route path='/data-desa' element={<DataDesa/>}/>
-        <Route path='/profil-desa' element={<ProfilForm/>}/>
-        <Route path='/profil-desa/:id' element={<ProfilEdit/>}/>
-        <Route path='/pemerintahan' element={<Pemerintahan/>}/>
-        <Route path='/tambah-pemerintah' element={<TambahPemerintah/>}/>
-        <Route path='/tugas-wewenang' element={<TugasWewenang/>}/>
-        <Route path='/tambah-tugas-wewenang' element={<TambahTugasWewenang/>}/>
-        <Route path='/agenda-desa' element={<AgendaPage/>}/>
-        <Route path='/tambah-agenda' element={<TambahAgenda/>}/>
-        <Route path='/edit-agenda/:id' element={<EditAgenda/>}/>
-        <Route path='/laporan-agenda/:id' element={<LaporanAgenda/>}/>
-        <Route path='/apbdes' element={<ApbdesPage/>} />
-        <Route path='/anggaran/:id' element={<EditAddApbdes/>} />
-        <Route path='/laporan-detail/:id' element={<DetailLaporan/>}/>
-        <Route path='/tambah-apbdes' element={<AddApbdes/>} />
-        <Route path='/organisasi' element={<OrganisasiPage/>} />
-        <Route path='/organisasi/:id' element={<EditOrganisasi/>} />
-        <Route path='/tambah-organisasi' element={<AddOrganisasi/>} />
-        <Route path='/pengumuman' element={<PengumumanPage/>} />
-        <Route path='/tambah-pengumuman' element={<TambahPengumuman/>} />
-        <Route path='/edit-pengumuman/:id' element={<EditPengumuman/>} />
-        <Route path='/bantuan' element={<BantuanPage/>} />
-        <Route path='/tambah-bantuan' element={<DaftarBantuanPage/>} />
-        <Route path='/tambah-daftar' element={<TambahDaftarBantuan/>} />
-        <Route path='/tambah-penerima' element={<TambahPenerimaBantuan/>} />
-        <Route path='/edit-penerima/:id' element={<EditPenerimaBantuan/>} />
-  
-        <Route path='*' element={<Navigate to="/dashboard" />} />
-        
-
-      </Routes> 
-    </Router>
-  )
+      <Router>
+          <Routes>
+              <Route path="/" element={isLoggedIn ? <Navigate to="/dashboard" /> : <Login setIsLoggedIn={setIsLoggedIn} />} />
+              <Route path="/dashboard" element={<PrivateRoute isLoggedIn={isLoggedIn}><Dashboard /></PrivateRoute>} />
+              <Route path="/logout" element={<PrivateRoute isLoggedIn={isLoggedIn}><Logout /></PrivateRoute> } />
+              <Route path="/data-penduduk" element={<PrivateRoute isLoggedIn={isLoggedIn}><Penduduk /></PrivateRoute>} />
+              <Route path="/tambah-penduduk" element={<PrivateRoute isLoggedIn={isLoggedIn}><TambahPenduduk /></PrivateRoute>} />
+              <Route path="/edit-penduduk/:id" element={<PrivateRoute isLoggedIn={isLoggedIn}><EditPenduduk /></PrivateRoute>} />
+              <Route path="/dusun" element={<PrivateRoute isLoggedIn={isLoggedIn}><DusunPage /></PrivateRoute>} />
+              <Route path="/tambah-dusun" element={<PrivateRoute isLoggedIn={isLoggedIn}><TambahDusun /></PrivateRoute>} />
+              <Route path="/edit-dusun/:id" element={<PrivateRoute isLoggedIn={isLoggedIn}><EditDusun /></PrivateRoute>} />
+              <Route path="/tambah-umkm" element={<PrivateRoute isLoggedIn={isLoggedIn}><AddUmkm /></PrivateRoute>} />
+              <Route path="/detail-umkm" element={<PrivateRoute isLoggedIn={isLoggedIn}><DetailUmkm /></PrivateRoute>} />
+              <Route path="/berita" element={<PrivateRoute isLoggedIn={isLoggedIn}><BeritaPage /></PrivateRoute>} />
+              <Route path="/edit-berita/:id" element={<PrivateRoute isLoggedIn={isLoggedIn}><EditBerita /></PrivateRoute>} />
+              <Route path="/tambah-berita" element={<PrivateRoute isLoggedIn={isLoggedIn}><TambahBerita /></PrivateRoute>} />
+              <Route path="/detail-wisata" element={<PrivateRoute isLoggedIn={isLoggedIn}><DetailWisata /></PrivateRoute>} />
+              <Route path="/data-desa" element={<PrivateRoute isLoggedIn={isLoggedIn}><DataDesa /></PrivateRoute>} />
+              <Route path="/profil-desa" element={<PrivateRoute isLoggedIn={isLoggedIn}><ProfilForm /></PrivateRoute>} />
+              <Route path="/profil-desa/:id" element={<PrivateRoute isLoggedIn={isLoggedIn}><ProfilEdit /></PrivateRoute>} />
+              <Route path="/pemerintahan" element={<PrivateRoute isLoggedIn={isLoggedIn}><Pemerintahan /></PrivateRoute>} />
+              <Route path="/tambah-pemerintah" element={<PrivateRoute isLoggedIn={isLoggedIn}><TambahPemerintah /></PrivateRoute>} />
+              <Route path="/tugas-wewenang" element={<PrivateRoute isLoggedIn={isLoggedIn}><TugasWewenang /></PrivateRoute>} />
+              <Route path="/tambah-tugas-wewenang" element={<PrivateRoute isLoggedIn={isLoggedIn}><TambahTugasWewenang /></PrivateRoute>} />
+              <Route path="/agenda-desa" element={<PrivateRoute isLoggedIn={isLoggedIn}><AgendaPage /></PrivateRoute>} />
+              <Route path="/tambah-agenda" element={<PrivateRoute isLoggedIn={isLoggedIn}><TambahAgenda /></PrivateRoute>} />
+              <Route path="/edit-agenda/:id" element={<PrivateRoute isLoggedIn={isLoggedIn}><EditAgenda /></PrivateRoute>} />
+              <Route path="/laporan-agenda/:id" element={<PrivateRoute isLoggedIn={isLoggedIn}><LaporanAgenda /></PrivateRoute>} />
+              <Route path="/apbdes" element={<PrivateRoute isLoggedIn={isLoggedIn}><ApbdesPage /></PrivateRoute>} />
+              <Route path="/anggaran/:id" element={<PrivateRoute isLoggedIn={isLoggedIn}><EditAddApbdes /></PrivateRoute>} />
+              <Route path="/laporan-detail/:id" element={<PrivateRoute isLoggedIn={isLoggedIn}><DetailLaporan /></PrivateRoute>} />
+              <Route path="/tambah-apbdes" element={<PrivateRoute isLoggedIn={isLoggedIn}><AddApbdes /></PrivateRoute>} />
+              <Route path="/organisasi" element={<PrivateRoute isLoggedIn={isLoggedIn}><OrganisasiPage /></PrivateRoute>} />
+              <Route path="/organisasi/:id" element={<PrivateRoute isLoggedIn={isLoggedIn}><EditOrganisasi /></PrivateRoute>} />
+              <Route path="/tambah-organisasi" element={<PrivateRoute isLoggedIn={isLoggedIn}><AddOrganisasi /></PrivateRoute>} />
+              <Route path="/pengumuman" element={<PrivateRoute isLoggedIn={isLoggedIn}><PengumumanPage /></PrivateRoute>} />
+              <Route path="/tambah-pengumuman" element={<PrivateRoute isLoggedIn={isLoggedIn}><TambahPengumuman /></PrivateRoute>} />
+              <Route path="/edit-pengumuman/:id" element={<PrivateRoute isLoggedIn={isLoggedIn}><EditPengumuman /></PrivateRoute>} />
+              <Route path="/bantuan" element={<PrivateRoute isLoggedIn={isLoggedIn}><BantuanPage /></PrivateRoute>} />
+              <Route path="/tambah-bantuan" element={<PrivateRoute isLoggedIn={isLoggedIn}><DaftarBantuanPage /></PrivateRoute>} />
+              <Route path="/tambah-daftar" element={<PrivateRoute isLoggedIn={isLoggedIn}><TambahDaftarBantuan /></PrivateRoute>} />
+              <Route path="/tambah-penerima" element={<PrivateRoute isLoggedIn={isLoggedIn}><TambahPenerimaBantuan /></PrivateRoute>} />
+              <Route path="/edit-penerima/:id" element={<PrivateRoute isLoggedIn={isLoggedIn}><EditPenerimaBantuan /></PrivateRoute>} />
+              <Route path="*" element={<Navigate to="/dashboard" />} />
+          </Routes>
+      </Router>
+  );
 }
 
 
-function PrivateRoute({ isLoggedIn }: { isLoggedIn: boolean }) {
-  return isLoggedIn ? <Dashboard /> : <Navigate to="/" />;
-}

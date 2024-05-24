@@ -22,7 +22,7 @@ export default function EditPenduduk() {
           tempat_lahir: '',
           pekerjaan: '',
           status_hidup: '',
-          no_kk: 0,
+          no_kk: '',
           nik: '',
           jenis_kelamin: '',
           status_perkawinan: '',
@@ -41,7 +41,7 @@ export default function EditPenduduk() {
                     if (!id) {
                          // Jika id adalah undefined, tidak perlu melanjutkan permintaan data
                          return;
-                     }
+                    }
                     const [pendudukData, dusunData] = await Promise.all([
                          getPendudukById(id),
                          getDusun()
@@ -72,37 +72,37 @@ export default function EditPenduduk() {
 
      const handleDusunChange = (_event: React.ChangeEvent<object>, value: Dusun | null) => {
           setSelectedDusun(value);
-      };
-      
+     };
 
-      const handleSubmit = async (e: React.FormEvent) => {
+
+     const handleSubmit = async (e: React.FormEvent) => {
           e.preventDefault();
           try {
                if (!id) {
-                    
+
                     return;
-                }
-                await updatePenduduk(id, {
+               }
+               await updatePenduduk(id, {
                     ...penduduk,
-                    id_dusun: selectedDusun ? selectedDusun.id || '' : '', 
-                    dusun: selectedDusun ? selectedDusun.nama_dusun || '' : '' 
-                  });
-                  
-              console.log('Penduduk updated successfully');
-              toast({
-                  title: "Data Penduduk",
-                  description: 'Data Penduduk Berhasil di Update'
-              });
-              navigate('/data-penduduk');
+                    id_dusun: selectedDusun ? selectedDusun.id || '' : '',
+                    dusun: selectedDusun ? selectedDusun.nama_dusun || '' : ''
+               });
+
+               console.log('Penduduk updated successfully');
+               toast({
+                    title: "Data Penduduk",
+                    description: 'Data Penduduk Berhasil di Update'
+               });
+               navigate('/data-penduduk');
           } catch (error) {
-              console.error('Error updating penduduk:', error);
-              toast({
-                  title: "Data Penduduk",
-                  description: 'Data Penduduk Gagal di Update'
-              });
+               console.error('Error updating penduduk:', error);
+               toast({
+                    title: "Data Penduduk",
+                    description: 'Data Penduduk Gagal di Update'
+               });
           }
-      };
-      
+     };
+
 
 
      return (
@@ -111,7 +111,7 @@ export default function EditPenduduk() {
                     <div className="p-8">
                          <div className="bg-white flex justify-between p-1 rounded-[7px]">
                               <div className="text-[16px]">
-                                   Form Tambah Data Penduduk
+                                   Form Ubah Data Penduduk
                               </div>
                               <div className="flex ">
                                    <div className="flex">
@@ -121,7 +121,7 @@ export default function EditPenduduk() {
                                         <ArrowRIghtIcon color='#000000' size={10} />
                                    </div>
                                    <div className="text-[#D9D9D9] text-[16px] ml-4">
-                                        Tambah Data Penduduk
+                                        Ubah Data Penduduk
                                    </div>
                               </div>
                          </div>
@@ -151,7 +151,7 @@ export default function EditPenduduk() {
                                                             <option value="Islam">Islam</option>
                                                             <option value="Budha">Budha</option>
                                                             <option value="Hindu">Hindu</option>
-                                                            <option value="Konghucu">Konghucu</option>
+                                                            <option value="Khonghucu">Khonghucu</option>
                                                        </select>
 
                                                   </div>

@@ -13,6 +13,6 @@ export interface PendudukDesa{
      status_hidup : string,
      status_perkawinan : string,
      dusun : string,
-     no_kk : number,
+     no_kk : string,
      id_dusun : string
 }

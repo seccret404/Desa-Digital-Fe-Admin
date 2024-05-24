@@ -11,14 +11,14 @@ import { getPemerintah } from '../../../services/desaServices'
 
 export default function Pemerintahan() {
 
-      const [pemerintah, setPemerintah] = useState<Pemerintah[]>([]);
+     const [pemerintah, setPemerintah] = useState<Pemerintah[]>([]);
 
-      useEffect(() =>{
-          async function fetchPemerintah(){
-               try{
+     useEffect(() => {
+          async function fetchPemerintah() {
+               try {
                     const data = await getPemerintah();
                     setPemerintah(data);
-               }catch(error){
+               } catch (error) {
                     if (error instanceof Error) {
                          console.error('error:', error.message);
                     } else {
@@ -27,8 +27,8 @@ export default function Pemerintahan() {
                }
           }
           fetchPemerintah();
-      },[])
-     
+     }, [])
+
      return (
           <SidebarLayout>
                <div className="bg-[#D9D9D98B] rounded-[15px]">
@@ -41,7 +41,7 @@ export default function Pemerintahan() {
                               <div className="">
                                    <Button width={249} height={47} color='white' bgColor='#0890EA' rounded={5} >
                                         <Link to='/tambah-pemerintah'>
-                                             Tambah Data
+                                             Tambah Data Struktur Pemerintahan
                                         </Link>
                                    </Button>
                               </div>
@@ -60,16 +60,16 @@ export default function Pemerintahan() {
                                              <TableHead className='text-center'>Aksi</TableHead>
                                         </TableHeader>
                                         <TableBody>
-                                            {pemerintah.map((p, index) =>
-                                        <TableRow key={p.id} >
-                                                       <TableCell>{index+1}</TableCell>
+                                             {pemerintah.map((p, index) =>
+                                                  <TableRow key={p.id} >
+                                                       <TableCell>{index + 1}</TableCell>
                                                        <TableCell>{p.nama}</TableCell>
                                                        <TableCell>{p.nik}</TableCell>
                                                        <TableCell>{p.jabatan}</TableCell>
                                                        {/* <TableCell className='text-[#0D9276] font-medium'>{new Date(b.tgl_publikasi).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: '2-digit' })}</TableCell> */}
                                                        <TableCell>
                                                             <a href={`https://desa-digital-bakend-production.up.railway.app/images/pemerintah/${p.profil}`}>
-                                                            <img src={`https://desa-digital-bakend-production.up.railway.app/images/pemerintah/${p.profil}`} alt="Images" width={100} height={150} />
+                                                                 <img src={`https://desa-digital-bakend-production.up.railway.app/images/pemerintah/${p.profil}`} alt="Images" width={100} height={150} />
 
                                                             </a>
                                                        </TableCell>
@@ -79,16 +79,16 @@ export default function Pemerintahan() {
                                                                  <div className="flex justify-center text-[#0890EA] text-[12px] bg-[#0890EA60] w-[70px] h-[23px] text-center rounded-[5px]">
                                                                       <Button>
                                                                            <Link to={''}>
-                                                                                Edit
+                                                                                Ubah
                                                                            </Link>
                                                                       </Button>
                                                                  </div>
                                                             </div>
                                                        </TableCell>
                                                   </TableRow>
-                                         
-                                        )}
-                                                  
+
+                                             )}
+
 
 
                                         </TableBody>

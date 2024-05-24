@@ -61,7 +61,7 @@ export default function ApbdesPage() {
             <div className="">
               <Button width={249} height={47} color='white' bgColor='#0890EA' rounded={5}>
                 <Link to='/tambah-apbdes'>
-                  Tambah Data
+                  Tambah Data APBDesa
                 </Link>
               </Button>
             </div>
@@ -89,7 +89,7 @@ export default function ApbdesPage() {
                         <div className="flex justify-center text-[#0890EA] text-[12px] bg-[#0890EA60] w-[70px] h-[23px] text-center rounded-[5px]">
                           <Button>
                             <Link to={`/anggaran/${a.id}`}>
-                              Edit
+                              Ubah
                             </Link>
                           </Button>
                         </div>

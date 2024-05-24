@@ -34,7 +34,7 @@ export default function TambahPemerintah() {
     fetchPenduduk();
   }, []);
 
-  const jabatanOptions = ['Kepala Desa', 'Sekretaris', 'Bendahara'];
+  const jabatanOptions = ['Kepala Desa', 'Sekretaris Desa', 'Bendahara', 'Kaur Umum dan Perencanaan','Kaur Keuangan','Kasi Pemerintahan','Kasi Kesejahteraan dan Pelayanan','Kadus I(Bonanidolok)','Kadus II(Lumban Bagas)'];
 
   const formatDateForBackend = (date: Date): string => {
     const isoString = date.toISOString();
@@ -82,7 +82,7 @@ export default function TambahPemerintah() {
         <div className="p-10">
           <div className="bg-white flex justify-between p-4 rounded-[7px]">
             <div className="text-[16px]">
-              Form Tambah Jabatan Pemerintah
+              Form Tambah Data Struktur Pemerintah
             </div>
             <div className="flex">
               <div className="flex">
@@ -92,7 +92,7 @@ export default function TambahPemerintah() {
                 <ArrowRightIcon color='#000000' size={10} />
               </div>
               <div className="text-[#D9D9D9] text-[16px] ml-4">
-                Tambah Jabatan
+                Tambah Data Struktur Pemerintah
               </div>
             </div>
           </div>

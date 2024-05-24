@@ -137,7 +137,7 @@ export default function EditAddApbdes() {
                     <div className="p-8">
                          <div className="bg-white flex justify-between p-4 rounded-[7px]">
                               <div className="text-[16px]">
-                                   Form Tambah Data APBDes
+                                   Form Ubah Data APBDes
                               </div>
                               <div className="flex ">
                                    <div className="flex">
@@ -147,7 +147,7 @@ export default function EditAddApbdes() {
                                         <ArrowRIghtIcon color='#000000' size={10} />
                                    </div>
                                    <div className="text-[#D9D9D9] text-[16px] ml-4">
-                                        Tambah Data APBDes
+                                        Ubah Data APBDes
                                    </div>
                               </div>
                          </div>

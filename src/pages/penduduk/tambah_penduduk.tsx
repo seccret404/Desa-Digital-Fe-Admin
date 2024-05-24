@@ -52,16 +52,16 @@ export default function TambahPenduduk() {
 
     const handleSubmit = async (event: { preventDefault: () => void }) => {
         event.preventDefault();
-        if(!nik || !nama || !agama || !alamat || !tanggalLahir || !tempatLahir ||
+        if (!nik || !nama || !agama || !alamat || !tanggalLahir || !tempatLahir ||
             !jenisKelamin || !pekerjaan || !kewarganegaraan || !pendidikan_terakhir ||
             !statusHidup || !statusPerkawinan || !noKK || !dusun || !dusunOptions
-        ){
-            toast({ title: "Error", description: "Tolong isi semua kolom!"});
-      return;
+        ) {
+            toast({ title: "Error", description: "Tolong isi semua kolom!" });
+            return;
         }
 
         const pendudukData = {
-            
+
             nik: nik,
             nama: nama,
             agama: agama,
@@ -75,8 +75,8 @@ export default function TambahPenduduk() {
             status_hidup: statusHidup,
             status_perkawinan: statusPerkawinan,
             dusun: dusun ? dusun.nama_dusun : '',
-            no_kk: Number(noKK),
-            id_dusun: dusun && dusun.id ? dusun.id.toString() : '' 
+            no_kk: noKK,
+            id_dusun: dusun && dusun.id ? dusun.id.toString() : ''
         };
 
         try {
@@ -122,7 +122,7 @@ export default function TambahPenduduk() {
 
     return (
         <SidebarLayout>
-            
+
             <div className="bg-[#] rounded-[5px]">
                 <div className="p-8">
                     <div className="bg-white flex justify-between p-2 rounded-[7px]">
@@ -165,7 +165,7 @@ export default function TambahPenduduk() {
                                                 <option value="Islam">Islam</option>
                                                 <option value="Budha">Budha</option>
                                                 <option value="Hindu">Hindu</option>
-                                                <option value="Konghucu">Konghucu</option>
+                                                <option value="Khonghucu">Khonghucu</option>
                                             </select>
                                         </div>
                                     </div>

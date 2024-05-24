@@ -75,7 +75,7 @@ export default function TugasWewenang() {
                                                                  <div className="flex justify-center text-[#0890EA] text-[12px] bg-[#0890EA60] w-[70px] h-[23px] text-center rounded-[5px]">
                                                                       <Button>
                                                                            <Link to={''}>
-                                                                                Edit
+                                                                                Ubah
                                                                            </Link>
                                                                       </Button>
                                                                  </div>

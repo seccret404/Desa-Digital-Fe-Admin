@@ -35,6 +35,7 @@ export default function TambahPengumuman() {
 
     try {
       await addPengumuman(pengumuman);
+      console.log(pengumuman);
       toast({
         title: "Pengumuman",
         description: "Pengumuman berhasil ditambahkan!"

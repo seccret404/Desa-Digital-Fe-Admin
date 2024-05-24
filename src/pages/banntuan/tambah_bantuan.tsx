@@ -52,7 +52,7 @@ export default function TambahDaftarBantuan() {
                     <div className="p-8">
                          <div className="bg-white flex justify-between p-4 rounded-[7px]">
                               <div className="text-[16px]">
-                                   Form Tambah bantuan
+                                   Form Tambah Data bantuan
                               </div>
                               <div className="flex ">
                                    <div className="flex">
@@ -62,7 +62,7 @@ export default function TambahDaftarBantuan() {
                                         <ArrowRIghtIcon color='#000000' size={10} />
                                    </div>
                                    <div className="text-[#D9D9D9] text-[16px] ml-4">
-                                        Tambah Bantuan
+                                        Tambah Data Bantuan
                                    </div>
                               </div>
                          </div>
