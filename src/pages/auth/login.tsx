@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { TextField } from "@mui/material";
-import logo from '../../../public/assets/real.png';
+import logo from '../../../public/assets/logoB.png';
 import { login } from '../../services/desaServices';
 import { useNavigate } from 'react-router-dom';
 import { LoginResponse } from '../../interfaces/auth';

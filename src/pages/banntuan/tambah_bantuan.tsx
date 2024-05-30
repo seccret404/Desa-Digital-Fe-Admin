@@ -9,6 +9,7 @@ import { addBantuan } from '../../services/desaServices';
 
 
 export default function TambahDaftarBantuan() {
+     const [, setIsLoggedIn] = useState(false);
      const navigate = useNavigate();
      const {toast} = useToast();
      const Back = () => {
@@ -47,7 +48,7 @@ export default function TambahDaftarBantuan() {
      }
      
      return (
-          <SidebarLayout>
+          <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
                <div className="bg-[#] rounded-[5px]">
                     <div className="p-8">
                          <div className="bg-white flex justify-between p-4 rounded-[7px]">

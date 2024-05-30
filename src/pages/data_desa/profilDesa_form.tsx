@@ -16,6 +16,7 @@ interface Location {
 }
 
 export default function ProfilForm() {
+  const [, setIsLoggedIn] = useState(false);
   const [provinsiList, setProvinsiList] = useState<Location[]>([]);
   const [kabupatenList, setKabupatenList] = useState<Location[]>([]);
   const [kecamatanList, setKecamatanList] = useState<Location[]>([]);
@@ -107,7 +108,7 @@ export default function ProfilForm() {
   };
 
   return (
-    <SidebarLayout>
+    <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
       <div className="bg-[#D9D9D98B] rounded-[15px]">
         <div className="p-10">
           <div className="bg-white flex justify-between p-4 rounded-[7px]">

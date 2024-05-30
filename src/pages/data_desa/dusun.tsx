@@ -11,6 +11,7 @@ import { deleteDusun, getDusun } from '../../services/desaServices';
 import { useToast } from '../../components/ui/use-toast';
 
 export default function DusunPage() {
+  const [, setIsLoggedIn] = useState(false);
   const [dusun, setDusun] = useState<Dusun[]>([]);
   const { toast } = useToast();
 
@@ -45,7 +46,7 @@ export default function DusunPage() {
   };
 
   return (
-    <SidebarLayout>
+    <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
       <div className="bg-[#D9D9D98B] rounded-[15px]">
         <div className="p-8">
           <div className="flex items-center justify-between">

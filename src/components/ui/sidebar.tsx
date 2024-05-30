@@ -17,7 +17,11 @@ import PengumumanIcon from '../icon/pengumumanIcon';
 import BeritaIcon from '../icon/beritaIcon';
 import OrganisasiIcon from '../icon/organisasiIcon';
 import AddIcon from '../icon/addIcon';
-export default function Sidebar() {
+interface SidebarProps {
+     handleLogout: () => void; // Type definition for handleLogout prop
+   }
+   
+   export default function Sidebar({ handleLogout }: SidebarProps) {
 
      const [isHovered, setIsHovered] = useState(false);
      const [isActive, setIsActive] = useState(false);
@@ -94,7 +98,9 @@ export default function Sidebar() {
                               </SubMenu>
 
                               <MenuItem disabled className='mt-6'></MenuItem>
-                              <MenuItem component={<Link to='/logout' />} className='text-center rounded-[5px] bg-[#fdcece] text-[#f84444]'>Keluar</MenuItem>
+                              <MenuItem onClick={handleLogout} className='text-center rounded-[5px] bg-[#fdcece] text-[#f84444]'>
+              Keluar
+            </MenuItem>
                          </Menu>
                     </Side>
                </ScrollArea>

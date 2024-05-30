@@ -8,6 +8,7 @@ import { getBeritaById, updateBerita } from '../../services/desaServices';
 import { useToast } from '../../components/ui/use-toast';
 
 export default function EditBerita() {
+  const [, setIsLoggedIn] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
   const [judulBerita, setJudulBerita] = useState('');
@@ -73,7 +74,7 @@ export default function EditBerita() {
   };
 
   return (
-    <SidebarLayout>
+    <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
       <div className="bg-[#D9D9D98B] rounded-[15px]">
         <div className="p-8">
           <div className="bg-white flex justify-between p-4 rounded-[7px]">

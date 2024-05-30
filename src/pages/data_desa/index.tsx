@@ -7,6 +7,7 @@ import { Profil } from '../../interfaces/profil';
 import { getProfil } from '../../services/desaServices';
 
 export default function DataDesa() {
+     const [, setIsLoggedIn] = useState(false);
      const [profile, setProfile] = useState<Profil[]>([]);
      const [loading, setLoading] = useState(true);
 
@@ -34,7 +35,7 @@ export default function DataDesa() {
 
      if (profile.length === 0) {
           return (
-               <SidebarLayout>
+               <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
                     <div className="bg-[#D9D9D98B] rounded-[15px]">
                          <div className="p-8">
                               <div className="flex items-center justify-between">
@@ -59,7 +60,7 @@ export default function DataDesa() {
 
 
      return (
-          <SidebarLayout>
+          <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
                <div className="bg-[#D9D9D98B] rounded-[15px]">
                     <div className="p-8">
 
@@ -77,7 +78,7 @@ export default function DataDesa() {
                                              </div>
                                         </div>
                                         <div className="flex justify-center">
-                                             <img src={`https://desa-digital-bakend-production.up.railway.app/images/profile/${item.gambar_desa}`} alt={item.nama_desa} className='rounded-[15px] ' />
+                                             <img src={`https://desa-digital-bakend-production.up.railway.app/api/profile/${item.gambar_desa}`} alt={item.nama_desa} className='rounded-[15px] ' />
                                         </div>
                                         <div className="mt-4">
                                              <div className="font-bold text-[20px]" >

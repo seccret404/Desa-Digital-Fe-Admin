@@ -13,6 +13,7 @@ import { Agenda } from '../../interfaces/agenda';
 import { Laporan } from '../../interfaces/laporan'
 
 export default function AgendaPage() {
+  const [, setIsLoggedIn] = useState(false);
   const [agenda, setAgenda] = useState<Agenda[]>([]);
   const [laporanAgenda, setLaporanAgenda] = useState<Laporan[]>([]);
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
@@ -89,7 +90,7 @@ export default function AgendaPage() {
   };
 
   return (
-    <SidebarLayout>
+    <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
       <div className="bg-[#] rounded-[15px]">
         <div className="p-8">
           <div className="flex items-center justify-between">
@@ -154,16 +155,13 @@ export default function AgendaPage() {
                       <TableCell>{new Date(p.tanggal_kegiatan).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: '2-digit' })}</TableCell>
                       <TableCell>{p.lokasi}</TableCell>
                       <TableCell>
-                        {laporanAgenda.findIndex(item => item.id_agenda === p.id) !== -1 ? (
-                          <Link to={`/laporan-detail/${p.id}`}>
-                            Lihat Laporan
-                          </Link>
+                      {laporanAgenda.filter(item => item.id_agenda === p.id).length > 0 ? (
+                          <Link to={`/detail-agenda/${p.id}`}>Lihat Laporan</Link>
                         ) : (
-                          <Link to={`/laporan-agenda/${p.id}`}>
-                            Buat Laporan
-                          </Link>
+                          <Link to={`/laporan-agenda/${p.id}`}>Buat Laporan</Link>
                         )}
-                      </TableCell>
+
+</TableCell>
                       <TableCell>
                         <div className="flex justify-center ml-4 mr-4">
                           <div className="flex justify-center text-[#0890EA] text-[12px] bg-[#0890EA60] w-[70px] h-[23px] text-center rounded-[5px]">

@@ -14,6 +14,7 @@ interface DateTime {
 }
 
 export default function Dashboard() {
+     const [, setIsLoggedIn] = useState(false);
      const [dateTime, setDateTime] = useState<DateTime>(getCurrentDateTime());
      const [, setPenduduk] = useState<PendudukDesa[]>([]);
      const [totalDusun, setTotalDusun] = useState<number>(0);
@@ -87,7 +88,7 @@ export default function Dashboard() {
      }, []);
 
      return (
-          <SidebarLayout>
+          <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
                <div className="text-[18px] font-medium">
                     Dashboard
                </div>

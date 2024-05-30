@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom'
 
 
 export default function AddApbdes() {
-   
+     const [, setIsLoggedIn] = useState(false);
      const [judulAnggaran, setJudulAnggaran] = useState<string>('');
      const currentYear = new Date().getFullYear();
      const [selectedYear, setSelectedYear] = useState<string>(currentYear.toString());
@@ -155,7 +155,7 @@ export default function AddApbdes() {
       }
       
      return (
-          <SidebarLayout>
+          <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
                <div className="bg-[#D9D9D98B] rounded-[15px]">
                     <div className="p-8">
                          <div className="bg-white flex justify-between p-4 rounded-[7px]">

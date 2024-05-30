@@ -10,6 +10,7 @@ import { Anggaran } from '../../interfaces/anggaran'
 import { getAnggaran } from '../../services/desaServices'
 
 export default function ApbdesPage() {
+  const [, setIsLoggedIn] = useState(false);
   const [anggaran, setAnggaran] = useState<Anggaran[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -45,7 +46,7 @@ export default function ApbdesPage() {
   const currentItems = filteredAnggaran.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
-    <SidebarLayout>
+    <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
       <div className="bg-[#D9D9D98B] rounded-[15px]">
         <div className="p-8">
           <div className="flex items-center justify-between">

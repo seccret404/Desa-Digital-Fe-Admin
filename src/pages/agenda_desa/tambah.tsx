@@ -9,7 +9,7 @@ import { addAgenda } from '../../services/desaServices'
 import { useNavigate } from 'react-router-dom'
 import { useToast } from '../../components/ui/use-toast'
 export default function TambahAgenda() {
-   
+          const [, setIsLoggedIn] = useState(false);
           const [namaKegiatan, setNamaKegiatan] = useState('');
           const [tanggalKegiatan, setTanggalKegiatan] = useState<Date>(new Date());
           const [lokasi, setLokasi] = useState('');
@@ -64,7 +64,7 @@ export default function TambahAgenda() {
       
      
      return (
-          <SidebarLayout>
+          <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
                <div className="bg-[#] rounded-[15px]">
                     <div className="p-8">
                          <div className="bg-white flex justify-between p-4 rounded-[7px]">

@@ -11,6 +11,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 
 export default function TambahPenduduk() {
+    const [, setIsLoggedIn] = useState(false);
     const [nik, setNik] = useState('');
     const [nama, setNama] = useState('');
     const [agama, setAgama] = useState('');
@@ -119,10 +120,11 @@ export default function TambahPenduduk() {
     const handlePendidikan = (event: { target: { value: SetStateAction<string> } }) => {
         setPendidikan(event.target.value);
     }
-
+    const handlePekerjaan = (event: { target: { value: SetStateAction<string> } }) => {
+        setPekerjaan(event.target.value);
+    }
     return (
-        <SidebarLayout>
-
+        <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
             <div className="bg-[#] rounded-[5px]">
                 <div className="p-8">
                     <div className="bg-white flex justify-between p-2 rounded-[7px]">
@@ -190,7 +192,13 @@ export default function TambahPenduduk() {
                                             Pekerjaan
                                         </div>
                                         <div className="">
-                                            <Input className='w-[416px] h-[40px] bg-[#D9D9D92C]' placeholder='Pekerjaan' value={pekerjaan} onChange={(e) => setPekerjaan(e.target.value)} />
+                                        <select value={pekerjaan} onChange={handlePekerjaan} className='w-[416px] h-[40px]  border border-gray-300 rounded-md px-2 bg-[#D9D9D92C]'>
+                                                <option>Pilih Pekerjaan</option>
+                                                <option value="PNS">Pegawai Negeri Sipil</option>
+                                                <option value="Petani">Petani</option>
+                                                <option value="Wiraswata">Wiraswata</option>
+                                                
+                                            </select>
                                         </div>
                                     </div>
                                     <div className="mt-6">

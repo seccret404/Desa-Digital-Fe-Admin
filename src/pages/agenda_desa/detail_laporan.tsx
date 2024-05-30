@@ -1,100 +1,92 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { getLaporanById, getAgenda } from '../../services/desaServices';
+import { Link, useParams } from 'react-router-dom';
+import { getAgendaById, getLaporanAgenda } from '../../services/desaServices';
 import SidebarLayout from '../../components/layout/SidebarLayout';
 import HomeIcon from '../../components/icon/homeIcon';
 import ArrowRightIcon from '../../components/icon/arrowRightIcon';
+import { Agenda } from '../../interfaces/agenda';
 import { Laporan } from '../../interfaces/laporan';
+import Button from '../../components/ui/button';
 
-export default function DetailLaporan() {
-  const { id } = useParams<{ id: string }>(); 
-  const [laporan, setLaporan] = useState<Laporan | null>(null); 
-  const [namaKegiatan, setNamaKegiatan] = useState<string>(''); 
+export default function DetailAgenda() {
+  const [, setIsLoggedIn] = useState(false);
+  const { id } = useParams<{ id: string }>();
+  const [agenda, setAgenda] = useState<Agenda | null>(null);
+  const [laporan, setLaporan] = useState<Laporan[]>([]);
+
   useEffect(() => {
-    async function fetchLaporan() {
+    async function fetchData() {
       try {
-        if(!id){
+        if (!id) {
           return;
         }
-        const data = await getLaporanById(id); 
-        setLaporan(data);
+        // Fetch agenda by ID
+        const agendaData = await getAgendaById(id);
+        setAgenda(agendaData);
+        const allLaporan = await getLaporanAgenda();
+
+        // Filter laporan based on id_agenda
+        const filteredLaporan = allLaporan.filter((lap: Laporan) => lap.id_agenda === agendaData.id);
+        setLaporan(filteredLaporan);
       } catch (error) {
-        console.error('Error fetching laporan:', error);
+        console.error('Error fetching data:', error);
       }
     }
-    fetchLaporan();
-  }, [id]); 
 
-  useEffect(() => {
-    async function fetchAgendaData() {
-      try {
-        const agendaData = await getAgenda();
-        const agendaTerkait = agendaData.find(agenda => agenda.id === laporan?.id_agenda); 
-        if (agendaTerkait) {
-          setNamaKegiatan(agendaTerkait.nama_kegiatan); 
-        }
-      } catch (error) {
-        console.error('Error fetching agenda data:', error);
-      }
+    if (id) {
+      fetchData();
     }
-    if (laporan) {
-      fetchAgendaData();
-    }
-  }, [laporan]); 
+  }, [id]);
 
-  if (!laporan || !namaKegiatan) {
-    return <div>Loading...</div>; 
+  if (!agenda) {
+    return <div>Loading...</div>;
   }
 
   return (
-    <SidebarLayout>
+    <SidebarLayout setIsLoggedIn={setIsLoggedIn} >
       <div className="bg-[#D9D9D98B] rounded-[15px]">
         <div className="p-8">
           <div className="bg-white flex justify-between p-4 rounded-[7px]">
-            <div className="text-[16px]">Detail Laporan</div>
+            <div className="text-[16px]">Detail Agenda</div>
             <div className="flex">
               <HomeIcon color="#0890EA" size={16} />
               <div className="ml-4 flex">
                 <ArrowRightIcon color="#000000" size={10} />
               </div>
-              <div className="text-[#D9D9D9] text-[16px] ml-4">Detail Laporan</div>
+              <div className="text-[#D9D9D9] text-[16px] ml-4">Detail Agenda</div>
             </div>
           </div>
           <div className="flex justify-end mt-4"></div>
-          <div className="bg-white rounded-[15px] mt-6 ">
+          <div className="bg-white rounded-[15px] mt-6">
             <div className="p-6 mb-6">
-              <div className="text-[20px] font-medium">{namaKegiatan}</div>
-              <div>
-                <div className="text-[18px] font-medium mt-8">Dokumentasi</div>
-                <div className="grid grid-cols-4 gap-4">
-                
-                <img src={`https://desa-digital-bakend-production.up.railway.app/api/dokumentasir/${laporan.dokumentasi}`} alt="" />
-                </div>
+              <div className="flex justify-center items-end text-[#ffffff] text-[12px] bg-[#0890EA] w-[70px] h-[23px] text-end rounded-[5px]">
+              {laporan.length > 0 && (
+                  <Button>
+                    <Link to={`/edit-laporan/${laporan[0].id}`}> {/* Adjust this line to navigate to the edit page */}
+                      Ubah
+                    </Link>
+                  </Button>
+                )}
               </div>
+              <div className="text-[20px] font-medium">{agenda.nama_kegiatan}</div>
               <div>
                 <div className="text-[18px] font-medium mt-8">Hari/Tanggal</div>
-                <div>{new Date(laporan.tgl_realisasi).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: '2-digit' })}</div>
+                <div>{new Date(agenda.tanggal_kegiatan).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: '2-digit' })}</div>
               </div>
-              <div>
-                <div className="text-[18px] font-medium mt-8">Jumlah Peserta</div>
-                <div>{laporan.jumlah_peserta} orang</div>
-              </div>  
               <div>
                 <div className="text-[18px] font-medium mt-8">Lokasi</div>
-                <div>{laporan.lokasi_kegiatan}</div>
+                <div>{agenda.lokasi}</div>
               </div>
-              <div>
-                <div className="text-[18px] font-medium mt-8">Anggaran Desa</div>
-                <div>Rp. {laporan.anggaran_desa}</div>
-              </div>
-              <div>
-                <div className="text-[18px] font-medium mt-8">Donasi</div>
-                <div>Rp. {laporan.donasi}</div>
-              </div>
-              <div>
-                <div className="text-[18px] font-medium mt-8">Status Kegiatan</div>
-                <div>{laporan.status_kegiatan}</div>
-              </div>
+              {laporan.length > 0 && (
+                <div>
+                  <div className="text-[20px] font-medium mt-8">Laporan Kegiatan</div>
+                  {laporan.map((lap: Laporan) => (
+                    <div key={lap.id}>
+                      <div className="">{lap.anggaran_desa}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>

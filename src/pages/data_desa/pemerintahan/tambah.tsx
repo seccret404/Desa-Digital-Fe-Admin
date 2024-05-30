@@ -13,6 +13,7 @@ import Select from '@mui/material/Select';
 import { useToast } from '../../../components/ui/use-toast';
 
 export default function TambahPemerintah() {
+  const [, setIsLoggedIn] = useState(false);
   const [pendudukList, setPendudukList] = useState<PendudukDesa[]>([]);
   const [selectedPenduduk, setSelectedPenduduk] = useState<PendudukDesa | null>(null);
   const [selectedJabatan, setSelectedJabatan] = useState('');
@@ -77,7 +78,7 @@ export default function TambahPemerintah() {
   
 
   return (
-    <SidebarLayout>
+    <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
       <div className="bg-[#D9D9D98B] rounded-[15px]">
         <div className="p-10">
           <div className="bg-white flex justify-between p-4 rounded-[7px]">

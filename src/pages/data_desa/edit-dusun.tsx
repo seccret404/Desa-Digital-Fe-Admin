@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react'
 import { useToast } from '../../components/ui/use-toast'
 import { Dusun } from '../../interfaces/dusun'
 export default function EditDusun() {
+     const [, setIsLoggedIn] = useState(false);
      const navigate = useNavigate();
      const { toast } = useToast();
      const { id } = useParams<{ id: string }>();
@@ -67,7 +68,7 @@ export default function EditDusun() {
      }
 
      return (
-          <SidebarLayout>
+          <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
                <div className="bg-[#D9D9D98B] rounded-[15px]">
                     <div className="p-8">
                          <div className="bg-white flex justify-between p-4 rounded-[7px]">

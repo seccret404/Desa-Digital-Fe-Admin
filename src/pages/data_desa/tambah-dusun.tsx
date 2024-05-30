@@ -9,6 +9,7 @@ import { useToast } from '../../components/ui/use-toast'
 import { getPenduduk } from '../../services/desaServices'
 import { PendudukDesa } from '../../interfaces/penduduk'
 export default function TambahDusun() {
+     const [, setIsLoggedIn] = useState(false);
      const navigate = useNavigate();
      const { toast } = useToast();
      const [dusun, setDusun] = useState('');
@@ -62,7 +63,7 @@ export default function TambahDusun() {
      }
 
      return (
-          <SidebarLayout>
+          <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
                <div className="bg-[#D9D9D98B] rounded-[15px]">
                     <div className="p-8">
                          <div className="bg-white flex justify-between p-4 rounded-[7px]">

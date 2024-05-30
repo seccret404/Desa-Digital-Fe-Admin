@@ -8,10 +8,13 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '.
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react'
 import { Bantuan } from '../../interfaces/bantuan'
-import { getBantuan } from '../../services/desaServices'
-
+import { deleteBantuan, getBantuan } from '../../services/desaServices'
+import { useToast } from '../../components/ui/use-toast';
 export default function DaftarBantuanPage() {
+     const [, setIsLoggedIn] = useState(false);
      const [bantuan, setBantuan] = useState<Bantuan[]>([]);
+     const { toast } = useToast();
+
 
      useEffect(() => {
           async function fetchBantuan() {
@@ -29,8 +32,22 @@ export default function DaftarBantuanPage() {
           fetchBantuan();
      }, [])
 
+     const handleDelete = async (id: string) => {
+          try {
+            if (!id) {
+              return;
+            }
+            await deleteBantuan(id);
+            toast({ title: "Success", description: "Bantuan berhasil dihapus!" });
+            setBantuan(bantuan.filter(d => d.id !== id));
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          } catch (error: any) {
+            toast({ title: "Error", description: error.message });
+          }
+        };
+
      return (
-          <SidebarLayout>
+          <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
                <div className="bg-[#D9D9D98B] rounded-[15px]">
 
                     <div className="p-8">
@@ -67,13 +84,13 @@ export default function DaftarBantuanPage() {
                                                   <TableCell>
                                                        <div className="flex justify-center ml-4 mr-4">
 
-                                                            <div className="flex justify-center text-[#FFFFFF] text-[12px] bg-[#FF0909EC] w-[70px] h-[23px] text-center rounded-[5px]">
-                                                                 <Button>
-                                                                      <Link to={''} >
-                                                                           Hapus
-                                                                      </Link>
-                                                                 </Button>
-                                                            </div>
+                                                       <div className="flex ml-4 justify-center text-[#EA081F] text-[12px] bg-[#EA083160] w-[70px] h-[23px] text-center rounded-[5px]">
+                          <button onClick={() => {
+                            if (b.id !== undefined) {
+                              handleDelete(b.id);
+                            }
+                          }}>Hapus</button>
+                        </div>
                                                        </div>
                                                   </TableCell>
                                              </TableRow>

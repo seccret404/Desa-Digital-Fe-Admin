@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react';
 import SidebarLayout from '../../../components/layout/SidebarLayout';
 import HomeIcon from '../../../components/icon/homeIcon';
 import ArrowRightIcon from '../../../components/icon/arrowRightIcon';
@@ -5,22 +6,23 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useToast } from '../../../components/ui/use-toast';
-import { useEffect, useState } from 'react';
+import { getTugasById, updateTugas,  getPemerintah } from '../../../services/desaServices';
 import { Pemerintah } from '../../../interfaces/pemerintah';
-import { addTugas, getPemerintah } from '../../../services/desaServices';
 import { Tugas } from '../../../interfaces/jabatan';
 
-export default function TambahTugasWewenang() {
+export default function EditTugasWewenang() {
   const [, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { id } = useParams(); 
   const [jabatan, setJabatan] = useState<Pemerintah[]>([]);
   const [selectedJabatan, setSelectedJabatan] = useState<Pemerintah | null>(null);
   const [tugas, setTugas] = useState<string>('');
   const [wewenang, setWewenang] = useState<string>('');
   const [fungsi, setFungsi] = useState<string>('');
+  const [tugasId, setTugasId] = useState<string>('');
 
   useEffect(() => {
     const fetchPemerintah = async () => {
@@ -39,55 +41,51 @@ export default function TambahTugasWewenang() {
     fetchPemerintah();
   }, []);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleTugasChange = (_event: any, editor: { getData: () => any; }) => {
-    const data = editor.getData();
-    setTugas(data);
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleWewenangChange = (_event: any, editor: { getData: () => any; }) => {
-    const data = editor.getData();
-    setWewenang(data);
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleFungsiChange = (_event: any, editor: { getData: () => any; }) => {
-    const data = editor.getData();
-    setFungsi(data);
-  };
+  useEffect(() => {
+    const fetchTugasData = async () => {
+      try {
+        if (!id) {
+          return;
+        }
+        const tugasData = await getTugasById(id); 
+        setTugasId(tugasData.id || ''); 
+        setTugas(tugasData.tugas);
+        setWewenang(tugasData.wewenang);
+        setFungsi(tugasData.fungsi);
+        setSelectedJabatan(jabatan.find((item) => item.jabatan === tugasData.jabatan) || null);
+      } catch (error) {
+        console.error('Error fetching tugas:', error);
+      }
+    };
+    fetchTugasData();
+  }, [id, jabatan]); 
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    if(!jabatan || !selectedJabatan || !tugas || !wewenang || !fungsi){
-      toast({ title: "Error", description: "Tolong isi semua kolom!"});
+    if (!selectedJabatan || !tugas || !wewenang || !fungsi || !tugasId) {
+      toast({ title: "Error", description: "Tolong isi semua kolom!" });
       return;
     }
     try {
-      if (selectedJabatan && tugas && fungsi && wewenang) {
-        const data: Tugas = {
-          jabatan: selectedJabatan.jabatan,
-          tugas: tugas,
-          fungsi: fungsi,
-          wewenang: wewenang,
-        };
-        await addTugas(data);
-        console.log('Penerima added successfully:', data);
-        toast({
-          title: 'Tugas dan Wewenang',
-          description: 'Data berhasil ditambahkan!',
-        });
-        navigate('/tugas-wewenang');
-      } else {
-        console.error('Please fill all fields');
-      }
-    } catch (error) {
-      console.error('Error adding penerima:', error);
+      const data: Tugas = {
+        id: tugasId, 
+        jabatan: selectedJabatan.jabatan,
+        tugas: tugas,
+        fungsi: fungsi,
+        wewenang: wewenang,
+      };
+      await updateTugas(tugasId, data); 
       toast({
         title: 'Tugas dan Wewenang',
-        description: 'Data gagal ditambahkan!',
+        description: 'Data berhasil diperbarui!',
       });
       navigate('/tugas-wewenang');
+    } catch (error) {
+      console.error('Error updating tugas:', error);
+      toast({
+        title: 'Tugas dan Wewenang',
+        description: 'Gagal memperbarui data tugas!',
+      });
     }
   };
 
@@ -97,7 +95,7 @@ export default function TambahTugasWewenang() {
         <div className="p-10">
           <div className="bg-white flex justify-between p-4 rounded-[7px]">
             <div className="text-[16px]">
-              Form Tambah Tugas Wewenang
+              Form Edit Tugas Wewenang
             </div>
             <div className="flex">
               <div className="flex">
@@ -107,7 +105,7 @@ export default function TambahTugasWewenang() {
                 <ArrowRightIcon color='#000000' size={10} />
               </div>
               <div className="text-[#D9D9D9] text-[16px] ml-4">
-                Tambah Tugas Wewenang
+                Edit Tugas Wewenang
               </div>
             </div>
           </div>
@@ -133,7 +131,7 @@ export default function TambahTugasWewenang() {
                     <CKEditor
                       editor={ClassicEditor}
                       data={tugas}
-                      onChange={handleTugasChange}
+                      onChange={(_event, editor) => setTugas(editor.getData())}
                     />
                   </div>
                 </div>
@@ -143,37 +141,40 @@ export default function TambahTugasWewenang() {
                     <CKEditor
                       editor={ClassicEditor}
                       data={fungsi}
-                      onChange={handleFungsiChange}
+                      onChange={(_event, editor) => setFungsi(editor.getData())}
                     />
-                  </div>
+                
                 </div>
-                <div className="flex items-center mt-2 pl-6 pr-6">
-                  <div className="w-full">
-                    <div className="text-[16px] mb-1 mt-2">Wewenang Jabatan</div>
-                    <CKEditor
-                      editor={ClassicEditor}
-                      data={wewenang}
-                      onChange={handleWewenangChange}
-                    />
-                  </div>
+              </div>
+              <div className="flex items-center mt-2 pl-6 pr-6">
+                <div className="w-full">
+                  <div className="text-[16px] mb-1 mt-2">Wewenang Jabatan</div>
+                  <CKEditor
+                    editor={ClassicEditor}
+                    data={wewenang}
+                    onChange={(_event, editor) => setWewenang(editor.getData())}
+                  />
                 </div>
-                <div className="flex justify-end mt-6 pr-6 mb-10">
-                  <div className="mr-6">
-                    <button type="button" className="text-white bg-[#F61616] rounded-[5px] w-[142px] h-[30px]" onClick={() => navigate('/tugas-wewenang')}>
-                      Batal
-                    </button>
-                  </div>
-                  <div>
-                    <button type="submit" className="text-white bg-[#0890EA] rounded-[5px] w-[142px] h-[30px]">
-                      Simpan
-                    </button>
-                  </div>
+              </div>
+              <div className="flex justify-end mt-6 pr-6 mb-10">
+                <div className="mr-6">
+                  <button type="button" className="text-white bg-[#F61616] rounded-[5px] w-[142px] h-[30px]" onClick={() => navigate('/tugas-wewenang')}>
+                    Batal
+                  </button>
                 </div>
-              </form>
-            </div>
+                <div>
+                  <button type="submit" className="text-white bg-[#0890EA] rounded-[5px] w-[142px] h-[30px]">
+                    Simpan
+                  </button>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>
-    </SidebarLayout>
-  );
+    </div>
+  </SidebarLayout>
+);
 }
+
+

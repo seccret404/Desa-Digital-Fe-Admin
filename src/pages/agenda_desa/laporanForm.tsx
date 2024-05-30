@@ -11,6 +11,7 @@ import { Laporan } from '../../interfaces/laporan'
 import { useNavigate } from 'react-router-dom'
 import { useToast } from '../../components/ui/use-toast'
 export default function LaporanAgenda() {
+     const [, setIsLoggedIn] = useState(false);
      const { id } = useParams<{ id?: string }>(); 
      const navigate = useNavigate();
      const { toast } = useToast();
@@ -105,7 +106,7 @@ export default function LaporanAgenda() {
 
 
      return (
-          <SidebarLayout>
+          <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
                <div className="bg-[#] rounded-[15px]">
                     <div className="p-8">
                          <div className="bg-white flex justify-between p-4 rounded-[7px]">

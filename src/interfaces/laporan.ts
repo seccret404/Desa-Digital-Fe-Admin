@@ -1,4 +1,5 @@
 export interface Laporan {
+     id?:string,
      id_agenda: string,
      jumlah_peserta: string,
      lokasi_kegiatan: string,

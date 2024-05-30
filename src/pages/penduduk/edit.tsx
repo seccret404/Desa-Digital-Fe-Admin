@@ -12,6 +12,7 @@ import { Dusun } from '../../interfaces/dusun';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField'
 export default function EditPenduduk() {
+     const [, setIsLoggedIn] = useState(false);
      const { id } = useParams<{ id: string }>();
      const { toast } = useToast();
      const navigate = useNavigate();
@@ -106,7 +107,7 @@ export default function EditPenduduk() {
 
 
      return (
-          <SidebarLayout>
+          <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
                <div className="bg-[#D9D9D98B] rounded-[15px]">
                     <div className="p-8">
                          <div className="bg-white flex justify-between p-1 rounded-[7px]">

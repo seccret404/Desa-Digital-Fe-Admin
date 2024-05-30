@@ -7,9 +7,10 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '.
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Penerima } from '../../interfaces/penerimaBantuan'
-import { getPenerimaBantuan } from '../../services/desaServices'
+import {  getPenerimaBantuan } from '../../services/desaServices'
 
 export default function BantuanPage() {
+  const [, setIsLoggedIn] = useState(false);
   const [bantuan, setBantuan] = useState<Penerima[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -31,6 +32,8 @@ export default function BantuanPage() {
     fetchPenerimaBantuan();
   }, []);
 
+ 
+
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
     setCurrentPage(1); // Reset to the first page when searching
@@ -46,7 +49,7 @@ export default function BantuanPage() {
   const currentItems = filteredBantuan.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
-    <SidebarLayout>
+    <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
       <div className="bg-[#D9D9D98B] rounded-[5px]">
         <div className="p-8">
           <div className="flex items-center justify-between">

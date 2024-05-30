@@ -17,6 +17,7 @@ import { Penerima } from '../../interfaces/penerimaBantuan';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '../../components/ui/use-toast';
 export default function TambahPenerimaBantuan() {
+  const [, setIsLoggedIn] = useState(false);
   const [status, setStatus] = useState('');
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -84,7 +85,7 @@ export default function TambahPenerimaBantuan() {
     console.log('bentukTerima:', bentukTerima);
     try {
       if (selectedPenduduk && selectedBantuan && status && jenisBantuan && tglTerima && bentukTerima && jumlahTerima !== null) {
-        // Periksa apakah selectedBantuan dan selectedBantuan.id tidak bernilai null atau undefined
+        
         if (selectedBantuan.id !== undefined && selectedPenduduk.id !== undefined) {
           const data: Penerima = {
             id_penduduk: selectedPenduduk.id,
@@ -132,7 +133,7 @@ export default function TambahPenerimaBantuan() {
 
 
   return (
-    <SidebarLayout>
+    <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
       <div className="bg-[#D9D9D98B] rounded-[15px]">
         <div className="p-8">
           <div className="bg-white flex justify-between p-4 rounded-[7px]">

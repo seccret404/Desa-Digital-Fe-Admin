@@ -10,7 +10,7 @@ import { Pemerintah } from '../../../interfaces/pemerintah'
 import { getPemerintah } from '../../../services/desaServices'
 
 export default function Pemerintahan() {
-
+     const [, setIsLoggedIn] = useState(false);
      const [pemerintah, setPemerintah] = useState<Pemerintah[]>([]);
 
      useEffect(() => {
@@ -30,7 +30,7 @@ export default function Pemerintahan() {
      }, [])
 
      return (
-          <SidebarLayout>
+          <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
                <div className="bg-[#D9D9D98B] rounded-[15px]">
                     <div className="p-8">
                          <div className="flex items-center justify-between">
@@ -78,7 +78,7 @@ export default function Pemerintahan() {
 
                                                                  <div className="flex justify-center text-[#0890EA] text-[12px] bg-[#0890EA60] w-[70px] h-[23px] text-center rounded-[5px]">
                                                                       <Button>
-                                                                           <Link to={''}>
+                                                                           <Link to={`/pemerintahan/${p.id}`}>
                                                                                 Ubah
                                                                            </Link>
                                                                       </Button>

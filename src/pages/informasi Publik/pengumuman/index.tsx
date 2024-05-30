@@ -7,10 +7,12 @@ import { Link } from 'react-router-dom'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../../components/ui/table'
 import { useEffect, useState } from 'react'
 import { Pengumuman } from '../../../interfaces/pengumuman'
-import { getPengumuman } from '../../../services/desaServices'
-
+import {  deletePengumuman, getPengumuman } from '../../../services/desaServices'
+import { useToast } from '../../../components/ui/use-toast';
 export default function PengumumanPage() {
+     const [, setIsLoggedIn] = useState(false);
      const [pengumuman, setPengumuman] = useState<Pengumuman[]>([]);
+     const { toast } = useToast();
 
      useEffect(() => {
           async function fetchPengumuman() {
@@ -27,8 +29,21 @@ export default function PengumumanPage() {
           }
           fetchPengumuman();
      }, [])
+     const handleDelete = async (id: string) => {
+          try {
+            if (!id) {
+              return;
+            }
+            await deletePengumuman(id);
+            toast({ title: "Success", description: "Pengumuman berhasil dihapus!" });
+            setPengumuman(pengumuman.filter(d => d.id !== id));
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          } catch (error: any) {
+            toast({ title: "Error", description: error.message });
+          }
+        };
      return (
-          <SidebarLayout>
+          <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
                <div className="bg-[#] rounded-[15px]">
                     <div className="p-8">
                          <div className="flex items-center justify-between">
@@ -64,13 +79,13 @@ export default function PengumumanPage() {
                                                        <TableCell>{p.judul_pengumuman}</TableCell>
                                                        <TableCell className='text-[#0D9276] font-medium'>{new Date(p.tgl_publikasi).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: '2-digit' })}</TableCell>
                                                        <TableCell>
-                                                            {typeof p.cover_pengumuman === 'string' && (
-                                                                 p.cover_pengumuman.endsWith('.jpg') || p.cover_pengumuman.endsWith('.png') || p.cover_pengumuman.endsWith('.jpeg') ? (
-                                                                      <img src={`https://desa-digital-bakend-production.up.railway.app/api/pengumuman_cover/${p.cover_pengumuman}`} alt="Cover Pengumuman" className="w-20 h-auto" />
-                                                                 ) : (
-                                                                      <a href={`https://desa-digital-bakend-production.up.railway.app/api/pengumuman_cover/${p.cover_pengumuman}`} target="_blank" rel="noopener noreferrer">{p.cover_pengumuman}</a>
-                                                                 )
-                                                            )}
+                                                       {p.file_pengumuman && typeof p.file_pengumuman === 'string' && (
+                                                    p.file_pengumuman.endsWith('.jpg') || p.file_pengumuman.endsWith('.png') || p.file_pengumuman.endsWith('.jpeg') ? (
+                                                        <img src={`https://desa-digital-bakend-production.up.railway.app/api/pengumuman_cover/${p.file_pengumuman}`} alt="Cover Pengumuman" className="w-20 h-auto" />
+                                                    ) : (
+                                                        <a href={`https://desa-digital-bakend-production.up.railway.app/api/pengumuman_cover/${p.file_pengumuman}`} target="_blank" rel="noopener noreferrer">{p.file_pengumuman}</a>
+                                                    )
+                                                )}
                                                        </TableCell>
                                                        <TableCell>
                                                             <div className="flex justify-center ml-4 mr-4">
@@ -82,6 +97,9 @@ export default function PengumumanPage() {
                                                                            </Link>
                                                                       </Button>
                                                                  </div>
+                                                                 <div className="flex ml-4 justify-center text-[#EA081F] text-[12px] bg-[#EA083160] w-[70px] h-[23px] text-center rounded-[5px]">
+                                                                 <button onClick={() => p.id && handleDelete(p.id)}>Hapus</button>
+                        </div>
                                                             </div>
                                                        </TableCell>
                                                   </TableRow>
