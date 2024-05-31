@@ -56,7 +56,7 @@ export default function OrganisasiPage() {
                                              <TableHead>NO</TableHead>
                                              <TableHead>Nama Organisasi</TableHead>
                                              <TableHead>Tahun Berdiri</TableHead>
-                                             <TableHead>Alamat Organisasi</TableHead>
+                                             <TableHead>Logo Organisasi</TableHead>
                                              <TableHead>Nama Ketua</TableHead>
                                              <TableHead>Aksi</TableHead>
                                         </TableHeader>
