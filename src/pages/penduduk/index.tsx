@@ -82,11 +82,11 @@ export default function Penduduk() {
         const x = (pageWidth - textWidth) / 2;
 
         doc.text(text, x, 10);
-        doc.autoTable({
-            head: [['No', 'Tahun', 'Jenis Kelamin L', 'Jenis Kelamin P', 'Total','Perubahan (Total Kelahiran)', 'Perubahan (Total Meninggal)']],
-            body: [[1, currentYear, manCount, womanCount, totalPenduduk,births, perubahan]]
-        });
-        doc.save('laporan_penduduk.pdf');
+        // doc.autoTable({
+        //     head: [['No', 'Tahun', 'Jenis Kelamin L', 'Jenis Kelamin P', 'Total','Perubahan (Total Kelahiran)', 'Perubahan (Total Meninggal)']],
+        //     body: [[1, currentYear, manCount, womanCount, totalPenduduk,births, perubahan]]
+        // });
+        // doc.save('laporan_penduduk.pdf');
     };
 
     return (
