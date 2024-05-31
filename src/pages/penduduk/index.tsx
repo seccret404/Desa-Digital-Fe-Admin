@@ -74,20 +74,19 @@ export default function Penduduk() {
         const manCount = penduduk.filter(p => p.jenis_kelamin === 'Laki-laki' && p.status_hidup !== 'Wafat').length;
         const womanCount = penduduk.filter(p => p.jenis_kelamin === 'Perempuan' && p.status_hidup !== 'Wafat').length;
         const totalPenduduk = manCount + womanCount;
-        const perubahan = deceasedCount;
-        const births = birthCount;
         const pageWidth = doc.internal.pageSize.getWidth();
         const text = 'Laporan Penduduk Desa';
         const textWidth = doc.getTextWidth(text);
         const x = (pageWidth - textWidth) / 2;
-
+    
         doc.text(text, x, 10);
-        // doc.autoTable({
-        //     head: [['No', 'Tahun', 'Jenis Kelamin L', 'Jenis Kelamin P', 'Total','Perubahan (Total Kelahiran)', 'Perubahan (Total Meninggal)']],
-        //     body: [[1, currentYear, manCount, womanCount, totalPenduduk,births, perubahan]]
-        // });
-        // doc.save('laporan_penduduk.pdf');
+        doc.autoTable({
+            head: [['No', 'Tahun', 'Jenis Kelamin L', 'Jenis Kelamin P', 'Total', 'Perubahan (Total Kelahiran)', 'Perubahan (Total Meninggal)']],
+            body: [[1, currentYear, manCount, womanCount, totalPenduduk, birthCount, deceasedCount]]
+        });
+        doc.save('laporan_penduduk.pdf');
     };
+    
 
     return (
         <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
