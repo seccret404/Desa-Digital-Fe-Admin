@@ -12,6 +12,7 @@ import { useToast } from '../../../components/ui/use-toast';
 export default function PengumumanPage() {
      const [, setIsLoggedIn] = useState(false);
      const [pengumuman, setPengumuman] = useState<Pengumuman[]>([]);
+     const [searchQuery, setSearchQuery] = useState("");
      const { toast } = useToast();
 
      useEffect(() => {
@@ -42,6 +43,14 @@ export default function PengumumanPage() {
             toast({ title: "Error", description: error.message });
           }
         };
+
+        const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+          setSearchQuery(e.target.value);
+      };
+  
+      const filteredBerita = pengumuman.filter((b) =>
+          b.judul_pengumuman.toLowerCase().includes(searchQuery.toLowerCase())
+      );
      return (
           <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
                <div className="bg-[#] rounded-[15px]">
@@ -49,8 +58,12 @@ export default function PengumumanPage() {
                          <div className="flex items-center justify-between">
                               <div className="relative w-[376px]">
                                    <FontAwesomeIcon icon={faSearch} className="absolute top-[10px] left-[10px]" />
-                                   <Input placeholder="Ketikkan kata kunci..." className="pl-[35px] rounded-[23px] border border-[2px] border-[#0B0B2A]" />
-                              </div>
+                                   <Input 
+                                placeholder="Ketikkan kata kunci..." 
+                                className="pl-[35px] rounded-[23px] border border-[2px] border-[#0B0B2A]" 
+                                value={searchQuery}
+                                onChange={handleSearchChange}
+                            /></div>
                               <div className="">
                                    <Button width={249} height={47} color='white' bgColor='#0890EA' rounded={5} >
                                         <Link to='/tambah-pengumuman'>
@@ -72,7 +85,7 @@ export default function PengumumanPage() {
                                              <TableHead className='text-center'>Aksi</TableHead>
                                         </TableHeader>
                                         <TableBody>
-                                             {pengumuman.map((p, index) =>
+                                             {filteredBerita.map((p, index) =>
 
                                                   <TableRow key={p.id}>
                                                        <TableCell>{index + 1}</TableCell>

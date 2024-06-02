@@ -84,7 +84,17 @@ export default function AddApbdes() {
      };
 
      const handleSaveData = async (event: React.FormEvent<HTMLFormElement>) => {
-          event.preventDefault(); // Menghentikan perilaku form HTML bawaan
+          event.preventDefault();
+
+          if (!judulAnggaran || !selectedYear) {
+               toast({
+                 title: "Error",
+                 description: "Tahun Anggaran dan Judul tidak boleh kosong!",
+                 duration: 5000, 
+                 color: '#EB0F0F'
+               });
+               return; 
+             }
           try {
               const data: Anggaran = {
                    judul: judulAnggaran,

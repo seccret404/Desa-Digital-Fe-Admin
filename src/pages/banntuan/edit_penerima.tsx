@@ -110,7 +110,7 @@ export default function EditPenerimaBantuan() {
         tgl_terima: tglTerima?.toLocaleString(),
         jumlah_terima: jumlahTerima.toString(),
         bentuk_terima: bentukTerima,
-        id: id
+        
       };
       await updatePenerima(id, data); // Update penerima data
       toast({

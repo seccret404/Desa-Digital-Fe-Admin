@@ -14,7 +14,7 @@ import { Organisasi } from '../../interfaces/organisasi'
 export default function OrganisasiPage() {
      const [, setIsLoggedIn] = useState(false);
      const [organisasi, setOrganisasi] = useState<Organisasi[]>([]);
-
+     const [searchQuery, setSearchQuery] = useState("");
   useEffect(() => {
     async function fetchOrganisasi() {
       try {
@@ -30,6 +30,14 @@ export default function OrganisasiPage() {
     }
     fetchOrganisasi();
   }, []);
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+     setSearchQuery(e.target.value);
+ };
+
+ const filterOrganisasi = organisasi.filter((b) =>
+     b.nama_lembaga.toLowerCase().includes(searchQuery.toLowerCase())
+ );
      return (
           <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
                <div className="bg-[#D9D9D98B] rounded-[15px]">
@@ -37,8 +45,13 @@ export default function OrganisasiPage() {
                          <div className="flex items-center justify-between">
                               <div className="relative w-[376px]">
                                    <FontAwesomeIcon icon={faSearch} className="absolute top-[10px] left-[10px]" />
-                                   <Input placeholder="Ketikkan kata kunci..." className="pl-[35px] rounded-[23px] border border-[2px] border-[#0B0B2A]" />
-                              </div>
+                                   <Input 
+                                placeholder="Ketikkan kata kunci..." 
+                                className="pl-[35px] rounded-[23px] border border-[2px] border-[#0B0B2A]" 
+                                value={searchQuery}
+                                onChange={handleSearchChange}
+                            /></div>
+                             
                               <div className="">
                                    <Button width={249} height={47} color='white' bgColor='#0890EA' rounded={5} >
                                         <Link to='/tambah-organisasi'>
@@ -61,7 +74,7 @@ export default function OrganisasiPage() {
                                              <TableHead>Aksi</TableHead>
                                         </TableHeader>
                                         <TableBody>
-                                        {organisasi.map((p, index) => (
+                                        {filterOrganisasi.map((p, index) => (
                                         <TableRow key={p.id}>
                                         <TableCell>{index + 1}</TableCell>
                                         <TableCell>{p.nama_lembaga}</TableCell>

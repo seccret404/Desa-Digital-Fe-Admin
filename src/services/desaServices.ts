@@ -648,7 +648,7 @@ export const getPemerintahById= async (id: string): Promise<Pemerintah> => {
 };
 export const getProfilById= async (id: string): Promise<Profil> => {
   try {
-    const response = await fetch(`${API_URL}/profile/${id}`, {
+    const response = await fetch(`${API_URL}/profil/${id}`, {
       headers: {
         'Origin': 'http://localhost:3000'
       }
@@ -658,7 +658,7 @@ export const getProfilById= async (id: string): Promise<Profil> => {
     return data as Profil;
   } catch (error) {
     console.error('Error:', error);
-    throw new Error('Gagal mendapatkan data berita');
+    throw new Error('Gagal mendapatkan data profil');
   }
 };
 export const getPengumumanById= async (id: string): Promise<Pengumuman> => {
@@ -968,6 +968,7 @@ export const updateProfil = async (id: string, data: Profil): Promise<void> => {
     formData.append('sejarah_desa', data.sejarah_desa);
     formData.append('batas_barat', data.batas_barat);
     formData.append('batas_utara', data.batas_utara);
+    formData.append('batas_timur', data.batas_timur);
     formData.append('batas_selatan', data.batas_selatan);
     
     // Append gambar_desa if it exists
@@ -976,7 +977,7 @@ export const updateProfil = async (id: string, data: Profil): Promise<void> => {
     }
 
     // Send the PUT request to update the profile
-    const response = await fetch(`http://localhost:3000/api/profile/${id}`, {
+    const response = await fetch(`${API_URL}/profile/${id}`, {
       method: 'PUT',
       body: formData,
     });

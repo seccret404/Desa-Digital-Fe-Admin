@@ -12,7 +12,7 @@ import { getTugas } from '../../../services/desaServices'
 export default function TugasWewenang() {
      const [, setIsLoggedIn] = useState(false);
      const [tugas, setTugas] = useState<Tugas[]>([]);
-
+     const [searchQuery, setSearchQuery] = useState("");
      useEffect(() =>{
           async function fetchTugas(){
                try{
@@ -28,6 +28,23 @@ export default function TugasWewenang() {
           }
           fetchTugas();
      },[])
+
+     const limitTextToPengumuman = (text: string) => {
+          const words = text.split(' ');
+          if (words.length > 7) {
+               return words.slice(0, 7).join(' ') + '...';
+          }
+          return text;
+     };
+     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+          setSearchQuery(e.target.value);
+        };
+      
+
+     const filteredTugas = tugas.filter((t) => 
+          t.jabatan.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        
      
      return (
           <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
@@ -36,7 +53,12 @@ export default function TugasWewenang() {
                          <div className="flex items-center justify-between">
                               <div className="relative w-[376px]">
                                    <FontAwesomeIcon icon={faSearch} className="absolute top-[10px] left-[10px]" />
-                                   <Input placeholder="Ketikkan kata kunci..." className="pl-[35px] rounded-[23px] border border-[2px] border-[#0B0B2A]" />
+                                   <Input 
+                placeholder="Ketikkan kata kunci..." 
+                className="pl-[35px] rounded-[23px] border border-[2px] border-[#0B0B2A]" 
+                value={searchQuery}
+                onChange={handleSearchChange}
+              />
                               </div>
                               <div className="">
                                    <Button width={249} height={47} color='white' bgColor='#0890EA' rounded={5} >
@@ -59,15 +81,15 @@ export default function TugasWewenang() {
                                              <TableHead className='text-center'>Aksi</TableHead>
                                         </TableHeader>
                                         <TableBody>
-                                            {tugas.map((t, index) =>
+                                            {filteredTugas.map((t, index) =>
 
                                               <TableRow key={t.id}>
                                                        <TableCell>{index+1}</TableCell>
-                                                       <TableCell>{t.jabatan}</TableCell>
-                                                       <TableCell>{t.tugas}</TableCell>
+                                                       <TableCell >{t.jabatan}</TableCell>
+                                                       <TableCell dangerouslySetInnerHTML={{ __html: limitTextToPengumuman(t.tugas) }}></TableCell>
                                                       
-                                                       <TableCell>
-                                                            {t.wewenang}
+                                                       <TableCell dangerouslySetInnerHTML={{ __html: limitTextToPengumuman(t.wewenang) }}>
+                                                            
                                                        </TableCell>
                                                        <TableCell>
                                                             <div className="flex justify-center ml-4 mr-4">

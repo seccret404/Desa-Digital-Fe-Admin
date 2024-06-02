@@ -118,7 +118,10 @@ export default function TambahPenerimaBantuan() {
           console.error('Selected Bantuan is missing id');
         }
       } else {
-        console.error('Please fill all fields');
+        toast({
+          title: "Penerima Bantuan",
+          description: "Tolong isi semua data!"
+        });
       }
     }
     catch (error) {

@@ -13,6 +13,7 @@ import { useToast } from '../../components/ui/use-toast';
 export default function DusunPage() {
   const [, setIsLoggedIn] = useState(false);
   const [dusun, setDusun] = useState<Dusun[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const { toast } = useToast();
 
   useEffect(() => {
@@ -45,6 +46,10 @@ export default function DusunPage() {
     }
   };
 
+  const filteredDusun = dusun.filter(d =>
+    d.nama_dusun.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    d.nama_ketua.toLowerCase().includes(searchQuery.toLowerCase())
+  );
   return (
     <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
       <div className="bg-[#D9D9D98B] rounded-[15px]">
@@ -52,7 +57,12 @@ export default function DusunPage() {
           <div className="flex items-center justify-between">
             <div className="relative w-[376px]">
               <FontAwesomeIcon icon={faSearch} className="absolute top-[10px] left-[10px]" />
-              <Input placeholder="Ketikkan kata kunci..." className="pl-[35px] rounded-[23px]" />
+              <Input
+                placeholder="Ketikkan kata kunci..."
+                className="pl-[35px] rounded-[23px]"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
             </div>
             <div className="">
               <Button width={249} height={47} color='white' bgColor='#0890EA' rounded={5}>
@@ -73,7 +83,7 @@ export default function DusunPage() {
                 <TableHead className='text-center'>Aksi</TableHead>
               </TableHeader>
               <TableBody>
-                {dusun.map((d, index) =>
+                {filteredDusun.map((d, index) =>
                   <TableRow key={d.id}>
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>{d.nama_dusun}</TableCell>

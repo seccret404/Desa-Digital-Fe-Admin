@@ -58,8 +58,9 @@ export default function DetailAgenda() {
           </div>
           <div className="flex justify-end mt-4"></div>
           <div className="bg-white rounded-[15px] mt-6">
-            <div className="p-6 mb-6">
-              <div className="flex justify-center items-end text-[#ffffff] text-[12px] bg-[#0890EA] w-[70px] h-[23px] text-end rounded-[5px]">
+            <div className="p-6 mb-6 ">
+             <div className="flex justify-end">
+             <div className="flex justify-center items-end text-[#ffffff] text-[12px] bg-[#0890EA] w-[70px] h-[23px] text-end rounded-[5px]">
               {laporan.length > 0 && (
                   <Button>
                     <Link to={`/edit-laporan/${laporan[0].id}`}> {/* Adjust this line to navigate to the edit page */}
@@ -68,6 +69,7 @@ export default function DetailAgenda() {
                   </Button>
                 )}
               </div>
+             </div>
               <div className="text-[20px] font-medium">{agenda.nama_kegiatan}</div>
               <div>
                 <div className="text-[18px] font-medium mt-8">Hari/Tanggal</div>
@@ -79,7 +81,37 @@ export default function DetailAgenda() {
               </div>
               {laporan.length > 0 && (
                 <div>
-                  <div className="text-[20px] font-medium mt-8">Laporan Kegiatan</div>
+                  <div className="text-[20px] font-medium mt-8">Dokumentasi</div>
+                  {laporan.map((lap: Laporan) => (
+                    <div key={lap.id}>
+                      <div className=""><img src={`https://desa-digital-bakend-production.up.railway.app/api/dokumentasi/${lap.dokumentasi}`} alt="Dokumentasi" /></div>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {laporan.length > 0 && (
+                <div>
+                  <div className="text-[20px] font-medium mt-8">Koordinator</div>
+                  {laporan.map((lap: Laporan) => (
+                    <div key={lap.id}>
+                      <div className="">{lap.koordinator}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {laporan.length > 0 && (
+                <div>
+                  <div className="text-[20px] font-medium mt-8">Jumlah Peserta</div>
+                  {laporan.map((lap: Laporan) => (
+                    <div key={lap.id}>
+                      <div className="">{lap.jumlah_peserta} Peserta</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+               {laporan.length > 0 && (
+                <div>
+                  <div className="text-[20px] font-medium mt-8">Anggaran Desa</div>
                   {laporan.map((lap: Laporan) => (
                     <div key={lap.id}>
                       <div className="">{lap.anggaran_desa}</div>
@@ -87,8 +119,28 @@ export default function DetailAgenda() {
                   ))}
                 </div>
               )}
+              {laporan.length > 0 && (
+                <div>
+                  <div className="text-[20px] font-medium mt-8">Donasi</div>
+                  {laporan.map((lap: Laporan) => (
+                    <div key={lap.id}>
+                      <div className="">{lap.donasi}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+               {laporan.length > 0 && (
+                <div>
+                  <div className="text-[20px] font-medium mt-8">Status Kegiatan</div>
+                  {laporan.map((lap: Laporan) => (
+                    <div key={lap.id}>
+                      <div className="">{lap.status_kegiatan}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
-          </div>
+          </div>  
         </div>
       </div>
     </SidebarLayout>

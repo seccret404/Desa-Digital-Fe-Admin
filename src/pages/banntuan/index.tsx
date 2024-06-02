@@ -89,7 +89,7 @@ export default function BantuanPage() {
                     <TableCell>{d.nama_bantuan}</TableCell>
                     <TableCell>{new Date(d.tgl_terima).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: '2-digit' })}</TableCell>
                     <TableCell>{d.status_bantuan}</TableCell>
-                    <TableCell className='text-center bg-[#1FC7BF] text-white font-bold text-[16px]'>
+                    <TableCell className='text-center font-bold text-[16px]'>
                       {d.jumlah_terima}
                     </TableCell>
                     <TableCell>

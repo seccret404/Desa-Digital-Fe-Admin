@@ -41,6 +41,25 @@ export default function AddOrganisasi() {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
+    if (
+      !nama ||
+      !singkatan ||
+      !alamat ||
+      !tahun ||
+      !ketua ||
+      !wakil ||
+      !sekretaris ||
+      !bendahara ||
+      !logo ||
+      !anggota ||
+      !deskripsi
+  ) {
+      // Display toast for missing fields
+      toast({ title: "Peringatan", description: "Silakan lengkapi semua data!" });
+      return;
+  }
+
+
     const data = {
       nama_lembaga: nama,
       singkatan: singkatan,
@@ -52,10 +71,10 @@ export default function AddOrganisasi() {
       bendahara: bendahara,
       logo_organisasi: logo,
       jumlah_anggota: anggota,
-      deskripsi: deskripsi // Pastikan deskripsi tidak kosong atau NULL
+      deskripsi: deskripsi 
     };
 
-    console.log("Data to be submitted:", data); // Log untuk memastikan semua data benar
+    console.log("Data to be submitted:", data); 
 
     try {
       await addOrganisasi(data);

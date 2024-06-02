@@ -13,6 +13,7 @@ import { useToast } from '../../components/ui/use-toast';
 export default function BeritaPage() {
     const [, setIsLoggedIn] = useState(false);
     const [berita, setBerita] = useState<Berita[]>([]);
+    const [searchQuery, setSearchQuery] = useState("");
     const { toast } = useToast();
 
     useEffect(() => {
@@ -42,6 +43,14 @@ export default function BeritaPage() {
         }
     };
 
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const filteredBerita = berita.filter((b) =>
+        b.judul_berita.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     return (
         <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
             <div className="bg-[#D9D9D98B] rounded-[15px]">
@@ -49,7 +58,12 @@ export default function BeritaPage() {
                     <div className="flex items-center justify-between">
                         <div className="relative w-[376px]">
                             <FontAwesomeIcon icon={faSearch} className="absolute top-[10px] left-[10px]" />
-                            <Input placeholder="Ketikkan kata kunci..." className="pl-[35px] rounded-[23px] border border-[2px] border-[#0B0B2A]" />
+                            <Input 
+                                placeholder="Ketikkan kata kunci..." 
+                                className="pl-[35px] rounded-[23px] border border-[2px] border-[#0B0B2A]" 
+                                value={searchQuery}
+                                onChange={handleSearchChange}
+                            />
                         </div>
                         <div className="">
                             <Button width={249} height={47} color='white' bgColor='#0890EA' rounded={5} >
@@ -72,7 +86,7 @@ export default function BeritaPage() {
                                     <TableHead className='text-center'>Aksi</TableHead>
                                 </TableHeader>
                                 <TableBody>
-                                    {berita.map((b, index) =>
+                                    {filteredBerita.map((b, index) =>
                                         <TableRow key={b.id}>
                                             <TableCell>{index + 1} </TableCell>
                                             <TableCell>{b.judul_berita} </TableCell>

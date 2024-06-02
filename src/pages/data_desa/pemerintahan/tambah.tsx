@@ -6,7 +6,7 @@ import ArrowRightIcon from '../../../components/icon/arrowRightIcon';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { PendudukDesa } from '../../../interfaces/penduduk';
-import { getPenduduk, addPemerintah } from '../../../services/desaServices';
+import { getPenduduk, addPemerintah, getPemerintah } from '../../../services/desaServices';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
@@ -48,24 +48,30 @@ export default function TambahPemerintah() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-  
+
     if (!selectedPenduduk || !profil || !selectedJabatan || !tanggalMulai || !tanggalSelesai) {
-      toast({ title: "Error", description: "Tolong isi semua kolom!"});
+      toast({ title: "Error", description: "Tolong isi semua kolom!" });
       return;
     }
-  
- 
-  
-    const data = {
-      nama: selectedPenduduk.nama,
-      nik: selectedPenduduk.nik,
-      jabatan: selectedJabatan,
-      tahun_mulai: formatDateForBackend(tanggalMulai),
-      tahun_selesai: formatDateForBackend(tanggalSelesai),
-      profil: profil,
-    };
-  
+
     try {
+      const currentPemerintah = await getPemerintah(); // Fetch current pemerintah data
+      const ongoingJabatan = currentPemerintah.find(p => p.jabatan === selectedJabatan && new Date(p.tahun_selesai) > new Date());
+
+      if (ongoingJabatan) {
+        toast({ title: "Error", description: `Jabatan ${selectedJabatan} masih ada pengisi!` });
+        return;
+      }
+
+      const data = {
+        nama: selectedPenduduk.nama,
+        nik: selectedPenduduk.nik,
+        jabatan: selectedJabatan,
+        tahun_mulai: formatDateForBackend(tanggalMulai),
+        tahun_selesai: formatDateForBackend(tanggalSelesai),
+        profil: profil,
+      };
+
       console.log("Data to be submitted:", data); // Log the data before sending
       await addPemerintah(data);
       console.log("Data submitted successfully");
@@ -75,7 +81,6 @@ export default function TambahPemerintah() {
       toast({ title: "Error", description: "Gagal menambahkan data pemerintah!" });
     }
   };
-  
 
   return (
     <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
