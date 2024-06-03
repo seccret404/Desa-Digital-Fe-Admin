@@ -1,7 +1,7 @@
 import SidebarLayout from '../../components/layout/SidebarLayout'
 import { Input } from '../../components/ui/input'
 import HomeIcon from '../../components/icon/homeIcon'
-import ArrowRIghtIcon from '../../components/icon/arrowRightIcon'
+import ArrowRightIcon from '../../components/icon/arrowRightIcon'
 import { useNavigate } from 'react-router-dom'
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -9,6 +9,7 @@ import { useState } from 'react'
 import { addBerita } from '../../services/desaServices'
 import { useToast } from '../../components/ui/use-toast'
 import { Berita } from '../../interfaces/berita'
+
 export default function TambahBerita() {
   const [, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
@@ -21,6 +22,9 @@ export default function TambahBerita() {
     tgl_publikasi: ''
   });
 
+  const [coverPreview, setCoverPreview] = useState<string | null>(null);
+  const [fileName, setFileName] = useState<string | null>(null);
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!berita.judul_berita || !berita.isi_berita || !berita.cover || !berita.file) {
@@ -28,6 +32,12 @@ export default function TambahBerita() {
       return;
     }
 
+    if (berita.cover instanceof File && berita.file instanceof File) {
+      if (berita.cover.name === berita.file.name) {
+        toast({ title: "Error", description: "Nama file untuk cover dan file tidak boleh sama!" });
+        return;
+      }
+    }
     try {
       await addBerita(berita);
       toast({
@@ -52,12 +62,26 @@ export default function TambahBerita() {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = event.target;
-    if (files) {
-      setBerita({ ...berita, [name]: files[0] });
+    if (files && files[0]) {
+      const file = files[0];
+      const fileUrl = URL.createObjectURL(file);
+
+      if (name === 'cover') {
+        if (file.type.startsWith('image/')) {
+          setCoverPreview(fileUrl);
+        }
+        setBerita({ ...berita, cover: file });
+      } else if (name === 'file') {
+        if (file.type === 'application/pdf' || file.type === 'application/msword' || file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+          setFileName(file.name);
+        }
+        setBerita({ ...berita, file: file });
+      }
     } else {
       setBerita({ ...berita, [name]: value });
     }
   };
+
   const back = () => {
     navigate('/berita');
   }
@@ -73,7 +97,7 @@ export default function TambahBerita() {
                 <HomeIcon color='#0890EA' size={16} />
               </div>
               <div className="ml-4 flex">
-                <ArrowRIghtIcon color='#000000' size={10} />
+                <ArrowRightIcon color='#000000' size={10} />
               </div>
               <div className="text-[#D9D9D9] text-[16px] ml-4">Tambah Berita Desa</div>
             </div>
@@ -109,9 +133,13 @@ export default function TambahBerita() {
                     type='file'
                     className=' h-[40px] font-bold'
                     name="cover"
-                    onChange={(e) => setBerita({ ...berita, cover: e.target.files ? e.target.files[0] : '' })}
-
+                    onChange={handleChange}
                   />
+                  {coverPreview && (
+                    <div className="mt-2">
+                      <img src={coverPreview} alt="Cover Preview" className="max-w-xs max-h-xs" />
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="flex items-center mt-2 pl-6 pr-6">
@@ -120,16 +148,19 @@ export default function TambahBerita() {
                   <Input
                     type='file'
                     className=' h-[40px] font-bold'
-                    placeholder='File'
                     name="file"
-                    onChange={(e) => setBerita({ ...berita, file: e.target.files ? e.target.files[0] : '' })}
-
+                    onChange={handleChange}
                   />
+                  {fileName && (
+                    <div className="mt-2">
+                      <p>{fileName}</p>
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="flex justify-end mt-6">
                 <div className="mr-6">
-                  <button onClick={back} className='text-white bg-[#F61616] rounded-[5px] w-[142px] h-[30px]'>
+                  <button type="button" onClick={back} className='text-white bg-[#F61616] rounded-[5px] w-[142px] h-[30px]'>
                     Batal
                   </button>
                 </div>
@@ -145,5 +176,4 @@ export default function TambahBerita() {
       </div>
     </SidebarLayout>
   )
-
 }

@@ -65,7 +65,7 @@ export default function Login({ setIsLoggedIn }: LoginProps) {
                         className="bg-[#FFFFFF] rounded-[5px]"
                     />
                     {error && <div className="text-red-500 text-center">{error}</div>}
-                    <button onClick={handleLogin} className="bg-blue-500 text-white py-2 rounded">Login</button>
+                    <button onClick={handleLogin} className="bg-blue-500 text-white py-2 rounded">Masuk</button>
                 </div>
             </div>
         </div>

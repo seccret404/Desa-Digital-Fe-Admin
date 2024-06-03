@@ -37,6 +37,18 @@ export default function DetailAgenda() {
       fetchData();
     }
   }, [id]);
+  const formatToRupiah = (numberString: string) => {
+    const number = parseFloat(numberString);
+    
+    if (isNaN(number)) {
+      return numberString; 
+    }
+  
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR'
+    }).format(number);
+  };
 
   if (!agenda) {
     return <div>Loading...</div>;
@@ -60,10 +72,10 @@ export default function DetailAgenda() {
           <div className="bg-white rounded-[15px] mt-6">
             <div className="p-6 mb-6 ">
              <div className="flex justify-end">
-             <div className="flex justify-center items-end text-[#ffffff] text-[12px] bg-[#0890EA] w-[70px] h-[23px] text-end rounded-[5px]">
+             <div className="flex justify-center items-center text-[#ffffff] text-[12px] bg-[#0890EA] w-[100px] h-[30px] text-end rounded-[5px]">
               {laporan.length > 0 && (
                   <Button>
-                    <Link to={`/edit-laporan/${laporan[0].id}`}> {/* Adjust this line to navigate to the edit page */}
+                    <Link to={`/edit-laporan/${laporan[0].id}`} > {/* Adjust this line to navigate to the edit page */}
                       Ubah
                     </Link>
                   </Button>
@@ -114,7 +126,7 @@ export default function DetailAgenda() {
                   <div className="text-[20px] font-medium mt-8">Anggaran Desa</div>
                   {laporan.map((lap: Laporan) => (
                     <div key={lap.id}>
-                      <div className="">{lap.anggaran_desa}</div>
+                      {formatToRupiah(lap.anggaran_desa)}
                     </div>
                   ))}
                 </div>
@@ -124,7 +136,7 @@ export default function DetailAgenda() {
                   <div className="text-[20px] font-medium mt-8">Donasi</div>
                   {laporan.map((lap: Laporan) => (
                     <div key={lap.id}>
-                      <div className="">{lap.donasi}</div>
+                      <div className="">{formatToRupiah(lap.donasi)}</div>
                     </div>
                   ))}
                 </div>

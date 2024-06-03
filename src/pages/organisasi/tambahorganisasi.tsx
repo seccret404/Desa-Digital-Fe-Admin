@@ -8,6 +8,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { addOrganisasi } from '../../services/desaServices';
 import { useToast } from '../../components/ui/use-toast';
 import { useNavigate } from 'react-router-dom';
+
 export default function AddOrganisasi() {
   const [, setIsLoggedIn] = useState(false);
   const { toast } = useToast();
@@ -41,6 +42,17 @@ export default function AddOrganisasi() {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
+    const today = new Date();
+    const inputTanggalLahir = new Date(tahun);
+
+    if (inputTanggalLahir > today) {
+      toast({
+        title: "Data Organisasi",
+        description: 'Tahun Berdiri tidak boleh melebihi tanggal sekarang'
+      });
+      return;
+    }
+
     if (
       !nama ||
       !singkatan ||
@@ -53,12 +65,11 @@ export default function AddOrganisasi() {
       !logo ||
       !anggota ||
       !deskripsi
-  ) {
+    ) {
       // Display toast for missing fields
       toast({ title: "Peringatan", description: "Silakan lengkapi semua data!" });
       return;
-  }
-
+    }
 
     const data = {
       nama_lembaga: nama,
@@ -71,10 +82,10 @@ export default function AddOrganisasi() {
       bendahara: bendahara,
       logo_organisasi: logo,
       jumlah_anggota: anggota,
-      deskripsi: deskripsi 
+      deskripsi: deskripsi
     };
 
-    console.log("Data to be submitted:", data); 
+    console.log("Data to be submitted:", data);
 
     try {
       await addOrganisasi(data);
@@ -162,11 +173,17 @@ export default function AddOrganisasi() {
                       Jumlah Anggota
                     </div>
                     <div>
-                      <Input 
+                      <Input
                         type='number'
                         value={anggota}
-                        onChange={(e) => setAnggota(e.target.value)}
+                        onChange={(e) => {
+                          const value = parseInt(e.target.value);
+                          if (value > 0) {
+                            setAnggota(value.toString());
+                          }
+                        }}
                         className='w-[416px] h-[40px] font-bold' placeholder='Jumlah anggota' />
+
                     </div>
                   </div>
                 </div>
@@ -254,3 +271,4 @@ export default function AddOrganisasi() {
     </SidebarLayout>
   );
 }
+

@@ -53,6 +53,20 @@ export default function TambahPenduduk() {
 
     const handleSubmit = async (event: { preventDefault: () => void }) => {
         event.preventDefault();
+        if (nik.length !== 16) {
+            toast({ title: "Error", description: "NIK harus 16 karakter!" });
+            return;
+        }
+        const today = new Date();
+        const inputTanggalLahir = new Date(tanggalLahir);
+
+        if (inputTanggalLahir > today) {
+            toast({
+                title: "Data Penduduk",
+                description: 'Tanggal lahir tidak boleh melebihi tanggal sekarang'
+            });
+            return;
+        }
         if (!nik || !nama || !agama || !alamat || !tanggalLahir || !tempatLahir ||
             !jenisKelamin || !pekerjaan || !kewarganegaraan || !pendidikan_terakhir ||
             !statusHidup || !statusPerkawinan || !noKK || !dusun || !dusunOptions
@@ -218,7 +232,7 @@ export default function TambahPenduduk() {
                                             Nomor Kartu Keluarga
                                         </div>
                                         <div className="">
-                                            <Input className='w-[416px] h-[40px] bg-[#D9D9D92C]' placeholder='no kk' value={noKK} onChange={(e) => setNoKK(e.target.value)} />
+                                            <Input type='number' className='w-[416px] h-[40px] bg-[#D9D9D92C]' placeholder='no kk' value={noKK} onChange={(e) => setNoKK(e.target.value)} />
                                         </div>
                                     </div>
                                 </div>
@@ -228,7 +242,7 @@ export default function TambahPenduduk() {
                                             NIK
                                         </div>
                                         <div className="">
-                                            <Input className='w-[416px] h-[40px] bg-[#D9D9D92C]' placeholder='NIK' value={nik} onChange={(e) => setNik(e.target.value)} />
+                                            <Input type='number' className='w-[416px] h-[40px] bg-[#D9D9D92C]' placeholder='NIK' value={nik} onChange={(e) => setNik(e.target.value)} />
                                         </div>
                                     </div>
                                     <div className="mt-6">

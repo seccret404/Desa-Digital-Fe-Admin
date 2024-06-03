@@ -1,6 +1,5 @@
 import { Sidebar as Side, Menu, MenuItem, SubMenu, sidebarClasses } from 'react-pro-sidebar';
 import { ScrollArea } from './scroll';
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import GroupUcerIcon from '../icon/groupuserIcon';
 import AddUserIcon from '../icon/adduserIcon';
@@ -23,20 +22,7 @@ interface SidebarProps {
    
    export default function Sidebar({ handleLogout }: SidebarProps) {
 
-     const [isHovered, setIsHovered] = useState(false);
-     const [isActive, setIsActive] = useState(false);
-
-     const handleMouseEnter = () => {
-          setIsHovered(true);
-     };
-
-     const handleMouseLeave = () => {
-          setIsHovered(false);
-     };
-
-     const handleClick = () => {
-          setIsActive(true);
-     };
+   
      return (
           <>
 
@@ -52,13 +38,7 @@ interface SidebarProps {
                               <MenuItem disabled={true} className='text-[20px]'>Desa Digital</MenuItem>
                               <br />
                               <MenuItem
-                                   style={{
-                                        backgroundColor: isActive ? '#40A2E372' : (isHovered ? '#40A2E372' : 'initial'),
-                                        color: isActive ? '#40A2E3' : (isHovered ? '#40A2E3' : 'initial'),
-                                   }}
-                                   onMouseEnter={handleMouseEnter}
-                                   onMouseLeave={handleMouseLeave}
-                                   onClick={handleClick}
+                                  
 
                                    component={<Link to="/dashboard" />}
                               > Dashboard </MenuItem>

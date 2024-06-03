@@ -3,15 +3,15 @@ import HomeIcon from '../../components/icon/homeIcon'
 import ArrowRIghtIcon from '../../components/icon/arrowRightIcon'
 import { useNavigate } from 'react-router-dom'
 import { Input } from '../../components/ui/input';
-import {SetStateAction, useState } from 'react';
+import { SetStateAction, useState } from 'react';
 import { useToast } from '../../components/ui/use-toast';
-import { addBantuan } from '../../services/desaServices';
+import { addBantuan, getBantuan } from '../../services/desaServices';
 
 
 export default function TambahDaftarBantuan() {
      const [, setIsLoggedIn] = useState(false);
      const navigate = useNavigate();
-     const {toast} = useToast();
+     const { toast } = useToast();
      const Back = () => {
           navigate('/tambah-bantuan')
      }
@@ -21,9 +21,38 @@ export default function TambahDaftarBantuan() {
      const handleJenisBantuanChange = (e: { target: { value: SetStateAction<string>; }; }) => {
           setJenisbantuan(e.target.value);
      }
+     const checkExistingBantuan = async (jenisBantuan: string, namaBantuan: string): Promise<boolean> => {
+          try {
+               const bantuans = await getBantuan();
+               const existingBantuan = bantuans.some(bantuan => bantuan.jenis_bantuan === jenisBantuan && bantuan.nama_bantuan === namaBantuan);
+               return existingBantuan;
+          } catch (error) {
+               console.error('Error:', error);
+               throw new Error('Gagal memeriksa data bantuan');
+          }
+     }
 
      const handleSubmit = async (event: { preventDefault: () => void }) => {
           event.preventDefault();
+
+          // Check if jenisBantuan and namaBantuan are not empty
+          if (!jenisBantuan || !namaBantuan) {
+               toast({
+                    title: "Data Bantuan",
+                    description: "Field tidak boleh kosong!",
+               });
+               return;
+          }
+
+          const existingBantuan = await checkExistingBantuan(jenisBantuan, namaBantuan);
+          if (existingBantuan) {
+               toast({
+                    title: "Data Bantuan",
+                    description: "Nama bantuan dari jenis bantuan yang sama sudah ada!",
+               });
+               return;
+          }
+
           const dataBantuan = {
                jenis_bantuan: jenisBantuan,
                nama_bantuan: namaBantuan
@@ -33,7 +62,7 @@ export default function TambahDaftarBantuan() {
                await addBantuan(dataBantuan);
                toast({
                     title: "Data Bantuan",
-                    description: "Data berhasil ditambah!"
+                    description: "Data berhasil ditambah!",
                });
                navigate('/tambah-bantuan');
           } catch (error) {
@@ -41,12 +70,10 @@ export default function TambahDaftarBantuan() {
                toast({
                     title: "Data Bantuan",
                     description: "Data gagal ditambah!",
-
                });
           }
-
      }
-     
+
      return (
           <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
                <div className="bg-[#] rounded-[5px]">
@@ -67,52 +94,52 @@ export default function TambahDaftarBantuan() {
                                    </div>
                               </div>
                          </div>
-                       <div className="flex justify-center items-center">
-                       <div className="bg-white w-[600px] rounded-[5px] mt-6 flex justify-center">
-                              <div className="p-2 mb-6" >
-                                   <form action="">
+                         <div className="flex justify-center items-center">
+                              <div className="bg-white w-[600px] rounded-[5px] mt-6 flex justify-center">
+                                   <div className="p-2 mb-6" >
+                                        <form action="">
 
-                                        <div className="flex items-center mt-4">
-                                             <div className="w-[150px] text-[16px]">
-                                                  Jenis Bantuan
+                                             <div className="flex items-center mt-4">
+                                                  <div className="w-[150px] text-[16px]">
+                                                       Jenis Bantuan
+                                                  </div>
+                                                  <div className="w-[350px]">
+                                                       <select value={jenisBantuan} onChange={handleJenisBantuanChange} name="" id="" className='w-[350px] h-[35px] border-[2px] rounded-[5px] text-[16px]'>
+                                                            <option value="">Pilih Jenis</option>
+                                                            <option value="Desa">Pemerintahan Desa</option>
+                                                            <option value="Pemerintah">Pemerintahan Pusat</option>
+                                                       </select>
+                                                  </div>
                                              </div>
-                                             <div className="w-[350px]">
-                                                  <select value={jenisBantuan} onChange={handleJenisBantuanChange} name="" id="" className='w-[350px] h-[35px] border-[2px] rounded-[5px] text-[16px]'>
-                                                       <option value="">Pilih Jenis</option>
-                                                       <option value="Desa">Pemerintahan Desa</option>
-                                                       <option value="Pemerintah">Pemerintahan Pusat</option>
-                                                  </select>
+                                             <div className="flex items-center mt-4">
+                                                  <div className="w-[150px] text-[16px]">
+                                                       Nama Bantuan
+                                                  </div>
+                                                  <div className="w-[350px]">
+                                                       <Input placeholder='Nama Bantuan'
+                                                            value={namaBantuan}
+                                                            onChange={(e) => setNamabantuan(e.target.value)}
+                                                       />
+                                                  </div>
                                              </div>
-                                        </div>
-                                        <div className="flex items-center mt-4">
-                                             <div className="w-[150px] text-[16px]">
-                                                  Nama Bantuan
-                                             </div>
-                                             <div className="w-[350px]">
-                                                 <Input placeholder='Nama Bantuan' 
-                                                 value={namaBantuan}
-                                                 onChange={(e) => setNamabantuan(e.target.value)}
-                                                 />
-                                             </div>
-                                        </div>
-                                        <div className="flex justify-end mt-6">
-                                             <div className="mr-6">
-                                                  <button onClick={Back} className='bg-[#F61616] text-white rounded-[5px] w-[142px] h-[30px]'>
-                                                       Batal
-                                                  </button>
-                                             </div>
-                                             <div className="">
-                                                  <button onClick={handleSubmit} className='bg-[#0890EA] text-white rounded-[5px] w-[142px] h-[30px]'>
-                                                       simpan
-                                                  </button>
+                                             <div className="flex justify-end mt-6">
+                                                  <div className="mr-6">
+                                                       <button onClick={Back} className='bg-[#F61616] text-white rounded-[5px] w-[142px] h-[30px]'>
+                                                            Batal
+                                                       </button>
+                                                  </div>
+                                                  <div className="">
+                                                       <button onClick={handleSubmit} className='bg-[#0890EA] text-white rounded-[5px] w-[142px] h-[30px]'>
+                                                            simpan
+                                                       </button>
 
 
+                                                  </div>
                                              </div>
-                                        </div>
-                                   </form>
+                                        </form>
+                                   </div>
                               </div>
                          </div>
-                       </div>
                     </div>
                </div>
           </SidebarLayout >

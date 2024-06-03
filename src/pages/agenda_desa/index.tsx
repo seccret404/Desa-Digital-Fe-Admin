@@ -78,16 +78,35 @@ export default function AgendaPage() {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredAgenda.slice(indexOfFirstItem, indexOfLastItem);
 
+  
   const exportToExcel = () => {
     let fileName = "Agenda.xlsx";
     if (selectedYear) {
-      fileName = `Agenda_${selectedYear}.xlsx`;
+        fileName = `Agenda_${selectedYear}.xlsx`;
     }
-    const ws = XLSX.utils.json_to_sheet(filteredAgenda);
+
+    const wsData = filteredAgenda.map((item, index) => {
+      const laporan = laporanAgenda.find(laporan => laporan.id_agenda === item.id);
+      
+      return {
+        "NO": index + 1,
+        "Nama Kegiatan": item.nama_kegiatan,
+        "Hari/Tanggal": new Date(item.tanggal_kegiatan).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: '2-digit' }),
+        "Lokasi": item.lokasi,
+        "Koordinator": laporan ? laporan.koordinator : '',
+        "Donasi":  laporan ? laporan.donasi : '',
+        "Jumlah Peserta": laporan ? laporan.jumlah_peserta : '',
+        "Anggaran Desa": laporan ? laporan.anggaran_desa : '',
+      };
+    });
+
+    const ws = XLSX.utils.json_to_sheet(wsData);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Agenda");
     XLSX.writeFile(wb, fileName);
   };
+
+
 
   return (
     <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
@@ -155,13 +174,13 @@ export default function AgendaPage() {
                       <TableCell>{new Date(p.tanggal_kegiatan).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: '2-digit' })}</TableCell>
                       <TableCell>{p.lokasi}</TableCell>
                       <TableCell>
-                      {laporanAgenda.filter(item => item.id_agenda === p.id).length > 0 ? (
-                          <Link to={`/detail-agenda/${p.id}`}>Lihat Laporan</Link>
+                        {laporanAgenda.filter(item => item.id_agenda === p.id).length > 0 ? (
+                          <Link to={`/detail-agenda/${p.id}`} className='text-[#07BF9A]'>Lihat Laporan</Link>
                         ) : (
-                          <Link to={`/laporan-agenda/${p.id}`}>Buat Laporan</Link>
+                          <Link to={`/laporan-agenda/${p.id}`} className='text-[#0772BF]'>Buat Laporan</Link>
                         )}
 
-</TableCell>
+                      </TableCell>
                       <TableCell>
                         <div className="flex justify-center ml-4 mr-4">
                           <div className="flex justify-center text-[#0890EA] text-[12px] bg-[#0890EA60] w-[70px] h-[23px] text-center rounded-[5px]">

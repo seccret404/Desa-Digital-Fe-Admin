@@ -376,6 +376,7 @@ export const addProfil= async (data: Profil): Promise<void> => {
     await fetch(`${API_URL}/profile`, {
       method: 'POST',
       body: formData,
+      
     });
   } catch (error) {
     console.error('Error:', error);
@@ -394,6 +395,7 @@ export const addPengumuman = async (data: Pengumuman): Promise<void> => {
     await fetch(`${API_URL}/create/pengumuman`, {
       method: 'POST',
       body: formData,
+      
     });
   } catch (error) {
     console.error('Error:', error);

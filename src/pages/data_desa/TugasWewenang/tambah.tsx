@@ -63,7 +63,18 @@ export default function TambahTugasWewenang() {
       toast({ title: "Error", description: "Tolong isi semua kolom!"});
       return;
     }
+    
     try {
+
+      const currentPemerintah = await getPemerintah(); // Fetch current pemerintah data
+      const existingJabatan = currentPemerintah.find(p => p.jabatan === selectedJabatan.jabatan);
+
+      if (existingJabatan) {
+        toast({ title: "Error", description: `Tugas jabatan ${selectedJabatan.jabatan} sudah ada di database!` });
+        return;
+      }
+
+
       if (selectedJabatan && tugas && fungsi && wewenang) {
         const data: Tugas = {
           jabatan: selectedJabatan.jabatan,

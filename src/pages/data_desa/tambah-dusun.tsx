@@ -3,7 +3,7 @@ import { Input } from '../../components/ui/input'
 import HomeIcon from '../../components/icon/homeIcon'
 import ArrowRIghtIcon from '../../components/icon/arrowRightIcon'
 import { useNavigate } from 'react-router-dom'
-import { addDusun } from '../../services/desaServices'
+import { addDusun, getDusun } from '../../services/desaServices'
 import { useEffect, useState } from 'react'
 import { useToast } from '../../components/ui/use-toast'
 import { getPenduduk } from '../../services/desaServices'
@@ -15,23 +15,39 @@ export default function TambahDusun() {
      const [dusun, setDusun] = useState('');
      const [ketua, setKetua] = useState('');
      const [suggestedKetua, setSuggestedKetua] = useState<PendudukDesa[]>([]);
+     const [existingDusun, setExistingDusun] = useState<string[]>([]);
 
      useEffect(() => {
-          // Fetch penduduk data and set suggestedKetua
+
           const fetchPenduduk = async () => {
                try {
-                    const data = await getPenduduk(); // Assuming this function fetches the names of residents
+                    const data = await getPenduduk();
                     setSuggestedKetua(data);
                } catch (error) {
                     console.error('Error fetching penduduk data:', error);
                }
           };
+          const fetchDusun = async () => {
+               try {
+                    const data = await getDusun(); // Assuming this function fetches the names of dusun
+                    setExistingDusun(data.map(d => d.nama_dusun));
+               } catch (error) {
+                    console.error('Error fetching dusun data:', error);
+               }
+          };
+
           fetchPenduduk();
+          fetchDusun();
      }, []);
      const handleSubmit = async (event: { preventDefault: () => void }) => {
           event.preventDefault();
-          if(!dusun || !ketua){
-               toast({ title: "Error", description: "Tolong isi semua kolom!"});
+          if (!dusun || !ketua) {
+               toast({ title: "Error", description: "Tolong isi semua kolom!" });
+               return;
+          }
+
+          if (existingDusun.includes(dusun)) {
+               toast({ title: "Error", description: `Nama dusun ${dusun} sudah ada terdaftar!` });
                return;
           }
           const dusunData = {
@@ -54,14 +70,10 @@ export default function TambahDusun() {
 
                });
           }
-
      }
-
-
      const Back = () => {
           navigate('/dusun')
      }
-
      return (
           <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
                <div className="bg-[#D9D9D98B] rounded-[15px]">

@@ -35,18 +35,22 @@ export default function BantuanPage() {
  
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(event.target.value);
-    setCurrentPage(1); // Reset to the first page when searching
+    const query = event.target.value.toLowerCase();
+    setSearchQuery(query);
+    setCurrentPage(1); 
   };
+  
 
   const filteredBantuan = bantuan.filter(item =>
-    item.nama_penerima.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    item.nama_bantuan.toLowerCase().includes(searchQuery.toLowerCase())
+    item.nama_penerima.toLowerCase().includes(searchQuery) ||
+    item.nama_bantuan.toLowerCase().includes(searchQuery)
   );
+  
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredBantuan.slice(indexOfFirstItem, indexOfLastItem);
+
 
   return (
     <SidebarLayout setIsLoggedIn={setIsLoggedIn}>

@@ -9,6 +9,7 @@ import { useState } from 'react'
 import { useToast } from '../../../components/ui/use-toast'
 import { Pengumuman } from '../../../interfaces/pengumuman'
 import { addPengumuman } from '../../../services/desaServices'
+
 export default function TambahPengumuman() {
   const [, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
@@ -20,6 +21,8 @@ export default function TambahPengumuman() {
     file_pengumuman: '',
     tgl_publikasi: ''
   });
+  const [coverPreview, setCoverPreview] = useState<string>('');
+  const [filePreview, setFilePreview] = useState<string>('');
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -27,10 +30,15 @@ export default function TambahPengumuman() {
       !pengumuman.judul_pengumuman ||
       !pengumuman.deskripsi_pengumuman ||
       !pengumuman.cover_pengumuman ||
-      !pengumuman.file_pengumuman 
+      !pengumuman.file_pengumuman
       // !pengumuman.tgl_publikasiz
     ) {
       toast({ title: "Error", description: "Tolong isi semua kolom!" });
+      return;
+    }
+
+    if (typeof pengumuman.cover_pengumuman !== 'string' && typeof pengumuman.file_pengumuman !== 'string' && pengumuman.cover_pengumuman.name === pengumuman.file_pengumuman.name) {
+      toast({ title: "Error", description: "Nama file untuk cover dan file tidak boleh sama!" });
       return;
     }
 
@@ -59,13 +67,23 @@ export default function TambahPengumuman() {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = event.target;
-    if (files) {
+    if (files && files.length > 0) {
       setPengumuman({ ...pengumuman, [name]: files[0] });
+      if (name === "cover_pengumuman") {
+        setCoverPreview(URL.createObjectURL(files[0])); // Membuat URL objek untuk gambar yang dipilih
+      } else if (name === "file_pengumuman") {
+        setFilePreview(URL.createObjectURL(files[0]));
+      }
     } else {
-     setPengumuman({ ...pengumuman, [name]: value });
+      setPengumuman({ ...pengumuman, [name]: value });
+      if (name === "cover_pengumuman") {
+        setCoverPreview(''); // Mengatur filePreview menjadi '' atau null
+      } else if (name === "file_pengumuman") {
+        setFilePreview('');
+      }
     }
   };
-
+  
 
   const back = () => {
     navigate('/berita');
@@ -98,7 +116,6 @@ export default function TambahPengumuman() {
                     name="judul_pengumuman"
                     value={pengumuman.judul_pengumuman}
                     onChange={handleChange}
-                    
                   />
                 </div>
               </div>
@@ -109,7 +126,6 @@ export default function TambahPengumuman() {
                     editor={ClassicEditor}
                     onChange={handleEditorChange}
                     data={pengumuman.deskripsi_pengumuman}
-                    
                   />
                 </div>
               </div>
@@ -120,9 +136,9 @@ export default function TambahPengumuman() {
                     type='file'
                     className=' h-[40px] font-bold'
                     name="cover_pengumuman"
-                    onChange={(e) => setPengumuman({ ...pengumuman, cover_pengumuman: e.target.files ? e.target.files[0] : '' })}
-
+                    onChange={handleChange}
                   />
+                  {coverPreview && <img src={coverPreview} alt="Cover Preview" style={{ maxWidth: '100%', marginTop: '10px' }} />} 
                 </div>
               </div>
               <div className="flex items-center mt-2 pl-6 pr-6">
@@ -133,9 +149,9 @@ export default function TambahPengumuman() {
                     className=' h-[40px] font-bold'
                     placeholder='File'
                     name="file_pengumuman"
-                    onChange={(e) => setPengumuman({ ...pengumuman, file_pengumuman: e.target.files ? e.target.files[0] : '' })}
-
+                    onChange={handleChange}
                   />
+                  {filePreview && <img src={filePreview} alt="Cover Preview" style={{ maxWidth: '100%', marginTop: '10px' }} />} 
                 </div>
               </div>
               <div className="flex justify-end mt-6">
@@ -156,5 +172,4 @@ export default function TambahPengumuman() {
       </div>
     </SidebarLayout>
   )
-
 }

@@ -13,6 +13,8 @@ import { useToast } from '../../components/ui/use-toast';
 export default function DaftarBantuanPage() {
      const [, setIsLoggedIn] = useState(false);
      const [bantuan, setBantuan] = useState<Bantuan[]>([]);
+     const [searchQuery, setSearchQuery] = useState<string>('');
+
      const { toast } = useToast();
 
 
@@ -46,6 +48,16 @@ export default function DaftarBantuanPage() {
           }
         };
 
+        const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+          setSearchQuery(event.target.value);
+        };
+
+        const filteredBantuan = bantuan.filter(item =>
+          item.nama_bantuan.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        
+        
+
      return (
           <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
                <div className="bg-[#D9D9D98B] rounded-[15px]">
@@ -54,7 +66,7 @@ export default function DaftarBantuanPage() {
                          <div className="flex items-center justify-between">
                               <div className="relative w-[376px]">
                                    <FontAwesomeIcon icon={faSearch} className="absolute top-[10px] left-[10px]" />
-                                   <Input placeholder="Ketikkan kata kunci..." className="pl-[35px] rounded-[23px]" />
+                                   <Input placeholder="Ketikkan kata kunci..." className="pl-[35px] rounded-[23px]" onChange={handleSearchChange} />
                               </div>
                               <div className="">
                                    <Button width={249} height={47} color='white' bgColor='#0890EA' rounded={5} >
@@ -76,7 +88,7 @@ export default function DaftarBantuanPage() {
                                    </TableHeader>
                                    <TableBody>
 
-                                        {bantuan.map((b, index) =>
+                                        {filteredBantuan.map((b, index) =>
                                              <TableRow key={b.id}>
                                                   <TableCell>{index + 1}</TableCell>
                                                   <TableCell>{b.nama_bantuan}</TableCell>

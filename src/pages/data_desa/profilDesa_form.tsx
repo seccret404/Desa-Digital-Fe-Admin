@@ -41,9 +41,11 @@ export default function ProfilForm() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    
 
     try {
       await addProfil(profil);
+      console.log(profil)
       toast({
         title: "Berita",
         description: "Berita berhasil ditambahkan!"
@@ -100,9 +102,11 @@ export default function ProfilForm() {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = event.target;
-    if (files) {
+    if (files && files.length > 0) {
+      // For file inputs, use the File object itself
       setProfil({ ...profil, [name]: files[0] });
     } else {
+      // For other inputs, use the input value
       setProfil({ ...profil, [name]: value });
     }
   };
