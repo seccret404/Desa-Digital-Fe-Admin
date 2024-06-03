@@ -2,7 +2,7 @@ import SidebarLayout from '../../components/layout/SidebarLayout'
 import HomeIcon from '../../components/icon/homeIcon'
 import ArrowRIghtIcon from '../../components/icon/arrowRightIcon'
 import { Input } from '../../components/ui/input'
-import { addPenduduk, getDusun } from '../../services/desaServices'
+import { addPenduduk, getDusun, getPenduduk } from '../../services/desaServices'
 import { SetStateAction, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useToast } from '../../components/ui/use-toast'
@@ -27,7 +27,7 @@ export default function TambahPenduduk() {
     const [noKK, setNoKK] = useState('');
     const [dusun, setDusun] = useState<Dusun | null>(null);
     const [dusunOptions, setDusunOptions] = useState<Dusun[]>([]);
-
+    const [existingNiks, setExistingNiks] = useState<string[]>([]);
     const { toast } = useToast();
     const navigate = useNavigate();
 
@@ -38,11 +38,15 @@ export default function TambahPenduduk() {
         return `${year}-${month}-${day}`;
     };
 
+ 
     useEffect(() => {
         const fetchDusunData = async () => {
             try {
                 const dusun = await getDusun();
                 setDusunOptions(dusun);
+                const penduduk = await getPenduduk();
+                const existingNiks = penduduk.map((p: { nik: string }) => p.nik);
+                setExistingNiks(existingNiks);
             } catch (error) {
                 console.error('Error:', error);
             }
@@ -55,6 +59,10 @@ export default function TambahPenduduk() {
         event.preventDefault();
         if (nik.length !== 16) {
             toast({ title: "Error", description: "NIK harus 16 karakter!" });
+            return;
+        }
+        if (existingNiks.includes(nik)) {
+            toast({ title: "Error", description: "NIK sudah ada, gunakan NIK yang berbeda!" });
             return;
         }
         const today = new Date();
