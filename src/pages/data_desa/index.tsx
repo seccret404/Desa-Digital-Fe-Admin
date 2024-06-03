@@ -78,7 +78,7 @@ export default function DataDesa() {
                                              </div>
                                         </div>
                                         <div className="flex justify-center">
-                                             <img src={`https://desa-digital-bakend-production.up.railway.app/api/gambardesa/${item.gambar_desa}`} alt={item.nama_desa} className='rounded-[15px] ' />
+                                             <img src={`https://desa-api.desajanggadolok.id/api/gambardesa/${item.gambar_desa}`} alt={item.nama_desa} className='rounded-[15px] ' />
                                         </div>
                                         <div className="mt-4">
                                              <div className="font-bold text-[20px]" >

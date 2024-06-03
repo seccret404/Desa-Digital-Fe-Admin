@@ -80,8 +80,8 @@ export default function OrganisasiPage() {
                                         <TableCell>{p.nama_lembaga}</TableCell>
                                         <TableCell>{new Date(p.tahun_berdiri).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: '2-digit' })}</TableCell>
                                         <TableCell>
-                                        <a href={`https://desa-digital-bakend-production.up.railway.app/images/organisasi/${p.logo_organisasi}`}>
-                                                            <img src={`https://desa-digital-bakend-production.up.railway.app/images/organisasi/${p.logo_organisasi}`} alt="Images" width={100} height={150} />
+                                        <a href={`https://desa-api.desajanggadolok.id/images/organisasi/${p.logo_organisasi}`}>
+                                                            <img src={`https://desa-api.desajanggadolok.id/images/organisasi/${p.logo_organisasi}`} alt="Images" width={100} height={150} />
                                                             </a>
                                         </TableCell>
                                         <TableCell>{p.ketua}</TableCell>

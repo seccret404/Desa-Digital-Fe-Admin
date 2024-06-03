@@ -84,7 +84,7 @@ export default function DetailAgenda() {
                   <div className="text-[20px] font-medium mt-8">Dokumentasi</div>
                   {laporan.map((lap: Laporan) => (
                     <div key={lap.id}>
-                      <div className=""><img src={`https://desa-digital-bakend-production.up.railway.app/api/dokumentasi/${lap.dokumentasi}`} alt="Dokumentasi" /></div>
+                      <div className=""><img src={`https://desa-api.desajanggadolok.id//api/dokumentasi/${lap.dokumentasi}`} alt="Dokumentasi" /></div>
                     </div>
                   ))}
                 </div>

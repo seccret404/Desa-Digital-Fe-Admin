@@ -94,9 +94,9 @@ export default function PengumumanPage() {
                                                        <TableCell>
                                                        {p.file_pengumuman && typeof p.file_pengumuman === 'string' && (
                                                     p.file_pengumuman.endsWith('.jpg') || p.file_pengumuman.endsWith('.png') || p.file_pengumuman.endsWith('.jpeg') ? (
-                                                        <img src={`https://desa-digital-bakend-production.up.railway.app/api/pengumuman_cover/${p.file_pengumuman}`} alt="Cover Pengumuman" className="w-20 h-auto" />
+                                                        <img src={`https://desa-api.desajanggadolok.id/api/pengumuman_cover/${p.file_pengumuman}`} alt="Cover Pengumuman" className="w-20 h-auto" />
                                                     ) : (
-                                                        <a href={`https://desa-digital-bakend-production.up.railway.app/api/pengumuman_cover/${p.file_pengumuman}`} target="_blank" rel="noopener noreferrer">{p.file_pengumuman}</a>
+                                                        <a href={`https://desa-api.desajanggadolok.id/api/pengumuman_cover/${p.file_pengumuman}`} target="_blank" rel="noopener noreferrer">{p.file_pengumuman}</a>
                                                     )
                                                 )}
                                                        </TableCell>

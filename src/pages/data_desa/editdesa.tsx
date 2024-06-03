@@ -322,7 +322,7 @@ export default function ProfilEdit() {
                                         </div>
                                         <div className="flex items-center mt-2 pl-6 pr-6">Gambar Sebelumnya : </div>
                                         <div className="flex items-center mt-2 pl-6 pr-6">
-                                             <img src={`https://desa-digital-bakend-production.up.railway.app/images/profile/${profil?.gambar_desa}`} alt="" />
+                                             <img src={`https://desa-api.desajanggadolok.id/images/profile/${profil?.gambar_desa}`} alt="" />
                                         </div>
                                         <div className="flex justify-end mt-6 pr-6 mb-10">
                                              <div className="mr-6">

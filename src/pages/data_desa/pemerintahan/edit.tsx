@@ -195,7 +195,7 @@ export default function EditPemerintah() {
                     accept="image/*"
                   />
                   {profil && (
-                    <><div className="">Profil Sebelumnya</div><img src={`https://desa-digital-bakend-production.up.railway.app/images/pemerintah/${profil}`} alt="Images" width={100} height={150} /></>
+                    <><div className="">Profil Sebelumnya</div><img src={`https://desa-api.desajanggadolok.id/images/pemerintah/${profil}`} alt="Images" width={100} height={150} /></>
                   )}
                 </div>
               </div>

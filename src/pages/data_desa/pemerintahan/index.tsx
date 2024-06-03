@@ -68,8 +68,8 @@ export default function Pemerintahan() {
                                                        <TableCell>{p.jabatan}</TableCell>
                                                        {/* <TableCell className='text-[#0D9276] font-medium'>{new Date(b.tgl_publikasi).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: '2-digit' })}</TableCell> */}
                                                        <TableCell>
-                                                            <a href={`https://desa-digital-bakend-production.up.railway.app/images/pemerintah/${p.profil}`}>
-                                                                 <img src={`https://desa-digital-bakend-production.up.railway.app/images/pemerintah/${p.profil}`} alt="Images" width={100} height={150} />
+                                                            <a href={`https://desa-api.desajanggadolok.id/images/pemerintah/${p.profil}`}>
+                                                                 <img src={`https://desa-api.desajanggadolok.id/images/pemerintah/${p.profil}`} alt="Images" width={100} height={150} />
 
                                                             </a>
                                                        </TableCell>

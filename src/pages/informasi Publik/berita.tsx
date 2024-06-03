@@ -96,9 +96,9 @@ export default function BeritaPage() {
                                             <TableCell>
                                                 {b.cover && typeof b.cover === 'string' && (
                                                     b.cover.endsWith('.jpg') || b.cover.endsWith('.png') || b.cover.endsWith('.jpeg') ? (
-                                                        <img src={`https://desa-digital-bakend-production.up.railway.app/images/cover/${b.cover}`} alt="Cover Berita" className="w-20 h-auto" />
+                                                        <img src={`https://desa-api.desajanggadolok.id/images/cover/${b.cover}`} alt="Cover Berita" className="w-20 h-auto" />
                                                     ) : (
-                                                        <a href={`https://desa-digital-bakend-production.up.railway.app/images/cover/${b.cover}`} target="_blank" rel="noopener noreferrer">{b.cover}</a>
+                                                        <a href={`https://desa-api.desajanggadolok.id/images/cover/${b.cover}`} target="_blank" rel="noopener noreferrer">{b.cover}</a>
                                                     )
                                                 )}
                                             </TableCell>
