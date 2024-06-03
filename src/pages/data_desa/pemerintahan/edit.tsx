@@ -56,11 +56,7 @@ export default function EditPemerintah() {
     fetchPemerintahData();
   }, [id]);
 
-  const jabatanOptions = [
-    'Kepala Desa', 'Sekretaris Desa', 'Bendahara', 'Kaur Umum dan Perencanaan', 
-    'Kaur Keuangan', 'Kasi Pemerintahan', 'Kasi Kesejahteraan dan Pelayanan', 
-    'Kadus I(Bonanidolok)', 'Kadus II(Lumban Bagas)'
-  ];
+  const jabatanOptions = ['Kepala Desa', 'Sekretaris Desa', 'Bendahara','Ketua BPD', 'Kaur Umum dan Perencanaan','Kaur Keuangan','Kaur Pembangunan','Kaur Pemerintahan','Kaur Kesejahteraan Rakyat','Kaur Pemberdayaan Masyarakat'];
 
   const formatDateForBackend = (date: Date): string => {
     const isoString = date.toISOString();

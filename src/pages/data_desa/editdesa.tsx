@@ -79,35 +79,33 @@ export default function ProfilEdit() {
      const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
           e.preventDefault();
           try {
-               if(!id){
-                    return;
-               }
-            const target = e.target as typeof e.target & {
-              gambar_desa: { files: FileList };
-            };
-            const updatedData = { ...profil };
-            if (!target.gambar_desa.files.length) {
-              
-              if (typeof profil.gambar_desa === 'string') {
-                updatedData.gambar_desa = profil.gambar_desa;
+              if (!id) {
+                  return;
               }
-            }
-        
-            await updateProfil(id, updatedData);
-            console.log(updatedData)
-            navigate('/data-desa')
-            toast({
-               title:'Update profil',
-               description:'Berhasil Update profil!'
-            })
+              const target = e.target as typeof e.target & {
+                  gambar_desa: { files: FileList };
+              };
+              const updatedData = { ...profil };
+              if (target.gambar_desa.files.length) {
+                  // Jika ada file baru yang dipilih, gunakan file gambar baru
+                  updatedData.gambar_desa = target.gambar_desa.files[0];
+              }
+      
+              await updateProfil(id, updatedData);
+              navigate('/data-desa');
+              toast({
+                  title: 'Update profil',
+                  description: 'Berhasil Update profil!'
+              });
           } catch (error) {
-            console.error('Error updating profil:', error);
-            toast({
-               title:'Update profil',
-               description:'Gagal Update profil!'
-            })
+              console.error('Error updating profil:', error);
+              toast({
+                  title: 'Update profil',
+                  description: 'Gagal Update profil!'
+              });
           }
-        };
+      };
+      
 
      const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
           const { name, value, files } = e.target;

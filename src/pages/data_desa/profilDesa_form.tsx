@@ -103,13 +103,17 @@ export default function ProfilForm() {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = event.target;
     if (files && files.length > 0) {
-      // For file inputs, use the File object itself
-      setProfil({ ...profil, [name]: files[0] });
+      const selectedFile = files[0];
+      // Buat objek URL untuk memuat berkas gambar sebagai URL
+      const imageUrl = URL.createObjectURL(selectedFile);
+      // Update profil dengan URL gambar
+      setProfil({ ...profil, [name]: imageUrl, gambar_desa: selectedFile });
     } else {
       // For other inputs, use the input value
       setProfil({ ...profil, [name]: value });
     }
   };
+  
 
   return (
     <SidebarLayout setIsLoggedIn={setIsLoggedIn}>
